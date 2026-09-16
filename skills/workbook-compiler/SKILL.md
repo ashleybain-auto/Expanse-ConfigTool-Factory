@@ -1,6 +1,6 @@
 # Workbook Compiler Skill
 
-## Purpose
+# Purpose
 
 The Workbook Compiler converts an existing Excel VBA ConfigTool workbook
 (.xlsb or .xlsm) into a deterministic intermediate representation that can

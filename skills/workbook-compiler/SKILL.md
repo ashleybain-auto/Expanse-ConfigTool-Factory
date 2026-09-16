@@ -1,6 +1,6 @@
 # Workbook Compiler Skill
 
-# Purpose
+## Purpose
 
 The Workbook Compiler converts an existing Excel VBA ConfigTool workbook
 (.xlsb or .xlsm) into a deterministic intermediate representation that can
@@ -75,6 +75,8 @@ timestamp, and ingestion timestamp.
 
 The original source file must never be modified by the compiler.
 
+If the workbook file fails to parse or is corrupted, halt analysis, log a PARSE_ERROR entry in warnings, and do not generate partial IR or manifest files.
+
 ---
 
 # 3. Required Workbook Analysis
@@ -132,7 +134,7 @@ Never silently discard a worksheet.
 
 # 4. Column Analysis
 
-For every relevant worksheet column capture:
+For every column in worksheets classified as mapping, lookup, source data, target data, staging, or settings, capture the following attributes.
 
 - ordinal position
 - column name
@@ -140,7 +142,7 @@ For every relevant worksheet column capture:
 - inferred data type
 - observed data types
 - null/blank frequency
-- distinct count where practical
+- distinct count for columns with fewer than 100,000 rows; otherwise mark as SAMPLED_ESTIMATE
 - example values
 - formula presence
 - formula pattern
@@ -209,6 +211,8 @@ Analyze:
 
 Use `olevba` where appropriate for source extraction.
 
+If olevba extraction fails or is unavailable, record an UNSUPPORTED entry for VBA analysis and continue with worksheet-level analysis rather than aborting the entire compilation.
+
 Do not execute VBA during analysis.
 
 The compiler must treat workbook VBA as untrusted executable content.
@@ -226,6 +230,8 @@ The compiler must:
 3. classify suspicious or external execution behavior
 4. record any unsupported behavior
 5. require explicit developer review for execution-dependent behavior
+
+If the workbook or VBA project is password-protected and cannot be read statically, mark the workbook as UNSUPPORTED_ENCRYPTED and record this in warnings without attempting to bypass protection.
 
 Never run:
 

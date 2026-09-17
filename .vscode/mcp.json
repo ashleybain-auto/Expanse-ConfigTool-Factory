@@ -1,0 +1,86 @@
+{
+	"servers": {
+		"io.github.github/github-mcp-server": {
+			"type": "stdio",
+			"command": "docker",
+			"args": [
+				"run",
+				"-i",
+				"--rm",
+				"-p",
+				"127.0.0.1:8085:8085",
+				"-e",
+				"GITHUB_OAUTH_CALLBACK_PORT=8085",
+				"-e",
+				"GITHUB_PERSONAL_ACCESS_TOKEN=${input:token}",
+				"ghcr.io/github/github-mcp-server:1.12.2"
+			],
+			"gallery": "https://api.mcp.github.com",
+			"version": "1.12.2"
+		},
+		"com.microsoft/azure": {
+			"type": "stdio",
+			"command": "dnx",
+			"args": [
+				"Azure.Mcp@3.0.0-beta.44",
+				"--yes",
+				"--",
+				"server",
+				"start"
+			],
+			"gallery": "https://api.mcp.github.com",
+			"version": "3.0.0-beta.44"
+		},
+		"com.microsoft/microsoft-fabric": {
+			"type": "stdio",
+			"command": "dnx",
+			"args": [
+				"Microsoft.Fabric.Mcp@1.4.0",
+				"--yes",
+				"--",
+				"server",
+				"start"
+			],
+			"gallery": "https://api.mcp.github.com",
+			"version": "1.4.0"
+		},
+		"com.microsoft/nuget": {
+			"type": "stdio",
+			"command": "dnx",
+			"args": [
+				"NuGet.Mcp.Server@1.4.16",
+				"--yes",
+				"--source",
+				"https://api.nuget.org/v3/index.json"
+			],
+			"gallery": "https://api.mcp.github.com",
+			"version": "1.4.16"
+		},
+		"com.postman/postman-mcp-server": {
+			"type": "stdio",
+			"command": "npx",
+			"args": [
+				"@postman/postman-mcp-server@2.12.3"
+			],
+			"env": {
+				"POSTMAN_API_KEY": "${input:POSTMAN_API_KEY}"
+			},
+			"gallery": "https://api.mcp.github.com",
+			"version": "2.12.3"
+		}
+	},
+	"inputs": [
+		{
+			"id": "token",
+			"type": "promptString",
+			"description": "",
+			"password": true
+		},
+		{
+			"id": "POSTMAN_API_KEY",
+			"type": "promptString",
+			"description": "A valid Postman API key.",
+			"password": true
+		}
+	]
+}

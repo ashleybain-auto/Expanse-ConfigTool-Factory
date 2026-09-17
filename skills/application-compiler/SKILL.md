@@ -1,4 +1,29 @@
-# Application Compiler Skill
+# # ECCS Application Compiler Skill
+
+## Project Identity
+
+Suite:
+Expanse Cutover Configuration Suite
+
+Suite Code:
+ECCS
+
+Factory:
+Expanse ConfigTool Factory
+
+Publisher Prefix:
+eccs
+
+Development Environment:
+DevelopmentAuto
+
+## Pilot Applications
+
+Registration:
+ECCS - Registration
+
+Non-Magic Registration:
+ECCS - Non-Magic Registration
 
 ## Purpose
 
@@ -557,6 +582,16 @@ Do not make the .msapp the only source artifact.
 Keep generated source in the repository.
 
 ---
+## Power Platform Solutions
+
+Core:
+ExpanseCutoverConfigurationSuiteCore
+
+Registration:
+ExpanseCutoverConfigurationSuiteRegistration
+
+Non-Magic Registration:
+ExpanseCutoverConfigurationSuiteNonMagicRegistration
 
 # 22. Power Platform Solution
 

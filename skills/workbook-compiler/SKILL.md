@@ -1,4 +1,21 @@
-# Workbook Compiler Skill
+# ECCS Workbook Compiler Skill
+
+## Project
+
+Suite:
+Expanse Cutover Configuration Suite
+
+Suite Code:
+ECCS
+
+Factory:
+Expanse ConfigTool Factory
+
+Publisher Prefix:
+eccs
+
+Repository:
+Expanse-ConfigTool-Factory
 
 ## Purpose
 
@@ -683,6 +700,22 @@ Its output is consumed by the Application Compiler.
 
 # 21. Required Pilot Tests
 
+## Registration Pilot
+
+MEDITECH Expanse:
+
+Tool Code:
+REG
+
+Variant:
+EXPANSE
+
+Display Name:
+ECCS - Registration
+
+Source Workbook:
+Mapping_Expanse_REG_Domain.xlsb
+
 Registration MEDITECH:
 
 - worksheet discovery
@@ -695,6 +728,20 @@ Registration MEDITECH:
 - mapping field discovery
 - action field discovery
 - audit field discovery
+
+Non-Magic Expanse:
+
+Tool Code:
+REG
+
+Variant:
+NONMAGIC
+
+Display Name:
+ECCS - Non-Magic Registration
+
+Source Workbook:
+Mapping_NonMagic_Expanse_REG_Domain.xlsb
 
 Registration Non-Magic:
 

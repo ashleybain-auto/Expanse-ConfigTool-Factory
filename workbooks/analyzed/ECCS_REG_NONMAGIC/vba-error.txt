@@ -1,0 +1,21 @@
+Encoding for stdout is only cp1252, will auto-encode text with utf8 before output
+Traceback (most recent call last):
+  File "C:\Users\QXA4067\Projects\Expanse-ConfigTool-Factory\.venv\Lib\site-packages\oletools\olevba.py", line 4225, in process_file
+    self.print_analysis(show_decoded_strings, deobfuscate)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\QXA4067\Projects\Expanse-ConfigTool-Factory\.venv\Lib\site-packages\oletools\olevba.py", line 4075, in print_analysis
+    t.write_row((kw_type, keyword, description), colors=(color_type, None, None))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\QXA4067\Projects\Expanse-ConfigTool-Factory\.venv\Lib\site-packages\oletools\thirdparty\tablestream\tablestream.py", line 326, in write_row
+    self.write(column[j] + u' '*(self.column_width[i]-text_width))
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\QXA4067\Projects\Expanse-ConfigTool-Factory\.venv\Lib\site-packages\oletools\thirdparty\tablestream\tablestream.py", line 291, in write
+    self.outfile.write(s)
+    ~~~~~~~~~~~~~~~~~~^^^
+  File "C:\Users\QXA4067\Projects\Expanse-ConfigTool-Factory\.venv\Lib\site-packages\colorclass\windows.py", line 275, in write
+    print(segment, file=self._original_stream, end='')
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\QXA4067\AppData\Local\Programs\Python\Python314\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u052d' in position 8: character maps to <undefined>

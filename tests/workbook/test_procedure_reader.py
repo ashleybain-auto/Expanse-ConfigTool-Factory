@@ -7,6 +7,32 @@ from workbook_compiler.procedure_reader import (
 )
 
 
+def test_nonmagic_procedure_source() -> None:
+    """Verify that Non-Magic VBA procedures are discoverable."""
+
+    source = (
+        "workbooks/analyzed/"
+        "ECCS_REG_NONMAGIC/"
+        "extracted-vba/"
+        "vba-source.txt"
+    )
+
+    procedures = discover_procedures(source)
+
+    assert len(procedures) > 0
+
+    source = (
+        "workbooks/analyzed/"
+        "ECCS_REG_NONMAGIC/"
+        "extracted-vba/"
+        "vba-source.txt"
+    )
+
+    procedures = discover_procedures(source)
+
+    assert len(procedures) > 0
+
+
 SOURCE = Path(
     "workbooks/analyzed/"
     "ECCS_REG_EXPANSE/"

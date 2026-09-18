@@ -1,34 +1,27 @@
-"""Build the ECCS Registration domain/action matrix."""
+"""Build an ECCS domain/action matrix from a procedure inventory."""
 
 from __future__ import annotations
 
+import argparse
 import json
 from pathlib import Path
 
 
-SOURCE = Path(
-    "workbooks/analyzed/"
-    "ECCS_REG_EXPANSE/"
-    "procedures.json"
-)
+def build_matrix(
+    source_file: Path,
+    output_file: Path,
+) -> None:
+    """Build a domain/action matrix from classified procedures."""
 
-OUTPUT = Path(
-    "workbooks/analyzed/"
-    "ECCS_REG_EXPANSE/"
-    "domain-actions.json"
-)
-
-
-def main() -> None:
-    """Build domain/action metadata from classified VBA procedures."""
-
-    if not SOURCE.exists():
+    if not source_file.exists():
         raise FileNotFoundError(
-            f"Procedure inventory not found: {SOURCE}"
+            f"Procedure inventory not found: {source_file}"
         )
 
     procedures = json.loads(
-        SOURCE.read_text(encoding="utf-8")
+        source_file.read_text(
+            encoding="utf-8"
+        )
     )
 
     domains: dict[str, set[str]] = {}
@@ -38,50 +31,89 @@ def main() -> None:
         classification = procedure["classification"]
 
         if classification == "REFRESH":
-            domain = name.removeprefix("RefreshData_")
+            prefix = "RefreshData_"
 
         elif classification == "PUBLISH":
-            domain = name.removeprefix("PushUpdates_")
+            prefix = "PushUpdates_"
 
         else:
             continue
 
-        if domain:
-            domains.setdefault(domain, set()).add(
-                classification
-            )
+        if not name.startswith(prefix):
+            continue
 
-    output = [
+        domain = name[len(prefix):].strip()
+
+        if domain:
+            domains.setdefault(
+                domain,
+                set(),
+            ).add(classification)
+
+    result = [
         {
             "domain": domain,
             "actions": sorted(actions),
         }
-        for domain, actions in sorted(domains.items())
+        for domain, actions in sorted(
+            domains.items()
+        )
     ]
 
-    OUTPUT.parent.mkdir(
+    output_file.parent.mkdir(
         parents=True,
         exist_ok=True,
     )
 
-    OUTPUT.write_text(
+    output_file.write_text(
         json.dumps(
-            output,
+            result,
             indent=2,
             ensure_ascii=False,
         ),
         encoding="utf-8",
     )
 
-    print(f"Domains discovered: {len(output)}")
+    print(
+        f"Domains discovered: {len(result)}"
+    )
 
-    for item in output:
+    for item in result:
         print(
             f"{item['domain']}: "
             f"{', '.join(item['actions'])}"
         )
 
-    print(f"Output: {OUTPUT}")
+    print(
+        f"Output: {output_file}"
+    )
+
+
+def main() -> None:
+    """Parse arguments and generate the requested domain matrix."""
+
+    parser = argparse.ArgumentParser(
+        description="Build an ECCS domain/action matrix."
+    )
+
+    parser.add_argument(
+        "--source",
+        required=True,
+        help="Path to procedures.json.",
+    )
+
+    parser.add_argument(
+        "--output",
+        required=True,
+        help="Path to domain-actions.json.",
+    )
+
+    args = parser.parse_args()
+
+    build_matrix(
+        Path(args.source),
+        Path(args.output),
+    )
 
 
 if __name__ == "__main__":

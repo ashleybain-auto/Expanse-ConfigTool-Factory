@@ -1,0 +1,701 @@
+{
+  "suite": {
+    "code": "ECCS",
+    "name": "Expanse Cutover Configuration Suite",
+    "publisherPrefix": "eccs",
+    "repository": "Expanse-ConfigTool-Factory"
+  },
+  "factory": {
+    "name": "Expanse ConfigTool Factory",
+    "code": "ECCS-FACTORY"
+  },
+  "configTool": {
+    "code": "REG",
+    "name": "Registration",
+    "variant": "NONMAGIC"
+  },
+  "source": {
+    "workbook": "Mapping_NonMagic_Expanse_REG_Domain.xlsb",
+    "extension": ".xlsb",
+    "sha256": "fc71e0685f748b7cd4c74a2cd663cf97727a91eb8e4da44379c3e808eac1dd99"
+  },
+  "domains": [
+    {
+      "name": "AdmitSource",
+      "actions": [
+        "PUBLISH",
+        "REFRESH"
+      ]
+    },
+    {
+      "name": "AdmitType",
+      "actions": [
+        "PUBLISH",
+        "REFRESH"
+      ]
+    },
+    {
+      "name": "EmploymentStatus",
+      "actions": [
+        "PUBLISH",
+        "REFRESH"
+      ]
+    },
+    {
+      "name": "Ethnicity",
+      "actions": [
+        "PUBLISH",
+        "REFRESH"
+      ]
+    },
+    {
+      "name": "Language",
+      "actions": [
+        "PUBLISH",
+        "REFRESH"
+      ]
+    },
+    {
+      "name": "PatientType",
+      "actions": [
+        "PUBLISH",
+        "REFRESH"
+      ]
+    },
+    {
+      "name": "Race",
+      "actions": [
+        "PUBLISH",
+        "REFRESH"
+      ]
+    },
+    {
+      "name": "Relationship",
+      "actions": [
+        "PUBLISH",
+        "REFRESH"
+      ]
+    },
+    {
+      "name": "Religion",
+      "actions": [
+        "PUBLISH",
+        "REFRESH"
+      ]
+    },
+    {
+      "name": "State",
+      "actions": [
+        "PUBLISH",
+        "REFRESH"
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "domain": "AdmitSource",
+      "actions": [
+        "PUBLISH",
+        "REFRESH"
+      ]
+    },
+    {
+      "domain": "AdmitType",
+      "actions": [
+        "PUBLISH",
+        "REFRESH"
+      ]
+    },
+    {
+      "domain": "EmploymentStatus",
+      "actions": [
+        "PUBLISH",
+        "REFRESH"
+      ]
+    },
+    {
+      "domain": "Ethnicity",
+      "actions": [
+        "PUBLISH",
+        "REFRESH"
+      ]
+    },
+    {
+      "domain": "Language",
+      "actions": [
+        "PUBLISH",
+        "REFRESH"
+      ]
+    },
+    {
+      "domain": "PatientType",
+      "actions": [
+        "PUBLISH",
+        "REFRESH"
+      ]
+    },
+    {
+      "domain": "Race",
+      "actions": [
+        "PUBLISH",
+        "REFRESH"
+      ]
+    },
+    {
+      "domain": "Relationship",
+      "actions": [
+        "PUBLISH",
+        "REFRESH"
+      ]
+    },
+    {
+      "domain": "Religion",
+      "actions": [
+        "PUBLISH",
+        "REFRESH"
+      ]
+    },
+    {
+      "domain": "State",
+      "actions": [
+        "PUBLISH",
+        "REFRESH"
+      ]
+    }
+  ],
+  "integrations": {
+    "sql": [
+      {
+        "type": "ADODB_CONNECTION",
+        "value": "ADODB.Connection",
+        "line_number": 1729
+      },
+      {
+        "type": "ADODB_CONNECTION",
+        "value": "ADODB.Connection",
+        "line_number": 6373
+      },
+      {
+        "type": "ADODB_COMMAND",
+        "value": "ADODB.Command",
+        "line_number": 2021
+      },
+      {
+        "type": "ADODB_COMMAND",
+        "value": "ADODB.Command",
+        "line_number": 2293
+      },
+      {
+        "type": "ADODB_COMMAND",
+        "value": "ADODB.Command",
+        "line_number": 2461
+      },
+      {
+        "type": "ADODB_COMMAND",
+        "value": "ADODB.Command",
+        "line_number": 2733
+      },
+      {
+        "type": "ADODB_COMMAND",
+        "value": "ADODB.Command",
+        "line_number": 2901
+      },
+      {
+        "type": "ADODB_COMMAND",
+        "value": "ADODB.Command",
+        "line_number": 3173
+      },
+      {
+        "type": "ADODB_COMMAND",
+        "value": "ADODB.Command",
+        "line_number": 3339
+      },
+      {
+        "type": "ADODB_COMMAND",
+        "value": "ADODB.Command",
+        "line_number": 3605
+      },
+      {
+        "type": "ADODB_COMMAND",
+        "value": "ADODB.Command",
+        "line_number": 3773
+      },
+      {
+        "type": "ADODB_COMMAND",
+        "value": "ADODB.Command",
+        "line_number": 4047
+      },
+      {
+        "type": "ADODB_COMMAND",
+        "value": "ADODB.Command",
+        "line_number": 4213
+      },
+      {
+        "type": "ADODB_COMMAND",
+        "value": "ADODB.Command",
+        "line_number": 4361
+      },
+      {
+        "type": "ADODB_COMMAND",
+        "value": "ADODB.Command",
+        "line_number": 4805
+      },
+      {
+        "type": "ADODB_COMMAND",
+        "value": "ADODB.Command",
+        "line_number": 4927
+      },
+      {
+        "type": "ADODB_COMMAND",
+        "value": "ADODB.Command",
+        "line_number": 5091
+      },
+      {
+        "type": "ADODB_COMMAND",
+        "value": "ADODB.Command",
+        "line_number": 5363
+      },
+      {
+        "type": "ADODB_COMMAND",
+        "value": "ADODB.Command",
+        "line_number": 5527
+      },
+      {
+        "type": "ADODB_COMMAND",
+        "value": "ADODB.Command",
+        "line_number": 5811
+      },
+      {
+        "type": "ADODB_COMMAND",
+        "value": "ADODB.Command",
+        "line_number": 5983
+      },
+      {
+        "type": "ADODB_COMMAND",
+        "value": "ADODB.Command",
+        "line_number": 6261
+      },
+      {
+        "type": "ADODB_COMMAND",
+        "value": "ADODB.Command",
+        "line_number": 6583
+      },
+      {
+        "type": "ADODB_COMMAND",
+        "value": "ADODB.Command",
+        "line_number": 6721
+      },
+      {
+        "type": "ADODB_COMMAND",
+        "value": "ADODB.Command",
+        "line_number": 6975
+      },
+      {
+        "type": "ADODB_COMMAND",
+        "value": "ADODB.Command",
+        "line_number": 7351
+      },
+      {
+        "type": "ADODB_COMMAND",
+        "value": "ADODB.Command",
+        "line_number": 7761
+      },
+      {
+        "type": "ADODB_COMMAND",
+        "value": "ADODB.Command",
+        "line_number": 8197
+      },
+      {
+        "type": "ADODB_COMMAND",
+        "value": "ADODB.Command",
+        "line_number": 8513
+      },
+      {
+        "type": "ADODB_COMMAND",
+        "value": "ADODB.Command",
+        "line_number": 8965
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 2015
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 2017
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 2291
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 2317
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 2455
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 2457
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 2731
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 2757
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 2895
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 2897
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 3171
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 3197
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 3333
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 3335
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 3603
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 3629
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 3767
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 3769
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 4045
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 4073
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 4207
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 4209
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 4355
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 4357
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 4803
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 4829
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 4925
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 4951
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 5085
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 5087
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 5361
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 5387
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 5521
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 5523
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 5809
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 5839
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 5977
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 5979
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 6259
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 6285
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 6577
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 6579
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 6715
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 6717
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 6969
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 6971
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 7345
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 7347
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 7755
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 7757
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 8191
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 8193
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 8507
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 8509
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 8959
+      },
+      {
+        "type": "ADODB_RECORDSET",
+        "value": "ADODB.Recordset",
+        "line_number": 8961
+      },
+      {
+        "type": "ADODB_PARAMETER",
+        "value": "ADODB.Parameter",
+        "line_number": 5801
+      },
+      {
+        "type": "SQL_VARIABLE",
+        "value": "SQLStr",
+        "line_number": 1727
+      },
+      {
+        "type": "SQL_VARIABLE",
+        "value": "SQLStr",
+        "line_number": 6371
+      },
+      {
+        "type": "SQL_OPEN",
+        "value": "Cn.Open (",
+        "line_number": 1751
+      },
+      {
+        "type": "SQL_OPEN",
+        "value": "Cn.Open (",
+        "line_number": 6433
+      },
+      {
+        "type": "SQL_DRIVER",
+        "value": "Driver={SQL Server}",
+        "line_number": 1751
+      },
+      {
+        "type": "SQL_DRIVER",
+        "value": "Driver={SQL Server}",
+        "line_number": 6433
+      },
+      {
+        "type": "SERVER_SETTING",
+        "value": "Sheets(\"Settings\").Range(\"settingServer\")",
+        "line_number": 455
+      },
+      {
+        "type": "SERVER_SETTING",
+        "value": "Sheets(\"Settings\").Range(\"settingServer\")",
+        "line_number": 471
+      },
+      {
+        "type": "SERVER_SETTING",
+        "value": "Sheets(\"Settings\").Range(\"settingServer\")",
+        "line_number": 491
+      },
+      {
+        "type": "SERVER_SETTING",
+        "value": "Sheets(\"Settings\").Range(\"settingServer\")",
+        "line_number": 1745
+      },
+      {
+        "type": "SERVER_SETTING",
+        "value": "Sheets(\"Settings\").Range(\"settingServer\")",
+        "line_number": 6487
+      },
+      {
+        "type": "DATABASE_NAME",
+        "value": "Database_Name",
+        "line_number": 1725
+      },
+      {
+        "type": "DATABASE_NAME",
+        "value": "Database_Name",
+        "line_number": 1747
+      },
+      {
+        "type": "DATABASE_NAME",
+        "value": "Database_Name",
+        "line_number": 1751
+      },
+      {
+        "type": "DATABASE_NAME",
+        "value": "Database_Name",
+        "line_number": 6369
+      },
+      {
+        "type": "DATABASE_NAME",
+        "value": "Database_Name",
+        "line_number": 6433
+      },
+      {
+        "type": "DATABASE_NAME",
+        "value": "Database_Name",
+        "line_number": 6489
+      }
+    ],
+    "api": []
+  },
+  "validation": {
+    "required": true
+  },
+  "audit": {
+    "required": true
+  },
+  "migration": {
+    "status": "IN_PROGRESS",
+    "generatedBy": "ECCS Workbook Compiler"
+  }
+}

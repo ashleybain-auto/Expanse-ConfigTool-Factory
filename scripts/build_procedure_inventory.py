@@ -11,17 +11,79 @@ from workbook_compiler.procedure_reader import (
 )
 
 
+def find_vba_source(
+    extraction_dir: Path,
+) -> Path:
+    """Find the VBA source text file in an extraction directory."""
+
+    if not extraction_dir.exists():
+        raise FileNotFoundError(
+            f"Extraction directory not found: {extraction_dir}"
+        )
+
+    preferred_names = (
+        "vba-source.txt",
+        "api-test-vba-source.txt",
+    )
+
+    for filename in preferred_names:
+        candidate = extraction_dir / filename
+
+        if candidate.exists() and candidate.stat().st_size > 0:
+            return candidate
+
+    candidates = sorted(
+        extraction_dir.glob("*vba*source*.txt")
+    )
+
+    candidates = [
+        path
+        for path in candidates
+        if path.is_file() and path.stat().st_size > 0
+    ]
+
+    if len(candidates) == 1:
+        return candidates[0]
+
+    if not candidates:
+        raise FileNotFoundError(
+            "No VBA source text file was found in "
+            f"{extraction_dir}"
+        )
+
+    names = ", ".join(
+        path.name
+        for path in candidates
+    )
+
+    raise RuntimeError(
+        "Multiple VBA source files were found. "
+        f"Available files: {names}"
+    )
+
+
 def main() -> None:
-    """Generate a procedure inventory from a selected VBA source file."""
+    """Generate a procedure inventory from extracted VBA."""
 
     parser = argparse.ArgumentParser(
-        description="Build an ECCS VBA procedure inventory."
+        description=(
+            "Build an ECCS VBA procedure inventory."
+        )
     )
 
     parser.add_argument(
         "--source",
-        required=True,
-        help="Path to extracted VBA source.",
+        help=(
+            "Path to extracted VBA source. "
+            "When omitted, the extraction directory is searched."
+        ),
+    )
+
+    parser.add_argument(
+        "--extraction-dir",
+        help=(
+            "Directory containing extracted VBA source."
+        ),
     )
 
     parser.add_argument(
@@ -32,9 +94,29 @@ def main() -> None:
 
     args = parser.parse_args()
 
+    if args.source:
+        source = Path(args.source)
+
+        if not source.exists():
+            raise FileNotFoundError(
+                f"Specified VBA source file not found: {source}"
+            )
+
+    elif args.extraction_dir:
+        source = find_vba_source(
+            Path(args.extraction_dir)
+        )
+
+    else:
+        raise ValueError(
+            "Provide either --source or --extraction-dir."
+        )
+
+    output = Path(args.output)
+
     procedures = write_procedure_inventory(
-        args.source,
-        args.output,
+        str(source),
+        str(output),
     )
 
     counts: dict[str, int] = {}
@@ -46,9 +128,8 @@ def main() -> None:
             counts.get(classification, 0) + 1
         )
 
-    print(
-        f"Procedures discovered: {len(procedures)}"
-    )
+    print(f"Source: {source}")
+    print(f"Procedures discovered: {len(procedures)}")
 
     for classification, count in sorted(
         counts.items()
@@ -57,13 +138,10 @@ def main() -> None:
             f"{classification}: {count}"
         )
 
-    print(
-        f"Output: {args.output}"
-    )
+    print(f"Output: {output}")
 
-    # Verify the generated JSON is readable.
     json.loads(
-        Path(args.output).read_text(
+        output.read_text(
             encoding="utf-8"
         )
     )

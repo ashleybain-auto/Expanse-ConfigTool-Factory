@@ -1,13 +1,17 @@
+"""Workbook structure readers for the ECCS Workbook Compiler."""
+
 from __future__ import annotations
 
 import hashlib
 from pathlib import Path
+from typing import Any
 
 import openpyxl
 from pyxlsb import open_workbook
 
 
 def sha256_file(path: Path) -> str:
+    """Return the SHA-256 hash of a file."""
     digest = hashlib.sha256()
 
     with path.open("rb") as stream:
@@ -17,7 +21,14 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
-def read_xlsb(path: Path) -> list[dict]:
+def inspect_file_signature(path: Path) -> bytes:
+    """Return the first eight bytes of the source file."""
+    with path.open("rb") as stream:
+        return stream.read(8)
+
+
+def read_xlsb(path: Path) -> list[dict[str, Any]]:
+    """Read worksheet metadata from an XLSB workbook."""
     sheets: list[dict] = []
 
     with open_workbook(path) as workbook:
@@ -33,7 +44,8 @@ def read_xlsb(path: Path) -> list[dict]:
     return sheets
 
 
-def read_xlsm_or_xlsx(path: Path) -> list[dict]:
+def read_xlsm_or_xlsx(path: Path) -> list[dict[str, Any]]:
+    """Read worksheet metadata from an XLSM or XLSX workbook."""
     workbook = openpyxl.load_workbook(
         path,
         read_only=True,
@@ -59,7 +71,8 @@ def read_xlsm_or_xlsx(path: Path) -> list[dict]:
     return sheets
 
 
-def read_workbook(path: str) -> dict:
+def read_workbook(path: str) -> dict[str, Any]:
+    """Validate and read a supported workbook."""
     source = Path(path)
 
     if not source.exists():

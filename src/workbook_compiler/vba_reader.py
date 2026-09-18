@@ -1,13 +1,12 @@
+"""Static VBA extraction utilities for the ECCS Workbook Compiler."""
 from __future__ import annotations
 
 import subprocess
 from pathlib import Path
 
 
-def extract_vba(
-    workbook_path: str,
-    output_dir: str,
-) -> str:
+def extract_vba(workbook_path: str, output_dir: str) -> str:
+    """Extract VBA source without executing workbook macros."""
 
     source = Path(workbook_path)
     destination = Path(output_dir)

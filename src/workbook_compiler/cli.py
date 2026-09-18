@@ -1,3 +1,5 @@
+"""Command-line interface for the ECCS Workbook Compiler."""
+
 from __future__ import annotations
 
 import argparse
@@ -9,6 +11,7 @@ from .workbook_reader import read_workbook
 
 
 def analyze(workbook_path: str, output_dir: str) -> None:
+    """Analyze a source workbook and write the initial analysis artifacts."""
     source = Path(workbook_path)
     destination = Path(output_dir)
 
@@ -44,6 +47,7 @@ def analyze(workbook_path: str, output_dir: str) -> None:
 
 
 def main() -> None:
+    """Parse command-line arguments and execute the selected command."""
     parser = argparse.ArgumentParser(
         description="ECCS Workbook Compiler"
     )

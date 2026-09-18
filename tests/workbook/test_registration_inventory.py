@@ -1,3 +1,4 @@
+"""Regression tests for ECCS MEDITECH Expanse Registration."""
 import json
 from pathlib import Path
 
@@ -21,6 +22,7 @@ EXPECTED_SHEETS = {
 
 
 def test_registration_sheet_inventory() -> None:
+    """Verify the expected Registration worksheets are discovered."""
     report = Path(
         "workbooks/analyzed/"
         "ECCS_REG_EXPANSE/"

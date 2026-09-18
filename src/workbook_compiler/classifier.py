@@ -3,27 +3,23 @@
 from __future__ import annotations
 
 
+CLASSIFICATION_RULES = (
+    ("refreshdata_", "REFRESH"),
+    ("pushupdates_", "PUBLISH"),
+    ("copydata_", "STAGE"),
+    ("validate", "VALIDATE"),
+    ("export", "EXPORT"),
+    ("setting", "CONFIGURE"),
+)
+
+
 def classify_procedure(name: str) -> str:
     """Classify a VBA procedure by its functional responsibility."""
 
     normalized = name.casefold()
 
-    if normalized.startswith("refreshdata_"):
-        return "REFRESH"
-
-    if normalized.startswith("pushupdates_"):
-        return "PUBLISH"
-
-    if normalized.startswith("copydata_"):
-        return "STAGE"
-
-    if normalized.startswith("validate"):
-        return "VALIDATE"
-
-    if "export" in normalized:
-        return "EXPORT"
-
-    if "setting" in normalized:
-        return "CONFIGURE"
+    for prefix, classification in CLASSIFICATION_RULES:
+        if normalized.startswith(prefix):
+            return classification
 
     return "OTHER"

@@ -2,24 +2,10 @@
 
 from __future__ import annotations
 
-import json
 from pathlib import Path
 from typing import Any
 
-
-def load_json(path: Path) -> dict[str, Any]:
-    """Load a JSON document."""
-
-    if not path.exists():
-        raise FileNotFoundError(
-            f"Manifest input not found: {path}"
-        )
-
-    return json.loads(
-        path.read_text(
-            encoding="utf-8"
-        )
-    )
+from .artifact_io import load_json, write_json
 
 
 def generate_manifest(
@@ -38,17 +24,21 @@ def generate_manifest(
 
     workbook = ir["workbook"]
 
-    config_tool = config[
-        "configTools"
-    ]["registration"]
-
-    variant = (
-        "EXPANSE"
-        if "NonMagic" not in workbook["filename"]
-        else "NONMAGIC"
+    registration_config = (
+        config["configTools"]["registration"]
     )
 
-    domains = []
+    workbook_name = workbook.get(
+        "filename",
+        "",
+    )
+
+    if "NonMagic" in workbook_name:
+        variant = "NONMAGIC"
+    else:
+        variant = "EXPANSE"
+
+    domains: list[dict[str, Any]] = []
 
     for item in ir.get("domains", []):
         domains.append(
@@ -58,18 +48,24 @@ def generate_manifest(
             }
         )
 
-    manifest = {
+    manifest: dict[str, Any] = {
         "suite": config["suite"],
         "factory": config["factory"],
         "configTool": {
-            "code": config_tool["code"],
-            "name": config_tool["name"],
+            "code": registration_config["code"],
+            "name": registration_config["name"],
             "variant": variant,
         },
         "source": {
-            "workbook": workbook["filename"],
-            "extension": workbook["extension"],
-            "sha256": workbook["sha256"],
+            "workbook": workbook_name,
+            "extension": workbook.get(
+                "extension",
+                "",
+            ),
+            "sha256": workbook.get(
+                "sha256",
+                "",
+            ),
         },
         "domains": domains,
         "actions": ir.get(
@@ -106,27 +102,16 @@ def write_manifest(
     config_file: str,
     output_file: str,
 ) -> dict[str, Any]:
-    """Generate and write the migration manifest."""
+    """Generate and write an ECCS migration manifest."""
 
     manifest = generate_manifest(
         ir_file,
         config_file,
     )
 
-    destination = Path(output_file)
-
-    destination.parent.mkdir(
-        parents=True,
-        exist_ok=True,
-    )
-
-    destination.write_text(
-        json.dumps(
-            manifest,
-            indent=2,
-            ensure_ascii=False,
-        ),
-        encoding="utf-8",
+    write_json(
+        manifest,
+        Path(output_file),
     )
 
     return manifest

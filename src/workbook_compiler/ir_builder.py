@@ -2,24 +2,10 @@
 
 from __future__ import annotations
 
-import json
 from pathlib import Path
 from typing import Any
 
-
-def load_json(path: Path) -> Any:
-    """Load JSON from a file."""
-
-    if not path.exists():
-        raise FileNotFoundError(
-            f"Required input not found: {path}"
-        )
-
-    return json.loads(
-        path.read_text(
-            encoding="utf-8"
-        )
-    )
+from .artifact_io import load_json, write_json
 
 
 def build_workbook_ir(
@@ -84,20 +70,9 @@ def write_workbook_ir(
         analysis_dir
     )
 
-    destination = Path(output_file)
-
-    destination.parent.mkdir(
-        parents=True,
-        exist_ok=True,
-    )
-
-    destination.write_text(
-        json.dumps(
-            ir,
-            indent=2,
-            ensure_ascii=False,
-        ),
-        encoding="utf-8",
+    write_json(
+        ir,
+        Path(output_file),
     )
 
     return ir

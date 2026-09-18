@@ -9,11 +9,129 @@ from typing import Any
 from oletools.olevba import VBA_Parser
 
 
+def extract_modules(
+    parser: VBA_Parser,
+) -> list[dict[str, Any]]:
+    """Extract VBA modules from an initialized parser."""
+
+    modules: list[dict[str, Any]] = []
+
+    for (
+        filename,
+        stream_path,
+        vba_filename,
+        vba_code,
+    ) in parser.extract_macros():
+
+        modules.append(
+            {
+                "filename": filename,
+                "stream_path": stream_path,
+                "vba_filename": vba_filename,
+                "source": vba_code,
+            }
+        )
+
+    return modules
+
+
+def extract_analysis(
+    parser: VBA_Parser,
+) -> list[dict[str, str]]:
+    """Extract VBA analysis findings."""
+
+    analysis: list[dict[str, str]] = []
+
+    for (
+        result_type,
+        keyword,
+        description,
+    ) in parser.analyze_macros():
+
+        analysis.append(
+            {
+                "type": str(result_type),
+                "keyword": str(keyword),
+                "description": str(description),
+            }
+        )
+
+    return analysis
+
+
+def write_vba_artifacts(
+    output_dir: Path,
+    modules: list[dict[str, Any]],
+    analysis: list[dict[str, str]],
+) -> tuple[Path, Path, Path]:
+    """Write extracted VBA source, modules, and analysis artifacts."""
+
+    source_parts: list[str] = []
+
+    for module in modules:
+        source_parts.append(
+            f"===== {module['vba_filename']} ====="
+        )
+
+        source_parts.append(
+            f"Source: {module['filename']}"
+        )
+
+        source_parts.append(
+            f"Stream: {module['stream_path']}"
+        )
+
+        source_parts.append(
+            str(module["source"])
+        )
+
+    source_file = (
+        output_dir / "vba-source.txt"
+    )
+
+    source_file.write_text(
+        "\n\n".join(source_parts),
+        encoding="utf-8",
+    )
+
+    modules_file = (
+        output_dir / "vba-modules.json"
+    )
+
+    modules_file.write_text(
+        json.dumps(
+            modules,
+            indent=2,
+            ensure_ascii=False,
+        ),
+        encoding="utf-8",
+    )
+
+    analysis_file = (
+        output_dir / "vba-analysis.json"
+    )
+
+    analysis_file.write_text(
+        json.dumps(
+            analysis,
+            indent=2,
+            ensure_ascii=False,
+        ),
+        encoding="utf-8",
+    )
+
+    return (
+        source_file,
+        modules_file,
+        analysis_file,
+    )
+
+
 def extract_vba(
     workbook_path: str,
     output_dir: str,
 ) -> dict[str, Any]:
-    """Extract VBA source and analysis using the oletools Python API."""
+    """Extract VBA source and analysis without executing macros."""
 
     source = Path(workbook_path)
     destination = Path(output_dir)
@@ -23,80 +141,35 @@ def extract_vba(
         exist_ok=True,
     )
 
-    source_file = destination / "vba-source.txt"
-    modules_file = destination / "vba-modules.json"
-    analysis_file = destination / "vba-analysis.json"
-
-    parser = VBA_Parser(str(source))
-
-    modules: list[dict[str, Any]] = []
-    analysis: list[dict[str, str]] = []
+    parser = VBA_Parser(
+        str(source)
+    )
 
     try:
         has_vba = parser.detect_vba_macros()
 
+        modules: list[dict[str, Any]] = []
+
         if has_vba:
-            for (
-                filename,
-                stream_path,
-                vba_filename,
-                vba_code,
-            ) in parser.extract_macros():
-
-                modules.append(
-                    {
-                        "filename": filename,
-                        "stream_path": stream_path,
-                        "vba_filename": vba_filename,
-                        "source": vba_code,
-                    }
-                )
-
-            for (
-                result_type,
-                keyword,
-                description,
-            ) in parser.analyze_macros() or ():
-
-                analysis.append(
-                    {
-                        "type": str(result_type),
-                        "keyword": str(keyword),
-                        "description": str(description),
-                    }
-                )
-
-        combined_source_parts: list[str] = []
-
-        for module in modules:
-            combined_source_parts.append(
-                f"===== {module['vba_filename']} ====="
-            )
-            combined_source_parts.append(
-                module["source"]
+            modules = extract_modules(
+                parser
             )
 
-        source_file.write_text(
-            "\n\n".join(combined_source_parts),
-            encoding="utf-8",
-        )
+        analysis: list[dict[str, str]] = []
 
-        modules_file.write_text(
-            json.dumps(
-                modules,
-                indent=2,
-                ensure_ascii=False,
-            ),
-            encoding="utf-8",
-        )
+        if has_vba:
+            analysis = extract_analysis(
+                parser
+            )
 
-        analysis_file.write_text(
-            json.dumps(
-                analysis,
-                indent=2,
-                ensure_ascii=False,
-            ),
-            encoding="utf-8",
+        (
+            source_file,
+            modules_file,
+            analysis_file,
+        ) = write_vba_artifacts(
+            destination,
+            modules,
+            analysis,
         )
 
         return {

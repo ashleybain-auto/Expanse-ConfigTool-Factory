@@ -8,6 +8,7 @@ from typing import Any
 
 from .artifact_io import write_json
 from .classifier import classify_procedure
+from .source_utils import line_number_at
 
 
 PROCEDURE_PATTERN = re.compile(
@@ -41,12 +42,9 @@ def discover_procedures(
         procedure_type = match.group(1)
         procedure_name = match.group(2)
 
-        line_number = (
-            source.count(
-                "\n",
-                0,
-                match.start(),
-            ) + 1
+        line_number = line_number_at(
+            source,
+            match.start(),
         )
 
         procedures.append(

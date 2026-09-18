@@ -46,7 +46,7 @@ def extract_analysis(
         result_type,
         keyword,
         description,
-    ) in parser.analyze_macros():
+    ) in (parser.analyze_macros() or ()):
 
         analysis.append(
             {

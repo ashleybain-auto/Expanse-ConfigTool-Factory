@@ -64,7 +64,7 @@ def extract_workbook(
         )
 
         analysis = list(
-            parser.analyze_macros()
+            parser.analyze_macros() or []
         )
 
         analysis_file = (

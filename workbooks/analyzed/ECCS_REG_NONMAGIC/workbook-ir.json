@@ -471,7 +471,7 @@
     {
       "name": "Generate_Export_File_For_Sharepoint",
       "procedure_type": "Sub",
-      "classification": "EXPORT",
+      "classification": "OTHER",
       "line_number": 6476
     },
     {

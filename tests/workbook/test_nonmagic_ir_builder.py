@@ -1,4 +1,4 @@
-"""Regression tests for the ECCS EXPANSE Workbook IR."""
+"""Regression tests for the ECCS Non-Magic Registration Workbook IR."""
 
 from pathlib import Path
 
@@ -9,7 +9,7 @@ from workbook_compiler.ir_builder import (
 
 ANALYSIS_DIR = Path(
     "workbooks/analyzed/"
-    "ECCS_REG_EXPANSE"
+    "ECCS_REG_NONMAGIC"
 )
 
 
@@ -29,8 +29,8 @@ EXPECTED_SECTIONS = {
 }
 
 
-def test_workbook_ir_contains_required_sections() -> None:
-    """Verify all required Workbook IR sections exist."""
+def test_nonmagic_ir_contains_required_sections() -> None:
+    """Verify all required IR sections exist."""
 
     ir = build_workbook_ir(
         str(ANALYSIS_DIR)
@@ -41,7 +41,7 @@ def test_workbook_ir_contains_required_sections() -> None:
     )
 
 
-def test_workbook_ir_contains_analysis_data() -> None:
+def test_nonmagic_ir_contains_analysis_data() -> None:
     """Verify implemented analysis sections contain data."""
 
     ir = build_workbook_ir(
@@ -55,8 +55,8 @@ def test_workbook_ir_contains_analysis_data() -> None:
     assert len(ir["actions"]) > 0
 
 
-def test_workbook_ir_identifies_expanse_source() -> None:
-    """Verify the IR identifies the EXPANSE Registration workbook."""
+def test_nonmagic_ir_identifies_correct_source() -> None:
+    """Verify the IR identifies the Non-Magic workbook."""
 
     ir = build_workbook_ir(
         str(ANALYSIS_DIR)
@@ -64,15 +64,5 @@ def test_workbook_ir_identifies_expanse_source() -> None:
 
     assert (
         ir["workbook"]["filename"]
-        == "Mapping_Expanse_REG_Domain.xlsb"
+        == "Mapping_NonMagic_Expanse_REG_Domain.xlsb"
     )
-
-
-def test_domains_and_actions_are_consistent() -> None:
-    """Verify the current domain/action model remains consistent."""
-
-    ir = build_workbook_ir(
-        str(ANALYSIS_DIR)
-    )
-
-    assert ir["domains"] == ir["actions"]

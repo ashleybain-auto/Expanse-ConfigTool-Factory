@@ -1,4 +1,5 @@
 api
 application-compiler
+eccs_sql_runtime
 workbook_compiler
 worker

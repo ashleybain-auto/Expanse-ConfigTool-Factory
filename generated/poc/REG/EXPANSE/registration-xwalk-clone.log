@@ -1,4 +1,0 @@
-Traceback (most recent call last):
-  File "C:\Users\QXA4067\Projects\Expanse-ConfigTool-Factory\scripts\clone_registration_xwalk_sources.py", line 28, in <module>
-    import pyodbc
-ModuleNotFoundError: No module named 'pyodbc'

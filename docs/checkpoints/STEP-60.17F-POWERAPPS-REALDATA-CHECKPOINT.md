@@ -4,7 +4,7 @@
 
 Resume at:
 
-**Step 60.17F - Power Apps Real-Data Import / Column Mapping**
+### Step 60.17F - Power Apps Real-Data Import / Column Mapping
 
 Next objective:
 
@@ -105,7 +105,7 @@ dbo.UI_Excel_Select_Xwalk_Source_Accommodations
 
 Scope:
 
-*ALL*
+`*ALL*`
 
 Real rows cloned:
 
@@ -123,7 +123,7 @@ dbo.UI_Excel_Select_Xwalk_Source_AdmitSource
 
 Scope:
 
-*ALL*
+`*ALL*`
 
 Real rows cloned:
 

@@ -1,35 +1,26 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ImportExportXml version="9.1.0.643" SolutionPackageVersion="9.1" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ImportExportXml version="9.2.26082.162" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OrganizationVersion="9.2.26082.162" OrganizationSchemaType="Standard" CRMServerServiceabilityVersion="9.2.26083.00167">
   <SolutionManifest>
-    <!-- Unique Name of Cds Solution-->
     <UniqueName>ECCSUploadMapping</UniqueName>
     <LocalizedNames>
-      <!-- Localized Solution Name in language code -->
       <LocalizedName description="ECCSUploadMapping" languagecode="1033" />
     </LocalizedNames>
     <Descriptions />
     <Version>1.0</Version>
-    <!-- Solution Package Type: Unmanaged(0)/Managed(1)/Both(2)-->
     <Managed>2</Managed>
     <Publisher>
-      <!-- Unique Publisher Name of Cds Solution -->
       <UniqueName>ECCS</UniqueName>
       <LocalizedNames>
-        <!-- Localized Cds Publisher Name in language code-->
         <LocalizedName description="ECCS" languagecode="1033" />
       </LocalizedNames>
       <Descriptions>
-        <!-- Description of Cds Publisher in language code -->
         <Description description="ECCS" languagecode="1033" />
       </Descriptions>
       <EMailAddress xsi:nil="true"></EMailAddress>
       <SupportingWebsiteUrl xsi:nil="true"></SupportingWebsiteUrl>
-      <!-- Customization Prefix for the Cds Publisher-->
       <CustomizationPrefix>eccs</CustomizationPrefix>
-      <!-- Derived Option Value Prefix for the Customization Prefix of Cds Publisher -->
       <CustomizationOptionValuePrefix>41790</CustomizationOptionValuePrefix>
       <Addresses>
-        <!-- Address of the Publisher-->
         <Address>
           <AddressNumber>1</AddressNumber>
           <AddressTypeCode>1</AddressTypeCode>
@@ -88,7 +79,14 @@
         </Address>
       </Addresses>
     </Publisher>
-    <RootComponents />
-    <MissingDependencies />
+    <RootComponents>
+      <RootComponent type="1" schemaName="eccs_eccsuploadbatches" behavior="0" />
+    </RootComponents>
+    <MissingDependencies>
+      <MissingDependency>
+        <Required type="9" schemaName="eccs_status" displayName="Status" solution="Active" />
+        <Dependent type="2" schemaName="eccs_status" displayName="Status" parentSchemaName="eccs_eccsuploadbatches" parentDisplayName="ECCS Upload Batches" />
+      </MissingDependency>
+    </MissingDependencies>
   </SolutionManifest>
 </ImportExportXml>

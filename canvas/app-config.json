@@ -1,0 +1,14 @@
+{
+  "name": "Expanse Cutover Automation - CNET",
+  "domain": "Cutover Nursing Entry Tool (CNET)",
+  "module": "CNET",
+  "record_label": "CNET Configuration",
+  "slug": "cnet",
+  "source": "No CNET-specific source workbook supplied",
+  "primary_sheet": null,
+  "sheets": [],
+  "schema_status": "shell prepared; CNET schema/config source not included in attached zips",
+  "configured_from_attached_sources": false,
+  "source_workbook_metadata": {},
+  "workbook_settings": {}
+}

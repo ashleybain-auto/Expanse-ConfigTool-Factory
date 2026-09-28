@@ -5,24 +5,24 @@ Hub screen: `scrModuleHub`
 
 | Module key | Module name | Launch mode | Hub target | Landing screen | Required params |
 | --- | --- | --- | --- | --- | --- |
-| registration_core | Registration Core | Screen (same app) | `scrRegistrationCore` | `scrRegistrationCore` | facility, recordKey, targetEnvironment, userPrincipalName, userDisplayName, sourceScreen, searchText |
-| cnet | CNET | App deep link | `ECCS_APPID_CNET` | `scrModuleMain` | facility, recordKey, targetEnvironment, userPrincipalName, userDisplayName, sourceScreen, searchText |
-| emergency_department | Emergency Department | App deep link | `ECCS_APPID_EMERGENCY_DEPARTMENT` | `scrModuleMain` | facility, recordKey, targetEnvironment, userPrincipalName, userDisplayName, sourceScreen, searchText |
-| mis_provider | MIS Provider | App deep link | `ECCS_APPID_MIS_PROVIDER` | `scrModuleMain` | facility, recordKey, targetEnvironment, userPrincipalName, userDisplayName, sourceScreen, searchText |
-| non_med_consults | Non-Med Consults | App deep link | `ECCS_APPID_NON_MED_CONSULTS` | `scrModuleMain` | facility, recordKey, targetEnvironment, userPrincipalName, userDisplayName, sourceScreen, searchText |
-| non_med_diet | Non-Med Diet | App deep link | `ECCS_APPID_NON_MED_DIET` | `scrModuleMain` | facility, recordKey, targetEnvironment, userPrincipalName, userDisplayName, sourceScreen, searchText |
-| non_med_ekg | Non-Med EKG | App deep link | `ECCS_APPID_NON_MED_EKG` | `scrModuleMain` | facility, recordKey, targetEnvironment, userPrincipalName, userDisplayName, sourceScreen, searchText |
-| non_med_level_of_care | Non-Med Level of Care | App deep link | `ECCS_APPID_NON_MED_LEVEL_OF_CARE` | `scrModuleMain` | facility, recordKey, targetEnvironment, userPrincipalName, userDisplayName, sourceScreen, searchText |
-| non_med_nursing | Non-Med Nursing | App deep link | `ECCS_APPID_NON_MED_NURSING` | `scrModuleMain` | facility, recordKey, targetEnvironment, userPrincipalName, userDisplayName, sourceScreen, searchText |
-| non_med_oe | Non-Med OE | App deep link | `ECCS_APPID_NON_MED_OE` | `scrModuleMain` | facility, recordKey, targetEnvironment, userPrincipalName, userDisplayName, sourceScreen, searchText |
-| non_med_rad | Non-Med RAD | App deep link | `ECCS_APPID_NON_MED_RAD` | `scrModuleMain` | facility, recordKey, targetEnvironment, userPrincipalName, userDisplayName, sourceScreen, searchText |
-| non_med_rt_pt_ot | Non-Med RT/PT/OT | App deep link | `ECCS_APPID_NON_MED_RT_PT_OT` | `scrModuleMain` | facility, recordKey, targetEnvironment, userPrincipalName, userDisplayName, sourceScreen, searchText |
-| registration_ptac | Registration PTAC | App deep link | `ECCS_APPID_REGISTRATION_PTAC` | `scrModuleMain` | facility, recordKey, targetEnvironment, userPrincipalName, userDisplayName, sourceScreen, searchText |
+| registration_core | Registration Core | Screen (same app) | `scrRegistrationCore` | `scrRegistrationCore` | moduleKey, facility, recordKey, targetEnvironment, userPrincipalName, userDisplayName, sourceScreen, searchText |
+| cnet | CNET | App deep link | `ECCS_APPID_CNET` | `scrModuleMain` | moduleKey, facility, recordKey, targetEnvironment, userPrincipalName, userDisplayName, sourceScreen, searchText |
+| emergency_department | Emergency Department | App deep link | `ECCS_APPID_EMERGENCY_DEPARTMENT` | `scrModuleMain` | moduleKey, facility, recordKey, targetEnvironment, userPrincipalName, userDisplayName, sourceScreen, searchText |
+| mis_provider | MIS Provider | App deep link | `ECCS_APPID_MIS_PROVIDER` | `scrModuleMain` | moduleKey, facility, recordKey, targetEnvironment, userPrincipalName, userDisplayName, sourceScreen, searchText |
+| non_med_consults | Non-Med Consults | App deep link | `ECCS_APPID_NON_MED_CONSULTS` | `scrModuleMain` | moduleKey, facility, recordKey, targetEnvironment, userPrincipalName, userDisplayName, sourceScreen, searchText |
+| non_med_diet | Non-Med Diet | App deep link | `ECCS_APPID_NON_MED_DIET` | `scrModuleMain` | moduleKey, facility, recordKey, targetEnvironment, userPrincipalName, userDisplayName, sourceScreen, searchText |
+| non_med_ekg | Non-Med EKG | App deep link | `ECCS_APPID_NON_MED_EKG` | `scrModuleMain` | moduleKey, facility, recordKey, targetEnvironment, userPrincipalName, userDisplayName, sourceScreen, searchText |
+| non_med_level_of_care | Non-Med Level of Care | App deep link | `ECCS_APPID_NON_MED_LEVEL_OF_CARE` | `scrModuleMain` | moduleKey, facility, recordKey, targetEnvironment, userPrincipalName, userDisplayName, sourceScreen, searchText |
+| non_med_nursing | Non-Med Nursing | App deep link | `ECCS_APPID_NON_MED_NURSING` | `scrModuleMain` | moduleKey, facility, recordKey, targetEnvironment, userPrincipalName, userDisplayName, sourceScreen, searchText |
+| non_med_oe | Non-Med OE | App deep link | `ECCS_APPID_NON_MED_OE` | `scrModuleMain` | moduleKey, facility, recordKey, targetEnvironment, userPrincipalName, userDisplayName, sourceScreen, searchText |
+| non_med_rad | Non-Med RAD | App deep link | `ECCS_APPID_NON_MED_RAD` | `scrModuleMain` | moduleKey, facility, recordKey, targetEnvironment, userPrincipalName, userDisplayName, sourceScreen, searchText |
+| non_med_rt_pt_ot | Non-Med RT/PT/OT | App deep link | `ECCS_APPID_NON_MED_RT_PT_OT` | `scrModuleMain` | moduleKey, facility, recordKey, targetEnvironment, userPrincipalName, userDisplayName, sourceScreen, searchText |
+| registration_ptac | Registration PTAC | App deep link | `ECCS_APPID_REGISTRATION_PTAC` | `scrModuleMain` | moduleKey, facility, recordKey, targetEnvironment, userPrincipalName, userDisplayName, sourceScreen, searchText |
 
 ## Return path standard
 
 - In-app modules: `Back()` to `scrModuleHub` with `varNavContext` retained.
-- External modules: return with a launch URL to the hub app and include `facility`, `recordKey`, and `searchText` query parameters.
+- External modules: return with a launch URL to the hub app and include `moduleKey`, `facility`, `recordKey`, `targetEnvironment`, `userPrincipalName`, `userDisplayName`, `sourceScreen`, `searchText`, and optional `returnToast` + `launchUtc` query parameters.
 - Hub startup should hydrate state from params and reapply facility filter, selected record, and search text.
 
 ## Validation execution log template

@@ -1,0 +1,34 @@
+{
+  "payload_contract": {
+    "required": {
+      "facility": "Current facility mnemonic from hub filter",
+      "recordKey": "Current selected record key",
+      "targetEnvironment": "LIVE | TEST | ZCON",
+      "userPrincipalName": "User().Email",
+      "userDisplayName": "User().FullName",
+      "sourceScreen": "Hub screen name",
+      "searchText": "Hub search text"
+    },
+    "optional": {
+      "returnRecordKey": "Record to reselect when returning to hub",
+      "returnToast": "Optional status message",
+      "launchUtc": "UTC timestamp for telemetry"
+    }
+  },
+  "hub_patterns": {
+    "module_items_source": "module-registry.json",
+    "on_select_screen": "Set(varNavContext, contextRecord); Navigate(ThisItem.target.screen, ScreenTransition.Fade, varNavContext)",
+    "on_select_app": "Set(varNavContext, contextRecord); Launch(Concatenate('https://apps.powerapps.com/play/appId=', ThisItem.target.appId, '&tenantId=', varTenantId, '&source=moduleHub', '&moduleKey=', ThisItem.module_key, '&facility=', EncodeUrl(varNavContext.facility), '&recordKey=', EncodeUrl(varNavContext.recordKey), '&targetEnvironment=', EncodeUrl(varNavContext.targetEnvironment), '&userPrincipalName=', EncodeUrl(varNavContext.userPrincipalName), '&userDisplayName=', EncodeUrl(varNavContext.userDisplayName), '&sourceScreen=', EncodeUrl(varNavContext.sourceScreen), '&searchText=', EncodeUrl(varNavContext.searchText)))"
+  },
+  "module_patterns": {
+    "app_on_start": "Set(varNavContext, {facility: Param('facility'), recordKey: Param('recordKey'), targetEnvironment: Param('targetEnvironment'), userPrincipalName: Param('userPrincipalName'), userDisplayName: Param('userDisplayName'), sourceScreen: Coalesce(Param('sourceScreen'), 'scrModuleHub'), searchText: Param('searchText')});",
+    "return_to_hub": "Back() for in-app modules; Launch(hubAppUrlWithContext) for separate module apps",
+    "preserve_state": "Persist varNavContext and reapply facility filter, selected record, and search text on hub re-entry"
+  },
+  "dataverse_rebind_checklist": [
+    "Replace starter data sources with module-specific Dataverse tables",
+    "Map facility/source/target/action fields to real Dataverse columns",
+    "Update Patch() payload types to match Dataverse schema",
+    "Verify save/refresh/lineage display against the bound Dataverse table"
+  ]
+}

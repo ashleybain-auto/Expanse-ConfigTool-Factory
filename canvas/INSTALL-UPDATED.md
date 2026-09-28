@@ -52,3 +52,12 @@ No target-match field was supplied; add the domain match field before enabling s
 - NO MATCH is red/bold and dated LIVE/TEST/ZCON matches invoke the synchronization prompt.
 - ECCS lineage is traceable.
 - App Checker has no new blocking errors.
+
+## 6. Hub linkage artifacts
+Use these files to connect this shell to the Registration POC hub and other modules:
+
+- `canvas/module-registry.json` (central module registry with visibility rules and targets)
+- `canvas/navigation-context.json` (shared launch payload + return path pattern)
+- `canvas/MODULE-LINKAGE-MATRIX.md` (hub-to-module linkage matrix and test workflow)
+
+For final integration, replace placeholder app IDs and complete Dataverse rebind checks before publishing.

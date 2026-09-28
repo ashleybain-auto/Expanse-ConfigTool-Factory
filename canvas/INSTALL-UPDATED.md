@@ -60,4 +60,4 @@ Use these files to connect this shell to the Registration POC hub and other modu
 - `canvas/navigation-context.json` (shared launch payload + return path pattern)
 - `canvas/MODULE-LINKAGE-MATRIX.md` (hub-to-module linkage matrix and test workflow)
 
-For final integration, replace placeholder app IDs and complete Dataverse rebind checks before publishing.
+For final integration, populate each module app ID through the referenced environment variables (for example `ECCS_APPID_CNET`) or replace `app_id_env_var` mappings with resolved app IDs, then complete Dataverse rebind checks before publishing.

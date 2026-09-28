@@ -14,7 +14,8 @@
       "returnRecordKey": "Record to reselect when returning to hub",
       "returnToast": "Optional status message",
       "launchUtc": "UTC timestamp for telemetry",
-      "targetScreen": "Module landing screen name"
+      "targetScreen": "Module landing screen name",
+      "hubScreen": "Hub screen destination name for return links"
     }
   },
   "hub_patterns": {
@@ -26,7 +27,7 @@
     "on_select_app": "Set(varNavContext, Patch(contextRecord, patch_nav_context)); Set(varTargetAppId, LookUp(colModuleAppIds, key = ThisItem.target.app_id_env_var).appId); Launch(Concatenate('https://apps.powerapps.com/play/', varTargetAppId, '?tenantId=', varTenantId, '&source=moduleHub', '&targetModuleKey=', EncodeUrl(varNavContext.targetModuleKey), '&moduleScreen=', EncodeUrl(varNavContext.targetScreen), '&facility=', EncodeUrl(varNavContext.facility), '&recordKey=', EncodeUrl(varNavContext.recordKey), '&targetEnvironment=', EncodeUrl(varNavContext.targetEnvironment), '&userPrincipalName=', EncodeUrl(varNavContext.userPrincipalName), '&userDisplayName=', EncodeUrl(varNavContext.userDisplayName), '&sourceScreen=', EncodeUrl(varNavContext.sourceScreen), '&searchText=', EncodeUrl(varNavContext.searchText), '&launchUtc=', EncodeUrl(varNavContext.launchUtc)))"
   },
   "module_patterns": {
-    "app_on_start": "Set(varNavContext, {targetModuleKey: Param('targetModuleKey'), targetScreen: Param('moduleScreen'), facility: Param('facility'), recordKey: Param('recordKey'), targetEnvironment: Param('targetEnvironment'), userPrincipalName: Param('userPrincipalName'), userDisplayName: Param('userDisplayName'), sourceScreen: Coalesce(Param('sourceScreen'), varHubScreenName), searchText: Param('searchText'), returnRecordKey: Param('returnRecordKey'), returnToast: Param('returnToast'), launchUtc: Param('launchUtc')});",
+    "app_on_start": "Set(varNavContext, {targetModuleKey: Param('targetModuleKey'), targetScreen: Param('moduleScreen'), facility: Param('facility'), recordKey: Param('recordKey'), targetEnvironment: Param('targetEnvironment'), userPrincipalName: Param('userPrincipalName'), userDisplayName: Param('userDisplayName'), sourceScreen: Coalesce(Param('sourceScreen'), Param('hubScreen'), 'scrModuleHub'), searchText: Param('searchText'), returnRecordKey: Param('returnRecordKey'), returnToast: Param('returnToast'), launchUtc: Param('launchUtc')});",
     "return_to_hub": "Navigate(hubScreenObject, ScreenTransition.None, varNavContext) for in-app modules; Set(varReturnRecordKeyParam, If(IsBlank(varNavContext.returnRecordKey), '', Concatenate('&returnRecordKey=', EncodeUrl(varNavContext.returnRecordKey)))); Launch(Concatenate(hubAppUrl, '?tenantId=', varTenantId, '&hubScreen=', EncodeUrl(varHubScreenName), '&targetModuleKey=', EncodeUrl(varNavContext.targetModuleKey), '&facility=', EncodeUrl(varNavContext.facility), '&recordKey=', EncodeUrl(Coalesce(varNavContext.returnRecordKey, varNavContext.recordKey)), varReturnRecordKeyParam, '&targetEnvironment=', EncodeUrl(varNavContext.targetEnvironment), '&userPrincipalName=', EncodeUrl(varNavContext.userPrincipalName), '&userDisplayName=', EncodeUrl(varNavContext.userDisplayName), '&sourceScreen=', EncodeUrl(varNavContext.sourceScreen), '&searchText=', EncodeUrl(varNavContext.searchText), '&returnToast=', EncodeUrl(Coalesce(varNavContext.returnToast, 'Saved')), '&moduleScreen=', EncodeUrl(varNavContext.targetScreen), '&launchUtc=', EncodeUrl(varNavContext.launchUtc))) for separate module apps",
     "preserve_state": "Persist varNavContext and reapply facility filter, selected record, and search text on hub re-entry"
   },

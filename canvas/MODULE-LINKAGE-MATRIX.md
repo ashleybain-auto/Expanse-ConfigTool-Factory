@@ -21,7 +21,7 @@ Hub screen: `scrModuleHub`
 
 ## Return path standard
 
-- In-app modules: `Back()` to `scrModuleHub` with `varNavContext` retained.
+- In-app modules: `Navigate(scrModuleHub, ScreenTransition.None, varNavContext)` to guarantee return to hub with preserved context.
 - External modules: return with a launch URL to the hub app and include `screen=scrModuleHub`, `moduleKey`, `facility`, `recordKey`, `targetEnvironment`, `userPrincipalName`, `userDisplayName`, `sourceScreen`, `searchText`, and optional `returnRecordKey` (can override `recordKey`), `returnToast`, and `launchUtc` query parameters.
 - Hub startup should hydrate state from params and reapply facility filter, selected record, and search text.
 

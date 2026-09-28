@@ -1,0 +1,57 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.8.12023.21 stable
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{911E67C6-3D85-4FCE-B560-20A9C3E3FF48}") = "backgroundTaskHost", "..\..\Windows\System32\backgroundTaskHost.exe", "{C8563580-7163-AFF1-80A4-CFCCA783CAA1}"
+	ProjectSection(DebuggerProjectSystem) = preProject
+		PortSupplier = 00000000-0000-0000-0000-000000000000
+		Executable = C:\Windows\System32\backgroundTaskHost.exe
+		RemoteMachine = CORPQXA4067D
+		StartingDirectory = C:\Windows\System32
+		Environment = Default
+		LaunchingEngine = 00000000-0000-0000-0000-000000000000
+		UseLegacyDebugEngines = No
+		LaunchSQLEngine = No
+		AttachLaunchAction = No
+		IORedirection = Auto
+	EndProjectSection
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "classifier", "source\repos\python-sklearn-classifier-cookiecutter\classifier.pyproj", "{876CE06D-AB96-44E5-B82F-9362A10C3A6A}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "clustering", "source\repos\python-sklearn-clustering-cookiecutter\clustering.pyproj", "{E314FD49-A04B-4414-89A4-F9D9D1606007}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "regression", "source\repos\python-sklearn-regression-cookiecutter\regression.pyproj", "{D525AD1D-FABA-416F-A434-A62E3F86A0B7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C8563580-7163-AFF1-80A4-CFCCA783CAA1}.Debug|Any CPU.ActiveCfg = Release|x64
+		{C8563580-7163-AFF1-80A4-CFCCA783CAA1}.Debug|x64.ActiveCfg = Release|x64
+		{C8563580-7163-AFF1-80A4-CFCCA783CAA1}.Release|Any CPU.ActiveCfg = Release|x64
+		{C8563580-7163-AFF1-80A4-CFCCA783CAA1}.Release|x64.ActiveCfg = Release|x64
+		{876CE06D-AB96-44E5-B82F-9362A10C3A6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{876CE06D-AB96-44E5-B82F-9362A10C3A6A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{876CE06D-AB96-44E5-B82F-9362A10C3A6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{876CE06D-AB96-44E5-B82F-9362A10C3A6A}.Release|x64.ActiveCfg = Release|Any CPU
+		{E314FD49-A04B-4414-89A4-F9D9D1606007}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E314FD49-A04B-4414-89A4-F9D9D1606007}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E314FD49-A04B-4414-89A4-F9D9D1606007}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E314FD49-A04B-4414-89A4-F9D9D1606007}.Release|x64.ActiveCfg = Release|Any CPU
+		{D525AD1D-FABA-416F-A434-A62E3F86A0B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D525AD1D-FABA-416F-A434-A62E3F86A0B7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D525AD1D-FABA-416F-A434-A62E3F86A0B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D525AD1D-FABA-416F-A434-A62E3F86A0B7}.Release|x64.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3649EC55-D6A7-4554-83C5-381AAC277F3F}
+	EndGlobalSection
+EndGlobal

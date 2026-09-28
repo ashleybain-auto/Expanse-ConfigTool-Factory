@@ -1,0 +1,309 @@
+{
+  "inputs": [
+    {
+      "id": "arg0",
+      "type": "promptString",
+      "description": "API key for authentication",
+      "default": "",
+      "password": true
+    },
+    {
+      "id": "arg1",
+      "type": "promptString",
+      "description": "Database connection string (e.g., postgres://user:pass@host:5432/db)",
+      "default": "",
+      "password": true
+    },
+    {
+      "id": "arg2",
+      "type": "promptString",
+      "description": "Database type: postgres, mysql, mariadb, sqlserver, sqlite",
+      "default": ""
+    },
+    {
+      "id": "arg3",
+      "type": "promptString",
+      "description": "Database hostname",
+      "default": ""
+    },
+    {
+      "id": "arg4",
+      "type": "promptString",
+      "description": "Database port",
+      "default": ""
+    },
+    {
+      "id": "arg5",
+      "type": "promptString",
+      "description": "Database username",
+      "default": ""
+    },
+    {
+      "id": "arg6",
+      "type": "promptString",
+      "description": "Database password",
+      "default": "",
+      "password": true
+    },
+    {
+      "id": "arg7",
+      "type": "promptString",
+      "description": "Database name or SQLite file path",
+      "default": ""
+    },
+    {
+      "id": "arg8",
+      "type": "promptString",
+      "description": "Transport mode: stdio or http",
+      "default": ""
+    },
+    {
+      "id": "arg9",
+      "type": "promptString",
+      "description": "HTTP server port (default: 8080)",
+      "default": ""
+    },
+    {
+      "id": "arg10",
+      "type": "promptString",
+      "description": "Instance identifier for tool names",
+      "default": ""
+    },
+    {
+      "id": "arg11",
+      "type": "promptString",
+      "description": "SSH server hostname",
+      "default": ""
+    },
+    {
+      "id": "arg12",
+      "type": "promptString",
+      "description": "SSH server port (default: 22)",
+      "default": ""
+    },
+    {
+      "id": "arg13",
+      "type": "promptString",
+      "description": "SSH username",
+      "default": ""
+    },
+    {
+      "id": "arg14",
+      "type": "promptString",
+      "description": "SSH password",
+      "default": "",
+      "password": true
+    },
+    {
+      "id": "arg15",
+      "type": "promptString",
+      "description": "Path to SSH private key",
+      "default": ""
+    },
+    {
+      "id": "arg16",
+      "type": "promptString",
+      "description": "SSH key passphrase",
+      "default": "",
+      "password": true
+    },
+    {
+      "id": "arg17",
+      "type": "promptString",
+      "description": "Maximum number of tool calls allowed per rate limit window. Defaults to 20.",
+      "default": ""
+    },
+    {
+      "id": "arg18",
+      "type": "promptString",
+      "description": "Rate limit window size in milliseconds. Defaults to 20000 (20 seconds).",
+      "default": ""
+    },
+    {
+      "id": "arg19",
+      "type": "promptString",
+      "description": "An escaped JSON array that defines the Dynatrace Managed environment(s) to connect to. See README file for contents of this.",
+      "default": ""
+    },
+    {
+      "id": "arg20",
+      "type": "promptString",
+      "description": "Logging level (e.g. debug, info, warning, error)",
+      "default": ""
+    },
+    {
+      "id": "arg21",
+      "type": "promptString",
+      "description": "Disable telemetry",
+      "default": ""
+    }
+  ],
+  "servers": {
+    "microsoft/devbox-mcp-server": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@microsoft/devbox-mcp@latest"
+      ],
+      "internalMetadata": {
+        "description": "This server enables natural language interactions for developer-focused operations like managing Dev Boxes, configurations, and pools.",
+        "version": "1.0.0",
+        "repository": "https://github.com/microsoft/devbox-mcp-server",
+        "displayName": "Dev Box",
+        "owner_avatar_url": "https://avatars.githubusercontent.com/u/6154722?v=4",
+        "updatedDate": "2026-01-21T11:35:18.0000000Z",
+        "registry": "https://api.mcp.github.com/v0.1/servers/",
+        "registryDisplayName": "GitHub MCP Registry",
+        "publisher": "microsoft",
+        "stargazerCount": "12"
+      }
+    },
+    "io.github.cap-js/mcp-server": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@cap-js/mcp-server@0.0.4"
+      ],
+      "internalMetadata": {
+        "description": "Model Context Protocol (MCP) server for AI-assisted development of CAP applications.",
+        "version": "1.0.0",
+        "repository": "https://github.com/cap-js/mcp-server",
+        "displayName": "Cap JS",
+        "owner_avatar_url": "https://avatars.githubusercontent.com/u/117299792?v=4",
+        "updatedDate": "2026-08-26T13:38:30.0000000Z",
+        "registry": "https://api.mcp.github.com/v0.1/servers/",
+        "registryDisplayName": "GitHub MCP Registry",
+        "publisher": "cap-js",
+        "stargazerCount": "109"
+      }
+    },
+    "io.github.dynatrace-oss/dynatrace-managed-mcp": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@dynatrace-oss/dynatrace-managed-mcp-server@1.0.1"
+      ],
+      "env": {
+        "DT_MCP_RATE_LIMIT_MAX_CALLS": "${input:arg17}",
+        "DT_MCP_RATE_LIMIT_WINDOW_MS": "${input:arg18}",
+        "DT_ENVIRONMENT_CONFIGS": "${input:arg19}",
+        "LOG_LEVEL": "${input:arg20}",
+        "DT_MCP_DISABLE_TELEMETRY": "${input:arg21}"
+      },
+      "internalMetadata": {
+        "description": "MCP server for Dynatrace Managed to access logs, events, and metrics.",
+        "version": "1.0.1",
+        "repository": "https://github.com/dynatrace-oss/dynatrace-managed-mcp",
+        "displayName": "Dynatrace Managed",
+        "owner_avatar_url": "https://avatars.githubusercontent.com/u/58178984?v=4",
+        "updatedDate": "2026-08-26T13:38:41.0000000Z",
+        "registry": "https://api.mcp.github.com/v0.1/servers/",
+        "registryDisplayName": "GitHub MCP Registry",
+        "publisher": "dynatrace-oss",
+        "stargazerCount": "28"
+      }
+    },
+    "io.github.bytebase/dbhub": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@bytebase/dbhub@1.2.1"
+      ],
+      "env": {
+        "DSN": "${input:arg1}",
+        "DB_TYPE": "${input:arg2}",
+        "DB_HOST": "${input:arg3}",
+        "DB_PORT": "${input:arg4}",
+        "DB_USER": "${input:arg5}",
+        "DB_PASSWORD": "${input:arg6}",
+        "DB_NAME": "${input:arg7}",
+        "TRANSPORT": "${input:arg8}",
+        "PORT": "${input:arg9}",
+        "ID": "${input:arg10}",
+        "SSH_HOST": "${input:arg11}",
+        "SSH_PORT": "${input:arg12}",
+        "SSH_USER": "${input:arg13}",
+        "SSH_PASSWORD": "${input:arg14}",
+        "SSH_KEY": "${input:arg15}",
+        "SSH_PASSPHRASE": "${input:arg16}"
+      },
+      "internalMetadata": {
+        "description": "Minimal, token-efficient Database MCP Server for PostgreSQL, MySQL, SQL Server, SQLite, MariaDB",
+        "version": "1.2.1",
+        "repository": "https://github.com/bytebase/dbhub",
+        "displayName": "DBHub",
+        "owner_avatar_url": "https://avatars.githubusercontent.com/u/74386897?v=4",
+        "updatedDate": "2026-08-26T13:38:28.0000000Z",
+        "registry": "https://api.mcp.github.com/v0.1/servers/",
+        "registryDisplayName": "GitHub MCP Registry",
+        "publisher": "bytebase",
+        "stargazerCount": "3K"
+      }
+    },
+    "io.github.microsoft/awesome-copilot": {
+      "type": "stdio",
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "ghcr.io/microsoft/mcp-dotnet-samples/awesome-copilot:1.0.2026082601"
+      ],
+      "internalMetadata": {
+        "description": "An MCP server that stores Copilot customizations from the Awesome Copilot repository",
+        "version": "1.0.2026082601",
+        "repository": "https://github.com/microsoft/mcp-dotnet-samples",
+        "displayName": "Awesome Copilot MCP Server",
+        "owner_avatar_url": "https://avatars.githubusercontent.com/u/6154722?v=4",
+        "updatedDate": "2026-08-26T13:39:04.0000000Z",
+        "registry": "https://api.mcp.github.com/v0.1/servers/",
+        "registryDisplayName": "GitHub MCP Registry",
+        "publisher": "microsoft",
+        "stargazerCount": "196"
+      }
+    },
+    "io.github.upstash/context7": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@upstash/context7-mcp@1.0.31"
+      ],
+      "env": {
+        "CONTEXT7_API_KEY": "${input:arg0}"
+      },
+      "internalMetadata": {
+        "description": "Up-to-date code docs for any prompt",
+        "version": "1.0.31",
+        "repository": "https://github.com/upstash/context7",
+        "displayName": "Context7",
+        "owner_avatar_url": "https://avatars.githubusercontent.com/u/74989412?v=4",
+        "updatedDate": "2026-08-26T13:39:44.0000000Z",
+        "registry": "https://api.mcp.github.com/v0.1/servers/",
+        "registryDisplayName": "GitHub MCP Registry",
+        "publisher": "upstash",
+        "stargazerCount": "61K"
+      }
+    },
+    "io.github.github/github-mcp-server": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp/",
+      "internalMetadata": {
+        "description": "Connect AI assistants to GitHub - manage repos, issues, PRs, and workflows through natural language.",
+        "version": "1.11.0",
+        "repository": "https://github.com/github/github-mcp-server",
+        "displayName": "GitHub",
+        "owner_avatar_url": "https://avatars.githubusercontent.com/u/9919?v=4",
+        "updatedDate": "2026-08-26T13:38:46.0000000Z",
+        "registry": "https://api.mcp.github.com/v0.1/servers/",
+        "registryDisplayName": "GitHub MCP Registry",
+        "publisher": "github",
+        "stargazerCount": "32K"
+      }
+    }
+  }
+}

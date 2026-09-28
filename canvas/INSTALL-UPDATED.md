@@ -4,6 +4,7 @@
 **Status:** shell prepared; CNET schema/config source not included in attached zips
 
 ## 1. What changed in this shell
+
 - App title and domain/module text are set for **Expanse Cutover Automation - CNET**.
 - Header shows configured source areas: **Schema binding required**.
 - Search and facility filtering are part of the shell.
@@ -11,6 +12,7 @@
 - The shell contains no CSV or source business-data rows.
 
 ## 2. Install the .msapp in DevelopmentAuto
+
 1. Open the Power Apps maker portal and select the **DevelopmentAuto** environment.
 2. Go to **Apps** and use **Import app > From file (.msapp)**.
 3. Select the `.msapp` in this package.
@@ -21,27 +23,37 @@
 8. Test one record end-to-end, then run App Checker, Save, and Publish.
 
 ## 3. Attached-source configuration
+
 - No app-specific worksheet was supplied for this module in the attached zips. Use the shell and complete schema binding when the module source is available.
 
 ## 4. Functional build formulas
+
 ### Facility Items
+
 ```powerfx
 Replace FacilityMnem_Source with the domain facility field.
 ```
+
 ### Gallery Items
+
 ```powerfx
 Replace the starter Accommodation Data Clone source with the domain table and apply the domain field mapping from this package.
 ```
+
 ### Save/Patch pattern
+
 ```powerfx
 Patch the mapped target columns and Action To Take field using the real Dataverse type.
 ```
+
 ### Target Match / Sync rule
+
 ```powerfx
 No target-match field was supplied; add the domain match field before enabling sync confirmation.
 ```
 
 ## 5. Acceptance checks
+
 - Correct application title and module/domain.
 - Correct facility list and filtering after real source rebinding.
 - Search finds records by source mnemonic/name.

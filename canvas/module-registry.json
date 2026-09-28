@@ -23,7 +23,8 @@
       "module_key": "registration_core",
       "launch_mode": "screen",
       "target": {
-        "screen": "scrRegistrationCore"
+        "screen": "scrRegistrationCore",
+        "landing_screen": "scrRegistrationCore"
       },
       "visibility_rule": "true",
       "dataverse_binding": {

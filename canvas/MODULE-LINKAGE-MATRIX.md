@@ -22,7 +22,7 @@ Hub screen: `scrModuleHub`
 ## Return path standard
 
 - In-app modules: `Back()` to `scrModuleHub` with `varNavContext` retained.
-- External modules: return with a launch URL to the hub app and include `moduleKey`, `facility`, `recordKey`, `targetEnvironment`, `userPrincipalName`, `userDisplayName`, `sourceScreen`, `searchText`, and optional `returnToast` + `launchUtc` query parameters.
+- External modules: return with a launch URL to the hub app and include `moduleKey`, `facility`, `targetEnvironment`, `userPrincipalName`, `userDisplayName`, `sourceScreen`, `searchText`, and optional `returnRecordKey` (mapped into `recordKey`), `returnToast`, and `launchUtc` query parameters.
 - Hub startup should hydrate state from params and reapply facility filter, selected record, and search text.
 
 ## Validation execution log template

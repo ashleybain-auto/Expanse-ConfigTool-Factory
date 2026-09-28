@@ -7,7 +7,7 @@
   },
   "shared_context": {
     "required": [
-      "moduleKey",
+      "targetModuleKey",
       "facility",
       "recordKey",
       "targetEnvironment",

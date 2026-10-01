@@ -90,7 +90,136 @@ Screens:
                   Height: =53
                   Text: |-
                     =CountRows(
-                        galExpandedMatchResults.AllItems
+                        Filter(
+                            Switch(
+                                Substitute(
+                                    Trim(
+                                        Coalesce(
+                                            gblSelectedWorksheet,
+                                            ""
+                                        )
+                                    ),
+                                    "REG ",
+                                    ""
+                                ),
+                                "Accommodations",
+                                    ForAll(
+                                        Filter(
+                                            'Accommodation Data Clone',
+                                            FacilityMnem_Source = gblSelectedFacility
+                                        ),
+                                        {
+                                            TargetMatchMtx: Coalesce(TargetMatchMtx, "")
+                                        }
+                                    ),
+                                "Locations",
+                                    ForAll(
+                                        Filter(
+                                            Locations,
+                                            'Source Facility Mnemonic' = gblSelectedFacility
+                                        ),
+                                        {
+                                            TargetMatchMtx: Coalesce('Target Match Matrix', "")
+                                        }
+                                    ),
+                                "Services",
+                                    ForAll(
+                                        Filter(
+                                            Services,
+                                            'Source Facility Mnemonic' = gblSelectedFacility
+                                        ),
+                                        {
+                                            TargetMatchMtx: Coalesce('Target Match Matrix', "")
+                                        }
+                                    ),
+                                "Insurance",
+                                    ForAll(
+                                        Filter(
+                                            Insurances,
+                                            'Source Facility Mnemonic' = gblSelectedFacility
+                                        ),
+                                        {
+                                            TargetMatchMtx: Coalesce('Target Match Matrix', "")
+                                        }
+                                    ),
+                                "RoomBed",
+                                    ForAll(
+                                        Filter(
+                                            'Room Beds',
+                                            'Source Facility Code' = gblSelectedFacility
+                                        ),
+                                        {
+                                            TargetMatchMtx: Coalesce('Target Match Status', "")
+                                        }
+                                    ),
+                                "Discharge Disposition",
+                                    ForAll(
+                                        Filter(
+                                            'Discharge Dispositions',
+                                            'Network Mnemonic Source' = gblSelectedNetworkMnemonic
+                                        ),
+                                        {
+                                            TargetMatchMtx: Coalesce('Target Match Matrix', "")
+                                        }
+                                    ),
+                                "Ins Auth Status",
+                                    ForAll(
+                                        Filter(
+                                            'Insurance Auths',
+                                            'Network Mnemonic Source' = gblSelectedNetworkMnemonic
+                                        ),
+                                        {
+                                            TargetMatchMtx: Coalesce('Target Match Matrix Note', "")
+                                        }
+                                    ),
+                                "Financial Approver",
+                                    ForAll(
+                                        Filter(
+                                            'Financial Approvers',
+                                            'Source Network Mnemonic' = gblSelectedNetworkMnemonic
+                                        ),
+                                        {
+                                            TargetMatchMtx: Coalesce('Target Match Matrix', "")
+                                        }
+                                    ),
+                                "Financial Class",
+                                    ForAll(
+                                        Filter(
+                                            'Financial Classes',
+                                            'Source Network Mnemonic' = gblSelectedNetworkMnemonic
+                                        ),
+                                        {
+                                            TargetMatchMtx: Coalesce('Target Match Matrix', "")
+                                        }
+                                    ),
+                                "Admit Source",
+                                    ForAll(
+                                        Filter(
+                                            'Admit Source Mapping',
+                                            'Source Network Mnemonic' = gblSelectedNetworkMnemonic
+                                        ),
+                                        {
+                                            TargetMatchMtx: Coalesce('Match Status', "")
+                                        }
+                                    ),
+                                FirstN(
+                                    Table(
+                                        {
+                                            TargetMatchMtx: ""
+                                        }
+                                    ),
+                                    0
+                                )
+                            ),
+                            If(
+                                ThisItem.MatchCategory = "NO MATCH",
+                                TargetMatchMtx = "NO MATCH",
+                                StartsWith(
+                                    TargetMatchMtx,
+                                    ThisItem.MatchCategory
+                                )
+                            )
+                        )
                     ) & " records"
                   Width: =107
                   X: =199
@@ -197,7 +326,736 @@ Screens:
             Height: =593
             Items: |-
               =Filter(
-                  galAccommodations.Items,
+                  Switch(
+                      Substitute(
+                          Trim(
+                              Coalesce(
+                                  gblSelectedWorksheet,
+                                  ""
+                              )
+                          ),
+                          "REG ",
+                          ""
+                      ),
+
+                      "Accommodations",
+                          ForAll(
+                              Filter(
+                                  'Accommodation Data Clone',
+                                  IsBlank(gblSelectedFacility) ||
+                                  FacilityMnem_Source = gblSelectedFacility
+                              ),
+                              {
+                                  RecordKey: Text(ECCS_Clone_RowId),
+                                  WorksheetName: "Accommodations",
+
+                                  SourceFacility: Coalesce(
+                                      FacilityMnem_Source,
+                                      ""
+                                  ),
+                                  SourceMnemonic: Coalesce(
+                                      Accommodation_Mnem_Source,
+                                      ""
+                                  ),
+                                  SourceName: Coalesce(
+                                      Accommodation_Name_Source,
+                                      ""
+                                  ),
+                                  SourcePACode: Coalesce(
+                                      PA_Code_Source,
+                                      ""
+                                  ),
+                                  SourceActive: Text(
+                                      Active_Source
+                                  ),
+
+                                  TargetFacility: Coalesce(
+                                      FacilityMnem_Target,
+                                      ""
+                                  ),
+                                  TargetMnemonic: Coalesce(
+                                      Accommodation_Mnem_Target,
+                                      ""
+                                  ),
+                                  TargetName: Coalesce(
+                                      Accommodation_Name_Target,
+                                      ""
+                                  ),
+                                  TargetPACode: Coalesce(
+                                      PA_Code_Target,
+                                      ""
+                                  ),
+                                  TargetActive: Coalesce(
+                                      Active_Target_Value,
+                                      ""
+                                  ),
+                                  TargetMatchMtx: Coalesce(
+                                      TargetMatchMtx,
+                                      ""
+                                  ),
+
+                                  ReadOnly: false
+                              }
+                          ),
+
+                      "Locations",
+                          ForAll(
+                              Filter(
+                                  Locations,
+                                  IsBlank(gblSelectedFacility) ||
+                                  'Source Facility Mnemonic' = gblSelectedFacility
+                              ),
+                              {
+                                  RecordKey:
+                                      Coalesce(
+                                          'Source Facility Mnemonic',
+                                          ""
+                                      ) &
+                                      "|" &
+                                      Coalesce(
+                                          'Source Location Mnemonic',
+                                          ""
+                                      ),
+                                  WorksheetName: "Locations",
+
+                                  SourceFacility: Coalesce(
+                                      'Source Facility Mnemonic',
+                                      ""
+                                  ),
+                                  SourceMnemonic: Coalesce(
+                                      'Source Location Mnemonic',
+                                      ""
+                                  ),
+                                  SourceName: Coalesce(
+                                      'Source Location Name',
+                                      ""
+                                  ),
+                                  SourcePACode: Coalesce(
+                                      'Source PA Code',
+                                      ""
+                                  ),
+                                  SourceActive: Coalesce(
+                                      'Source Location Active',
+                                      ""
+                                  ),
+
+                                  TargetFacility: Coalesce(
+                                      'Target Facility Mnemonic',
+                                      ""
+                                  ),
+                                  TargetMnemonic: Coalesce(
+                                      'Target Location Mnemonic',
+                                      ""
+                                  ),
+                                  TargetName: Coalesce(
+                                      'Target Location Name',
+                                      ""
+                                  ),
+                                  TargetPACode: Coalesce(
+                                      'Target PA Code',
+                                      ""
+                                  ),
+                                  TargetActive: Coalesce(
+                                      'Target Location Active',
+                                      ""
+                                  ),
+                                  TargetMatchMtx: Coalesce(
+                                      'Target Match Matrix',
+                                      ""
+                                  ),
+
+                                  ReadOnly: false
+                              }
+                          ),
+
+                      "Services",
+                          ForAll(
+                              Filter(
+                                  Services,
+                                  IsBlank(gblSelectedFacility) ||
+                                  'Source Facility Mnemonic' = gblSelectedFacility
+                              ),
+                              {
+                                  RecordKey:
+                                      Coalesce(
+                                          'Source Facility Mnemonic',
+                                          ""
+                                      ) &
+                                      "|" &
+                                      Coalesce(
+                                          'Source Service Mnemonic',
+                                          ""
+                                      ),
+                                  WorksheetName: "Services",
+
+                                  SourceFacility: Coalesce(
+                                      'Source Facility Mnemonic',
+                                      ""
+                                  ),
+                                  SourceMnemonic: Coalesce(
+                                      'Source Service Mnemonic',
+                                      ""
+                                  ),
+                                  SourceName: Coalesce(
+                                      'Source Service Name',
+                                      ""
+                                  ),
+                                  SourcePACode: Coalesce(
+                                      'Source Service PA Code',
+                                      ""
+                                  ),
+                                  SourceActive: Text(
+                                      'Source Active Status'
+                                  ),
+
+                                  TargetFacility: Coalesce(
+                                      'Target Facility Mnemonic',
+                                      ""
+                                  ),
+                                  TargetMnemonic: Coalesce(
+                                      'Target Service Mnemonic',
+                                      ""
+                                  ),
+                                  TargetName: Coalesce(
+                                      'Target Service Name',
+                                      ""
+                                  ),
+                                  TargetPACode: Coalesce(
+                                      'Target Service PA Code',
+                                      ""
+                                  ),
+                                  TargetActive: Text(
+                                      'Target Active Status'
+                                  ),
+                                  TargetMatchMtx: Coalesce(
+                                      'Target Match Matrix',
+                                      ""
+                                  ),
+
+                                  ReadOnly: false
+                              }
+                          ),
+
+                      "Insurance",
+                          ForAll(
+                              Filter(
+                                  Insurances,
+                                  IsBlank(gblSelectedFacility) ||
+                                  'Source Facility Mnemonic' = gblSelectedFacility
+                              ),
+                              {
+                                  RecordKey:
+                                      Coalesce(
+                                          'Source Facility Mnemonic',
+                                          ""
+                                      ) &
+                                      "|" &
+                                      Coalesce(
+                                          'Source Mnemonic',
+                                          ""
+                                      ),
+                                  WorksheetName: "Insurance",
+
+                                  SourceFacility: Coalesce(
+                                      'Source Facility Mnemonic',
+                                      ""
+                                  ),
+                                  SourceMnemonic: Coalesce(
+                                      'Source Mnemonic',
+                                      ""
+                                  ),
+                                  SourceName: Coalesce(
+                                      'Source Description',
+                                      ""
+                                  ),
+                                  SourcePACode: Coalesce(
+                                      'Source PA Code',
+                                      ""
+                                  ),
+                                  SourceActive: Coalesce(
+                                      'Source Active Status',
+                                      ""
+                                  ),
+
+                                  TargetFacility: Coalesce(
+                                      'Target Facility Mnemonic',
+                                      ""
+                                  ),
+                                  TargetMnemonic: Coalesce(
+                                      'Target Mnemonic',
+                                      ""
+                                  ),
+                                  TargetName: Coalesce(
+                                      'Target Description',
+                                      ""
+                                  ),
+                                  TargetPACode: Coalesce(
+                                      'Target PA Code',
+                                      ""
+                                  ),
+                                  TargetActive: Coalesce(
+                                      'Target Active Status',
+                                      ""
+                                  ),
+                                  TargetMatchMtx: Coalesce(
+                                      'Target Match Matrix',
+                                      ""
+                                  ),
+
+                                  ReadOnly: false
+                              }
+                          ),
+
+                      "RoomBed",
+                          ForAll(
+                              Filter(
+                                  'Room Beds',
+                                  IsBlank(gblSelectedFacility) ||
+                                  'Source Facility Code' = gblSelectedFacility
+                              ),
+                              {
+                                  RecordKey:
+                                      Coalesce(
+                                          'Source Facility Code',
+                                          ""
+                                      ) &
+                                      "|" &
+                                      Coalesce(
+                                          'Source Location Code',
+                                          ""
+                                      ) &
+                                      "|" &
+                                      Coalesce(
+                                          'Source Room Code',
+                                          ""
+                                      ) &
+                                      "|" &
+                                      Coalesce(
+                                          'Source Bed Code',
+                                          ""
+                                      ),
+                                  WorksheetName: "RoomBed",
+
+                                  SourceFacility: Coalesce(
+                                      'Source Facility Code',
+                                      ""
+                                  ),
+                                  SourceMnemonic: Coalesce(
+                                      'Source Room Code',
+                                      ""
+                                  ),
+                                  SourceName: Coalesce(
+                                      'Source Accommodation Type',
+                                      ""
+                                  ),
+                                  SourcePACode: Coalesce(
+                                      'Source Rate Accommodation Procedure Code',
+                                      ""
+                                  ),
+                                  SourceActive: Text(
+                                      'Source Active Status'
+                                  ),
+
+                                  TargetFacility: Coalesce(
+                                      'Target Facility Code',
+                                      ""
+                                  ),
+                                  TargetMnemonic: Coalesce(
+                                      'Target Room Code',
+                                      ""
+                                  ),
+                                  TargetName: Coalesce(
+                                      'Target Accommodation Type',
+                                      ""
+                                  ),
+                                  TargetPACode: Coalesce(
+                                      'Target Rate Accommodation Procedure Code',
+                                      ""
+                                  ),
+                                  TargetActive: "",
+                                  TargetMatchMtx: Coalesce(
+                                      'Target Match Status',
+                                      ""
+                                  ),
+
+                                  ReadOnly: false
+                              }
+                          ),
+
+                      "Discharge Disposition",
+                          ForAll(
+                              Filter(
+                                  'Discharge Dispositions',
+                                  IsBlank(gblSelectedNetworkMnemonic) ||
+                                  'Network Mnemonic Source' =
+                                      gblSelectedNetworkMnemonic
+                              ),
+                              {
+                                  RecordKey:
+                                      Coalesce(
+                                          'Network Mnemonic Source',
+                                          ""
+                                      ) &
+                                      "|" &
+                                      Coalesce(
+                                          'Discharge Disposition Mnemonic Source',
+                                          ""
+                                      ),
+                                  WorksheetName: "Discharge Disposition",
+
+                                  SourceFacility: Coalesce(
+                                      'Network Mnemonic Source',
+                                      ""
+                                  ),
+                                  SourceMnemonic: Coalesce(
+                                      'Discharge Disposition Mnemonic Source',
+                                      ""
+                                  ),
+                                  SourceName: Coalesce(
+                                      'Discharge Disposition Name Source',
+                                      ""
+                                  ),
+                                  SourcePACode: Coalesce(
+                                      'Billing Code Source',
+                                      ""
+                                  ),
+                                  SourceActive: Text(
+                                      'Active Source'
+                                  ),
+
+                                  TargetFacility: "",
+                                  TargetMnemonic: Coalesce(
+                                      'Discharge Disposition Mnemonic Target',
+                                      ""
+                                  ),
+                                  TargetName: Coalesce(
+                                      'Discharge Disposition Name Target',
+                                      ""
+                                  ),
+                                  TargetPACode: "",
+                                  TargetActive: "",
+                                  TargetMatchMtx: Coalesce(
+                                      'Target Match Matrix',
+                                      ""
+                                  ),
+
+                                  ReadOnly: false
+                              }
+                          ),
+
+                      "Ins Auth Status",
+                          ForAll(
+                              Filter(
+                                  'Insurance Auths',
+                                  IsBlank(gblSelectedNetworkMnemonic) ||
+                                  'Network Mnemonic Source' =
+                                      gblSelectedNetworkMnemonic
+                              ),
+                              {
+                                  RecordKey:
+                                      Coalesce(
+                                          'Network Mnemonic Source',
+                                          ""
+                                      ) &
+                                      "|" &
+                                      Coalesce(
+                                          'Insurance Authorization Status Mnemonic Source',
+                                          ""
+                                      ),
+                                  WorksheetName: "Ins Auth Status",
+
+                                  SourceFacility: Coalesce(
+                                      'Network Mnemonic Source',
+                                      ""
+                                  ),
+                                  SourceMnemonic: Coalesce(
+                                      'Insurance Authorization Status Mnemonic Source',
+                                      ""
+                                  ),
+                                  SourceName: Coalesce(
+                                      'Insurance Authorization Status Name Source',
+                                      ""
+                                  ),
+                                  SourcePACode: "",
+                                  SourceActive: Coalesce(
+                                      'Active Source Flag',
+                                      ""
+                                  ),
+
+                                  TargetFacility: "",
+                                  TargetMnemonic: Coalesce(
+                                      'Insurance Authorization Status Mnemonic Target',
+                                      ""
+                                  ),
+                                  TargetName: Coalesce(
+                                      'Insurance Authorization Status Name Target',
+                                      ""
+                                  ),
+                                  TargetPACode: "",
+                                  TargetActive: Coalesce(
+                                      'Active Target Flag',
+                                      ""
+                                  ),
+                                  TargetMatchMtx: Coalesce(
+                                      'Target Match Matrix Note',
+                                      ""
+                                  ),
+
+                                  ReadOnly: false
+                              }
+                          ),
+
+                      "Financial Approver",
+                          ForAll(
+                              Filter(
+                                  'Financial Approvers',
+                                  IsBlank(gblSelectedNetworkMnemonic) ||
+                                  'Source Network Mnemonic' =
+                                      gblSelectedNetworkMnemonic
+                              ),
+                              {
+                                  RecordKey:
+                                      Coalesce(
+                                          'Source Network Mnemonic',
+                                          ""
+                                      ) &
+                                      "|" &
+                                      Coalesce(
+                                          'Source Financial Approver Mnemonic',
+                                          ""
+                                      ),
+                                  WorksheetName: "Financial Approver",
+
+                                  SourceFacility: Coalesce(
+                                      'Source Network Mnemonic',
+                                      ""
+                                  ),
+                                  SourceMnemonic: Coalesce(
+                                      'Source Financial Approver Mnemonic',
+                                      ""
+                                  ),
+                                  SourceName: Coalesce(
+                                      'Source Financial Approver Description',
+                                      ""
+                                  ),
+                                  SourcePACode: "",
+                                  SourceActive: "",
+
+                                  TargetFacility: "",
+                                  TargetMnemonic: Coalesce(
+                                      'Target Financial Approver Mnemonic',
+                                      ""
+                                  ),
+                                  TargetName: Coalesce(
+                                      'Target Financial Approver Description',
+                                      ""
+                                  ),
+                                  TargetPACode: "",
+                                  TargetActive: "",
+                                  TargetMatchMtx: Coalesce(
+                                      'Target Match Matrix',
+                                      ""
+                                  ),
+
+                                  ReadOnly: false
+                              }
+                          ),
+
+                      "Financial Class",
+                          ForAll(
+                              Filter(
+                                  'Financial Classes',
+                                  IsBlank(gblSelectedNetworkMnemonic) ||
+                                  'Source Network Mnemonic' =
+                                      gblSelectedNetworkMnemonic
+                              ),
+                              {
+                                  RecordKey:
+                                      Coalesce(
+                                          'Source Network Mnemonic',
+                                          ""
+                                      ) &
+                                      "|" &
+                                      Coalesce(
+                                          'Source Financial Class Mnemonic',
+                                          ""
+                                      ),
+                                  WorksheetName: "Financial Class",
+
+                                  SourceFacility: Coalesce(
+                                      'Source Network Mnemonic',
+                                      ""
+                                  ),
+                                  SourceMnemonic: Coalesce(
+                                      'Source Financial Class Mnemonic',
+                                      ""
+                                  ),
+                                  SourceName: Coalesce(
+                                      'Source Financial Class Name',
+                                      ""
+                                  ),
+                                  SourcePACode: "",
+                                  SourceActive: Text(
+                                      'Source Active Status'
+                                  ),
+
+                                  TargetFacility: Coalesce(
+                                      'Target Network Mnemonic',
+                                      ""
+                                  ),
+                                  TargetMnemonic: Coalesce(
+                                      'Target Financial Class Mnemonic',
+                                      ""
+                                  ),
+                                  TargetName: Coalesce(
+                                      'Target Financial Class Name',
+                                      ""
+                                  ),
+                                  TargetPACode: "",
+                                  TargetActive: Text(
+                                      'Target Active Status'
+                                  ),
+                                  TargetMatchMtx: Coalesce(
+                                      'Target Match Matrix',
+                                      ""
+                                  ),
+
+                                  ReadOnly: false
+                              }
+                          ),
+
+                      "Admit Source",
+                          ForAll(
+                              Filter(
+                                  'Admit Source Mapping',
+                                  IsBlank(gblSelectedNetworkMnemonic) ||
+                                  'Source Network Mnemonic' =
+                                      gblSelectedNetworkMnemonic
+                              ),
+                              {
+                                  RecordKey:
+                                      Coalesce(
+                                          'Source Network Mnemonic',
+                                          ""
+                                      ) &
+                                      "|" &
+                                      Coalesce(
+                                          'Source Admit Code',
+                                          ""
+                                      ),
+                                  WorksheetName: "Admit Source",
+
+                                  SourceFacility: Coalesce(
+                                      'Source Network Mnemonic',
+                                      ""
+                                  ),
+                                  SourceMnemonic: Coalesce(
+                                      'Source Admit Code',
+                                      ""
+                                  ),
+                                  SourceName: Coalesce(
+                                      'Source Admit Description',
+                                      ""
+                                  ),
+                                  SourcePACode: "",
+                                  SourceActive: Text(
+                                      'Source Active Status'
+                                  ),
+
+                                  TargetFacility: Coalesce(
+                                      'Target Network Mnemonic',
+                                      ""
+                                  ),
+                                  TargetMnemonic: Coalesce(
+                                      'Target Admit Code',
+                                      ""
+                                  ),
+                                  TargetName: Coalesce(
+                                      'Target Admit Description',
+                                      ""
+                                  ),
+                                  TargetPACode: "",
+                                  TargetActive: Text(
+                                      'Target Active Status'
+                                  ),
+                                  TargetMatchMtx: Coalesce(
+                                      'Match Status',
+                                      ""
+                                  ),
+
+                                  ReadOnly: false
+                              }
+                          ),
+
+                      "Settings",
+                          ForAll(
+                              Filter(
+                                  'Application Configuration',
+                                  IsBlank(gblSelectedFacility) ||
+                                  'FacilityID' = gblSelectedFacility
+                              ),
+                              {
+                                  RecordKey: Coalesce(
+                                      'SourceID',
+                                      ""
+                                  ),
+                                  WorksheetName: "Settings",
+
+                                  SourceFacility: Coalesce(
+                                      'FacilityID',
+                                      ""
+                                  ),
+                                  SourceMnemonic: Coalesce(
+                                      'SourceID',
+                                      ""
+                                  ),
+                                  SourceName: Coalesce(
+                                      'AppID',
+                                      ""
+                                  ),
+                                  SourcePACode: Coalesce(
+                                      Text('AppKey'),
+                                      ""
+                                  ),
+                                  SourceActive: "",
+
+                                  TargetFacility: "",
+                                  TargetMnemonic: "",
+                                  TargetName: "",
+                                  TargetPACode: Coalesce(
+                                      'AppValue',
+                                      ""
+                                  ),
+                                  TargetActive: "",
+                                  TargetMatchMtx: "",
+
+                                  ReadOnly: true
+                              }
+                          ),
+
+                      FirstN(
+                          Table(
+                              {
+                                  RecordKey: "",
+                                  WorksheetName: "",
+                                  SourceFacility: "",
+                                  SourceMnemonic: "",
+                                  SourceName: "",
+                                  SourcePACode: "",
+                                  SourceActive: "",
+                                  TargetFacility: "",
+                                  TargetMnemonic: "",
+                                  TargetName: "",
+                                  TargetPACode: "",
+                                  TargetActive: "",
+                                  TargetMatchMtx: "",
+                                  ReadOnly: true
+                              }
+                          ),
+                          0
+                      )
+                  )
+                  ,
                   If(
                       gblSelectedMatchCategory = "NO MATCH",
                       TargetMatchMtx = "NO MATCH",
@@ -368,9 +1226,7 @@ Screens:
                   Height: =43
                   OnSelect: =Select(Parent)
                   Size: =18
-                  Text: |-
-                    =Coalesce(
-                        ThisItem.DBRecordCount)
+                  Text: =ThisItem.WorksheetName
                   VerticalAlign: =VerticalAlign.Top
                   Width: =65
                   X: =332
@@ -380,11 +1236,7 @@ Screens:
                 Properties:
                   Height: =35
                   OnSelect: =Select(Parent)
-                  Text: |-
-                    =If(
-                        IsBlank(ThisItem.DBRecordCount),
-                        Text(ThisItem.DBRecordCount)
-                    )
+                  Text: =""
                   Width: =234
                   X: =269
                   Y: =62
@@ -518,6 +1370,7 @@ Screens:
             OnSelect: |-
               =Refresh('Accommodation Data Clone');
               Refresh('Reg Config Categories');
+              Refresh('dim.Ref.Organizations');
               Set(
                   gblDashboardRefreshTime,
                   Now()
@@ -601,7 +1454,7 @@ Screens:
                       Filter(
                           'dim.Ref.Organizations',
                           'Wave Number' = gblSelectedWaveNumber &&
-                          'SubWave Code' = gblSelectedSubWaveCode &&
+                          'SubWave2 Code' = gblSelectedSubWaveCode &&
                           !IsBlank('Facility Mnemonic') &&
                           'Facility Mnemonic' <> "Facility Mnemonic" &&
                           'Facility Mnemonic' <> "NULL"
@@ -622,7 +1475,7 @@ Screens:
                   LookUp(
                       'dim.Ref.Organizations',
                       'Wave Number' = gblSelectedWaveNumber &&
-                      'SubWave Code' = gblSelectedSubWaveCode &&
+                      'SubWave2 Code' = gblSelectedSubWaveCode &&
                       'Facility Mnemonic' = cmbFacilities.Selected.Value,
                       'Network Mnemonic'
                   )
@@ -677,13 +1530,13 @@ Screens:
                       Filter(
                           'dim.Ref.Organizations',
                           !IsBlank('Wave Number') &&
-                          !IsBlank('SubWave Code') &&
+                          !IsBlank('SubWave2 Code') &&
                           'Wave Number' <> "Wave" &&
-                          'SubWave Code' <> "SubWave" &&
+                          'SubWave2 Code' <> "SubWave" &&
                           'Wave Number' <> "NULL" &&
-                          'SubWave Code' <> "NULL"
+                          'SubWave2 Code' <> "NULL"
                       ),
-                      'Wave Number' & " - " & 'SubWave Code'
+                      'Wave Number' & " - " & 'SubWave2 Code'
                   ),
                   Value,
                   SortOrder.Ascending
@@ -859,4 +1712,11 @@ Screens:
             Text: ="HOME"
             X: =591
             Y: =28
+
+
+
+
+
+
+
 

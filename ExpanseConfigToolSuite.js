@@ -1,0 +1,13 @@
+// Usage Example: FILENAME.onLoad
+
+export var FILENAME = (function () {
+    ("use strict");
+    var formContext;
+
+    return {
+        onLoad: function (executionContext) {
+            formContext = executionContext.getFormContext();
+            //formContext.getAttribute("accountnumber").getValue();
+        },
+    };
+})();

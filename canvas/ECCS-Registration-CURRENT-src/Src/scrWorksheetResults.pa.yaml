@@ -1,0 +1,275 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  scrWorksheetResults:
+    Properties:
+      Fill: =RGBA(232, 232, 232, 1)
+      LoadingSpinnerColor: =RGBA(0, 51, 102, 1)
+    Children:
+      - galWorksheetResults:
+          Control: Gallery@2.15.0
+          Variant: BrowseLayout_Vertical_OneTextVariant_ver5.0
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Height: =450
+            Items: =Locations
+            TemplateSize: =45
+            Width: =426
+            X: =53
+            Y: =284
+          Children:
+            - Title2:
+                Control: Label@2.5.1
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 1)
+                  Color: =RGBA(50, 49, 48, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                  Height: =Self.Size * 1.8
+                  OnSelect: =
+                  PaddingBottom: =0
+                  PaddingLeft: =0
+                  PaddingRight: =0
+                  PaddingTop: =0
+                  Size: =14
+                  Text: =ThisItem.'Source Location Name'
+                  VerticalAlign: =VerticalAlign.Top
+                  Width: =Parent.TemplateWidth - 86
+                  X: =16
+                  Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
+            - NextArrow2:
+                Control: Classic/Icon@2.5.0
+                Properties:
+                  AccessibleLabel: =Self.Tooltip
+                  BorderColor: =RGBA(0, 89, 178, 1)
+                  Color: =RGBA(166, 166, 166, 1)
+                  Height: =50
+                  Icon: =Icon.ChevronRight
+                  OnSelect: =Select(Parent)
+                  PaddingBottom: =12
+                  PaddingLeft: =12
+                  PaddingRight: =12
+                  PaddingTop: =12
+                  Tooltip: ="View item details"
+                  Width: =50
+                  X: =Parent.TemplateWidth - Self.Width - 12
+                  Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
+            - Separator2:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 89, 178, 1)
+                  Fill: =RGBA(255, 255, 255, 1)
+                  Height: =2
+                  OnSelect: =Select(Parent)
+                  Width: =Parent.TemplateWidth
+                  Y: =Parent.TemplateHeight - Self.Height
+            - Rectangle2:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 89, 178, 1)
+                  Fill: =RGBA(0, 89, 178, 1)
+                  Height: =Parent.TemplateHeight - Separator2.Height
+                  OnSelect: =Select(Parent)
+                  Visible: =ThisItem.IsSelected
+                  Width: =4
+      - Import2:
+          Control: Import@2.1.0
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(56, 56, 56, 1)
+            Fill: =RGBA(0, 51, 102, 1)
+            Font: =Font.'Open Sans'
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(0, 51, 102, 1), -20%)
+            PressedBorderColor: =ColorFade(Self.BorderColor, -20%)
+            PressedFill: =ColorFade(Self.Fill, -20%)
+            X: =505
+            Y: =197
+      - Export2:
+          Control: Export@2.1.0
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(56, 56, 56, 1)
+            Fill: =RGBA(0, 51, 102, 1)
+            Font: =Font.'Open Sans'
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(0, 51, 102, 1), -20%)
+            PressedBorderColor: =ColorFade(Self.BorderColor, -20%)
+            PressedFill: =ColorFade(Self.Fill, -20%)
+            X: =505
+            Y: =297
+      - shpWorkSheetHeader:
+          Control: Rectangle@2.3.0
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Fill: =ColorValue("#03173E")
+            Height: =88
+            Width: =1366
+      - lblResultTitle:
+          Control: ModernText@1.0.0
+          Properties:
+            Color: =Color.White
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =48
+            PaddingBottom: =2
+            PaddingLeft: =2
+            PaddingRight: =2
+            PaddingTop: =2
+            Size: =20
+            Text: ="Expanse Cutover & Configuration Suite"
+            Width: =500
+            X: =28
+      - lblResultSubtitle:
+          Control: ModernText@1.0.0
+          Properties:
+            AutoHeight: =true
+            Color: =ColorValue("#E05929")
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Height: =34
+            Text: ="Registration | Worksheet Bulk Import/Export"
+            Width: =477
+            X: =28
+            Y: =38
+      - btnNext3:
+          Control: ModernButton@1.0.0
+          Properties:
+            Font: =Font.'Open Sans'
+            Icon: ="ArrowRight"
+            OnSelect: |-
+              =Navigate(
+                  cmpECCSConfigurations,
+                  ScreenTransition.Cover
+              )
+            Size: =14
+            Text: ="NEXT"
+            X: =1224
+            Y: =28
+      - btnRefresh3:
+          Control: ModernButton@1.0.0
+          Properties:
+            Font: =Font.'Open Sans'
+            Icon: ="ArrowReset"
+            Size: =14
+            Text: ="REFRESH"
+            Width: =110
+            X: =1038
+            Y: =28
+      - btnBack3:
+          Control: ModernButton@1.0.0
+          Properties:
+            Font: =Font.'Open Sans'
+            Icon: ="ArrowLeft"
+            OnSelect: |-
+              =Set(
+                  gblDashboardExpanded,
+                  false
+              );
+              Back()
+            Size: =14
+            Text: ="BACK"
+            X: =860
+            Y: =28
+      - btnHome3:
+          Control: ModernButton@1.0.0
+          Properties:
+            Font: =Font.'Open Sans'
+            Icon: ="Home"
+            OnSelect: |-
+              =Navigate(
+                  scrRegistrationLaunchpad,
+                  ScreenTransition.Fade
+              )
+            Size: =14
+            Text: ="HOME"
+            X: =617
+            Y: =28
+      - drpWorksheetSelection:
+          Control: Classic/DropDown@2.3.1
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            ChevronBackground: =RGBA(0, 51, 102, 1)
+            ChevronFill: =RGBA(255, 255, 255, 1)
+            ChevronHoverBackground: =ColorFade(RGBA(0, 51, 102, 1), -20%)
+            ChevronHoverFill: =RGBA(255, 255, 255, 1)
+            Font: =Font.'Open Sans'
+            Height: =42
+            HoverFill: =RGBA(153, 205, 255, 1)
+            Items: |-
+              =Sort(
+                  Filter(
+                      'Reg Config Categories',
+                      'Reg Worksheet Name' <> "REG ALL" &&
+                      'Reg Worksheet Name' <> "REG [INSERT-UPLOAD]"
+                  ),
+                  'Reg Worksheet Name',
+                  SortOrder.Ascending
+              )
+            Items.Value: =eccs_regworksheetname
+            OnSelect: |-
+              =Set(
+                  gblSelectedWorksheet,
+                  drpWorksheetSelection.SelectedText.Value
+              );
+            PressedColor: =RGBA(255, 255, 255, 1)
+            PressedFill: =RGBA(0, 89, 178, 1)
+            SelectionColor: =RGBA(255, 255, 255, 1)
+            SelectionFill: =RGBA(0, 51, 102, 1)
+            Width: =404
+            X: =53
+            Y: =133
+      - lblRegWorksheetName1:
+          Control: ModernText@1.0.0
+          Properties:
+            Height: =39
+            Text: ="Reg Worksheet Name"
+            Width: =176
+            X: =53
+            Y: =94
+      - drpSrcFacilityMnem:
+          Control: Classic/DropDown@2.3.1
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            ChevronBackground: =RGBA(0, 51, 102, 1)
+            ChevronFill: =RGBA(255, 255, 255, 1)
+            ChevronHoverBackground: =ColorFade(RGBA(0, 51, 102, 1), -20%)
+            ChevronHoverFill: =RGBA(255, 255, 255, 1)
+            Font: =Font.'Open Sans'
+            Height: =46
+            HoverFill: =RGBA(153, 205, 255, 1)
+            Items: |-
+              =Sort(
+                  Distinct(
+                      'Accommodation Data Clone',
+                      FacilityMnem_Source
+                  ),
+                  Value,
+                  SortOrder.Ascending
+              )
+            Items.Value: =Value
+            PressedColor: =RGBA(255, 255, 255, 1)
+            PressedFill: =RGBA(0, 89, 178, 1)
+            SelectionColor: =RGBA(255, 255, 255, 1)
+            SelectionFill: =RGBA(0, 51, 102, 1)
+            Width: =404
+            X: =53
+            Y: =221
+      - lblFacilityMnemSrc:
+          Control: ModernText@1.0.0
+          Properties:
+            AutoHeight: =true
+            Text: ="Source Facility Mnemonic"
+            Width: =208
+            X: =53
+            Y: =189

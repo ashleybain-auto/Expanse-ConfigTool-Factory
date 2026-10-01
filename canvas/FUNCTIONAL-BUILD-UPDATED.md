@@ -3,6 +3,7 @@
 Source: `No CNET-specific source workbook supplied`
 
 ## Common functions
+
 - single-select facility filtering
 - text search against source mnemonic and source description/name
 - results gallery with selected-record state
@@ -16,7 +17,9 @@ Source: `No CNET-specific source workbook supplied`
 - ECCS lineage display retained from the Registration POC shell
 
 ## Source-specific configuration
+
 - Schema-specific source not supplied; bind when available.
+
 
 ## Hub linkage behavior
 - Module launch controls should bind to `canvas/module-registry.json` for target routing.

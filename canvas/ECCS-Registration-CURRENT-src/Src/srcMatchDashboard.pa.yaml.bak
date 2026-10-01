@@ -196,16 +196,31 @@ Screens:
             FocusedBorderThickness: '=1   '
             Height: =593
             Items: |-
-              =Filter(
-                  galAccommodations.Items,
-                  If(
-                      gblSelectedMatchCategory = "NO MATCH",
-                      TargetMatchMtx = "NO MATCH",
-                      StartsWith(
-                          TargetMatchMtx,
-                          gblSelectedMatchCategory
-                      )
-                  )
+              =AddColumns(
+                  Filter(
+                      'Facility Location',
+                      FacilityMnem_Source = gblSelectedFacility
+                  ),
+                  SourceFacility,
+                  FacilityMnem_Source,
+                  SourceMnemonic,
+                  LocationMnem,
+                  SourceName,
+                  LocationName,
+                  SourceActive,
+                  LocationActive,
+                  TargetFacility,
+                  "",
+                  TargetMnemonic,
+                  "",
+                  TargetName,
+                  "",
+                  TargetActive,
+                  "",
+                  TargetMatchMtx,
+                  "",
+                  DBRecordCount,
+                  Blank()
               )
             OnSelect: |-
               =Set(
@@ -859,4 +874,3 @@ Screens:
             Text: ="HOME"
             X: =591
             Y: =28
-

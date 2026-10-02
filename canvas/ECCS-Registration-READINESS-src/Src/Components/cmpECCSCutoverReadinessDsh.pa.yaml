@@ -73,12 +73,26 @@ ComponentDefinitions:
       - lblRegReadiness:
           Control: ModernText@1.0.0
           Properties:
-            X: =40
-            Y: =40
+            Color: =ColorValue("#03173E")
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =32
+            Size: =16
+            Text: ="REGISTRATION READINESS"
+            Width: =300
+            X: =150
+            Y: =90
+
+      - lblRegOverallValue:
+          Control: ModernText@1.0.0
+          Properties:
+            Color: =ColorValue("#03173E")
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =45
+            Size: =28
             Text: |-
-              "REGISTRATION READINESS"
-            Text: |-
-              Text(
+              =Text(
                   Round(
                       100 *
                       Sum(
@@ -95,10 +109,65 @@ ComponentDefinitions:
                       0
                   )
               ) & "%"
+            Width: =150
+            X: =150
+            Y: =135
+
+      - lblRegOverallCaption:
+          Control: ModernText@1.0.0
+          Properties:
+            Color: =ColorValue("#54585A")
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Height: =24
+            Size: =11
+            Text: ="Overall Readiness"
+            Width: =180
+            X: =150
+            Y: =180
+
+      - lblRegConfigValue:
+          Control: ModernText@1.0.0
+          Properties:
+            Color: =ColorValue("#03173E")
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =40
+            Size: =22
             Text: |-
-              "Worksheets"
+              =CountRows(
+                  Filter(
+                      colRegReadiness,
+                      TotalRecords > 0
+                  )
+              ) & " / " & CountRows(colRegReadiness)
+            Width: =120
+            X: =360
+            Y: =135
+
+      - lblRegConfigCaption:
+          Control: ModernText@1.0.0
+          Properties:
+            Color: =ColorValue("#54585A")
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Height: =24
+            Size: =11
+            Text: ="Worksheets"
+            Width: =140
+            X: =360
+            Y: =180
+
+      - lblRegMappingValue:
+          Control: ModernText@1.0.0
+          Properties:
+            Color: =ColorValue("#03173E")
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =40
+            Size: =22
             Text: |-
-              Text(
+              =Text(
                   Round(
                       100 *
                       (
@@ -121,65 +190,187 @@ ComponentDefinitions:
                       0
                   )
               ) & "%"
-            Text: |-
-              "NO MATCH"
-      - lblRegOverallValue:
-          Control: ModernText@1.0.0
-          Properties:
-            X: =60
-            Y: =60
-      - lblRegOverallCaption:
-          Control: ModernText@1.0.0
-          Properties:
-            X: =80
-            Y: =80
-      - lblRegConfigValue:
-          Control: ModernText@1.0.0
-          Properties:
-            X: =120
-            Y: =120
-      - lblRegConfigCaption:
-          Control: ModernText@1.0.0
-          Properties:
-            X: =140
-            Y: =140
-      - lblRegMappingValue:
-          Control: ModernText@1.0.0
-          Properties:
-            X: =160
-            Y: =160
+            Width: =120
+            X: =535
+            Y: =135
+
       - lblRegMappingCaption:
           Control: ModernText@1.0.0
           Properties:
-            X: =180
+            Color: =ColorValue("#54585A")
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Height: =24
+            Size: =11
+            Text: ="Mapped"
+            Width: =120
+            X: =535
             Y: =180
+
       - lblRegValidationValue:
           Control: ModernText@1.0.0
           Properties:
-            X: =200
-            Y: =200
+            Color: =ColorValue("#03173E")
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =40
+            Size: =22
+            Text: |-
+              =Text(
+                  Round(
+                      100 *
+                      Sum(
+                          colRegReadiness,
+                          LiveRecords
+                      ) /
+                      Max(
+                          1,
+                          Sum(
+                              colRegReadiness,
+                              TotalRecords
+                          )
+                      ),
+                      0
+                  )
+              ) & "%"
+            Width: =120
+            X: =700
+            Y: =135
+
       - lblRegValidationCaption:
           Control: ModernText@1.0.0
           Properties:
-            X: =240
-            Y: =240
+            Color: =ColorValue("#54585A")
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Height: =24
+            Size: =11
+            Text: ="LIVE"
+            Width: =120
+            X: =700
+            Y: =180
+
       - lblRegOpenIssuesValue:
           Control: ModernText@1.0.0
           Properties:
-            X: =260
-            Y: =260
+            Color: =ColorValue("#E05929")
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =40
+            Size: =22
+            Text: |-
+              =Text(
+                  Sum(
+                      colRegReadiness,
+                      NoMatchRecords
+                  )
+              )
+            Width: =120
+            X: =865
+            Y: =135
+
       - lblRegOpenIssuesCaption:
           Control: ModernText@1.0.0
           Properties:
-            X: =280
-            Y: =280
+            Color: =ColorValue("#54585A")
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Height: =24
+            Size: =11
+            Text: ="NO MATCH"
+            Width: =140
+            X: =865
+            Y: =180
+
       - lblRegEventDate:
           Control: ModernText@1.0.0
           Properties:
-            X: =300
-            Y: =300
+            Color: =ColorValue("#03173E")
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Height: =32
+            Size: =14
+            Text: |-
+              =With(
+                  {
+                      nextEvent: First(
+                          Sort(
+                              Filter(
+                                  colECCSCutoverSchedule,
+                                  StartDate >= Today()
+                              ),
+                              StartDate,
+                              SortOrder.Ascending
+                          )
+                      )
+                  },
+                  If(
+                      IsBlank(nextEvent.StartDate),
+                      "No milestone scheduled",
+                      nextEvent.EventName &
+                      " | " &
+                      Text(
+                          nextEvent.StartDate,
+                          "[$-en-US]mmmm d, yyyy"
+                      )
+                  )
+              )
+            Width: =500
+            X: =150
+            Y: =240
+
       - lblRegCountdown:
           Control: ModernText@1.0.0
           Properties:
-            X: =320
-            Y: =320
+            Color: =ColorValue("#E05929")
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =45
+            Size: =22
+            Text: |-
+              =With(
+                  {
+                      nextEvent: First(
+                          Sort(
+                              Filter(
+                                  colECCSCutoverSchedule,
+                                  StartDate >= Now()
+                              ),
+                              StartDate,
+                              SortOrder.Ascending
+                          )
+                      )
+                  },
+                  If(
+                      IsBlank(nextEvent.StartDate),
+                      "COUNTDOWN NOT CONFIGURED",
+                      With(
+                          {
+                              totalMinutes: DateDiff(
+                                  Now(),
+                                  nextEvent.StartDate,
+                                  TimeUnit.Minutes
+                              )
+                          },
+                          If(
+                              totalMinutes <= 0,
+                              "EVENT ACTIVE",
+                              Int(totalMinutes / 1440) &
+                              "d " &
+                              Mod(
+                                  Int(totalMinutes / 60),
+                                  24
+                              ) &
+                              "h " &
+                              Mod(
+                                  totalMinutes,
+                                  60
+                              ) &
+                              "m"
+                          )
+                      )
+                  )
+              )
+            Width: =400
+            X: =150
+            Y: =275

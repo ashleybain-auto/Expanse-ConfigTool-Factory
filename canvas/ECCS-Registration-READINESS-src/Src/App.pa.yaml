@@ -322,8 +322,8 @@ App:
                   )
               )
           }
-      )
-            ClearCollect(
+      );
+      ClearCollect(
           colECCSCutoverSchedule,
           {
               EventName: "3A UAT - EFL",
@@ -351,3 +351,6 @@ App:
           }
       );
     Theme: =PowerAppsTheme
+
+
+

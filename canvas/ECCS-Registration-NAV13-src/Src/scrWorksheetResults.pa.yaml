@@ -273,3 +273,12 @@ Screens:
             Width: =208
             X: =53
             Y: =189
+      - cmpECCSNavigationBar_WorksheetResults:
+          Control: CanvasComponent
+          ComponentName: cmpECCSNavigationBar
+          Properties:
+            Height: =75
+            Width: =680
+            X: =500
+            Y: =5
+

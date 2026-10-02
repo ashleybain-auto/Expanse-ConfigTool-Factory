@@ -1787,3 +1787,12 @@ Screens:
             Text: ="Facility"
             X: =405
             Y: =82
+      - cmpECCSNavigationBar_Accommodations:
+          Control: CanvasComponent
+          ComponentName: cmpECCSNavigationBar
+          Properties:
+            Height: =75
+            Width: =680
+            X: =500
+            Y: =5
+

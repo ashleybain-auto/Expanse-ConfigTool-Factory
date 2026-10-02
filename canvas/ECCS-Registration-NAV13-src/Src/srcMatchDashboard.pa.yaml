@@ -1666,3 +1666,12 @@ Screens:
             Text: ="HOME"
             X: =591
             Y: =28
+      - cmpECCSNavigationBar_MatchDashboard:
+          Control: CanvasComponent
+          ComponentName: cmpECCSNavigationBar
+          Properties:
+            Height: =75
+            Width: =680
+            X: =500
+            Y: =5
+

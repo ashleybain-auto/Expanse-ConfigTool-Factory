@@ -734,3 +734,12 @@ Screens:
             Width: =636
             X: =630
             Y: =221
+      - cmpECCSNavigationBar_Registration:
+          Control: CanvasComponent
+          ComponentName: cmpECCSNavigationBar
+          Properties:
+            Height: =75
+            Width: =680
+            X: =500
+            Y: =15
+

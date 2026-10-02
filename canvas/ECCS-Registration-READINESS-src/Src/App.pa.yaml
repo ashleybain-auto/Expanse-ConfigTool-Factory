@@ -44,7 +44,7 @@ App:
           colRegReadiness,
           {
               WorksheetName: "Accommodations",
-              TotalRecords: CountRows('Accommodation Data Clone'),
+              TotalRecords: CountIf('Accommodation Data Clone', true),
               NoMatchRecords: CountRows(
                   Filter(
                       'Accommodation Data Clone',
@@ -72,7 +72,7 @@ App:
           },
           {
               WorksheetName: "Locations",
-              TotalRecords: CountRows(Locations),
+              TotalRecords: CountIf(Locations, true),
               NoMatchRecords: CountRows(
                   Filter(
                       Locations,
@@ -100,7 +100,7 @@ App:
           },
           {
               WorksheetName: "Services",
-              TotalRecords: CountRows(Services),
+              TotalRecords: CountIf(Services, true),
               NoMatchRecords: CountRows(
                   Filter(
                       Services,
@@ -128,7 +128,7 @@ App:
           },
           {
               WorksheetName: "Insurance",
-              TotalRecords: CountRows(Insurances),
+              TotalRecords: CountIf(Insurances, true),
               NoMatchRecords: CountRows(
                   Filter(
                       Insurances,
@@ -156,7 +156,7 @@ App:
           },
           {
               WorksheetName: "RoomBed",
-              TotalRecords: CountRows('Room Beds'),
+              TotalRecords: CountIf('Room Beds', true),
               NoMatchRecords: CountRows(
                   Filter(
                       'Room Beds',
@@ -184,7 +184,7 @@ App:
           },
           {
               WorksheetName: "Discharge Disposition",
-              TotalRecords: CountRows('Discharge Dispositions'),
+              TotalRecords: CountIf('Discharge Dispositions', true),
               NoMatchRecords: CountRows(
                   Filter(
                       'Discharge Dispositions',
@@ -212,7 +212,7 @@ App:
           },
           {
               WorksheetName: "Ins Auth Status",
-              TotalRecords: CountRows('Insurance Auths'),
+              TotalRecords: CountIf('Insurance Auths', true),
               NoMatchRecords: CountRows(
                   Filter(
                       'Insurance Auths',
@@ -240,7 +240,7 @@ App:
           },
           {
               WorksheetName: "Financial Approver",
-              TotalRecords: CountRows('Financial Approvers'),
+              TotalRecords: CountIf('Financial Approvers', true),
               NoMatchRecords: CountRows(
                   Filter(
                       'Financial Approvers',
@@ -268,7 +268,7 @@ App:
           },
           {
               WorksheetName: "Financial Class",
-              TotalRecords: CountRows('Financial Classes'),
+              TotalRecords: CountIf('Financial Classes', true),
               NoMatchRecords: CountRows(
                   Filter(
                       'Financial Classes',
@@ -296,7 +296,7 @@ App:
           },
           {
               WorksheetName: "Admit Source",
-              TotalRecords: CountRows('Admit Source Mapping'),
+              TotalRecords: CountIf('Admit Source Mapping', true),
               NoMatchRecords: CountRows(
                   Filter(
                       'Admit Source Mapping',
@@ -349,8 +349,11 @@ App:
               StartDate: DateTimeValue("2027-01-14T00:00:00"),
               FinishDate: DateTimeValue("2027-01-14T00:00:00")
           }
-      );
+      )
     Theme: =PowerAppsTheme
+
+
+
 
 
 

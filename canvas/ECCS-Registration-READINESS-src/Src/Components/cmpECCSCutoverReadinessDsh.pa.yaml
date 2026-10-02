@@ -173,11 +173,15 @@ ComponentDefinitions:
                       (
                           Sum(
                               colRegReadiness,
-                              TotalRecords
-                          ) -
+                              TestRecords
+                          ) +
                           Sum(
                               colRegReadiness,
-                              NoMatchRecords
+                              ZconRecords
+                          ) +
+                          Sum(
+                              colRegReadiness,
+                              LiveRecords
                           )
                       ) /
                       Max(
@@ -193,7 +197,6 @@ ComponentDefinitions:
             Width: =120
             X: =535
             Y: =135
-
       - lblRegMappingCaption:
           Control: ModernText@1.0.0
           Properties:

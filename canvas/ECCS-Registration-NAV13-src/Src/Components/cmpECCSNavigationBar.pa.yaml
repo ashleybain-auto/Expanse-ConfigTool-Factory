@@ -1,0 +1,59 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+ComponentDefinitions:
+  cmpECCSNavigationBar:
+    DefinitionType: CanvasComponent
+    Description: Site Navigation
+    AccessAppScope: true
+    Properties:
+      Height: =75
+      Width: =680
+    Children:
+      - shpNavigationHeader:
+          Control: Rectangle@2.3.0
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Fill: =ColorValue("#03173E")
+            Height: =75
+            Width: =680
+            X: =2
+      - btnHome4:
+          Control: ModernButton@1.0.0
+          Properties:
+            Icon: ="Home"
+            Text: ="HOME"
+            Width: =100
+            X: =13
+            Y: =21
+      - btnBack4:
+          Control: ModernButton@1.0.0
+          Properties:
+            Icon: ="ArrowLeft"
+            OnSelect: =Back()
+            Text: ="BACK"
+            Width: =100
+            X: =263
+            Y: =21
+      - btnRefresh4:
+          Control: ModernButton@1.0.0
+          Properties:
+            Icon: ="ArrowSync"
+            Text: ="REFRESH"
+            Width: =115
+            X: =413
+            Y: =21
+      - btnNext4:
+          Control: ModernButton@1.0.0
+          Properties:
+            Icon: ="ArrowRight"
+            Layout: =ButtonLayout.IconAfter
+            Text: ="NEXT"
+            Width: =100
+            X: =573
+            Y: =21

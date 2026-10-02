@@ -29,23 +29,31 @@ Screens:
             Fill: =ColorValue("#F5F7FA")
             Height: =700
             Records: |-
-              =Table(
+              =ForAll(
+                  Filter(
+                      'Accommodation Data Clone',
+                      IsBlank(gblSelectedFacility) ||
+                      FacilityMnem_Source = gblSelectedFacility
+                  ),
                   {
-                      RecordKey: "",
-                      SourceFacility: "",
-                      SourceMnemonic: "",
-                      SourceName: "",
-                      SourcePACode: "",
-                      SourceActive: "",
-                      TargetFacility: "",
-                      TargetMnemonic: "",
-                      TargetName: "",
-                      TargetPACode: "",
-                      TargetActive: "",
-                      TargetMatchMtx: ""
+                      RecordKey: Text(ECCS_Clone_RowId),
+                      SourceFacility: Coalesce(FacilityMnem_Source, ""),
+                      SourceMnemonic: Coalesce(Accommodation_Mnem_Source, ""),
+                      SourceName: Coalesce(Accommodation_Name_Source, ""),
+                      SourcePACode: Coalesce(PA_Code_Source, ""),
+                      SourceActive: Text(Active_Source),
+                      TargetFacility: Coalesce(FacilityMnem_Target, ""),
+                      TargetMnemonic: Coalesce(Accommodation_Mnem_Target, ""),
+                      TargetName: Coalesce(Accommodation_Name_Target, ""),
+                      TargetPACode: Coalesce(PA_Code_Target, ""),
+                      TargetActive: Text(Active_Target),
+                      TargetMatchMtx: Coalesce(TargetMatchMtx, "")
                   }
               )
             WaveSubwaveFacilitySearch: ="Text"
             Width: =1200
             WorksheetName: ="Registration | Configuration Review"
             X: =6
+
+
+

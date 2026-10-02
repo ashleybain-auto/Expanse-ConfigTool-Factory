@@ -78,14 +78,7 @@ ComponentDefinitions:
             FocusedBorderThickness: =2
             Height: =483
             Items: |-
-              =If(
-                  IsBlank(gblECCSBoardSearchRecord),
-                  'Accommodation Data Clone',
-                  Filter(
-                      'Accommodation Data Clone',
-                      ECCS_Clone_RowId = gblECCSBoardSearchRecord.ECCS_Clone_RowId
-                  )
-              )
+              =cmpECCSConfigurationBoard.Records
             NavigationStep: =2
             OnSelect: =
             ShowNavigation: =true
@@ -111,7 +104,7 @@ ComponentDefinitions:
                   PaddingRight: =0
                   PaddingTop: =0
                   Size: =12
-                  Text: =ThisItem.FacilityMnem_Source
+                  Text: =ThisItem.SourceFacility
                   VerticalAlign: =VerticalAlign.Top
                   Width: =Parent.TemplateWidth - 86
                   X: =16
@@ -129,7 +122,7 @@ ComponentDefinitions:
                   PaddingRight: =0
                   PaddingTop: =0
                   Size: =10
-                  Text: =ThisItem.Accommodation_Name_Target
+                  Text: =ThisItem.TargetName
                   VerticalAlign: =VerticalAlign.Top
                   Width: =Title1.Width
                   X: =Title1.X
@@ -147,7 +140,7 @@ ComponentDefinitions:
                   PaddingRight: =0
                   PaddingTop: =0
                   Size: =10
-                  Text: =ThisItem.Accommodation_Mnem_Target
+                  Text: =ThisItem.TargetMnemonic
                   VerticalAlign: =VerticalAlign.Top
                   Width: =Title1.Width
                   X: =Title1.X
@@ -194,7 +187,7 @@ ComponentDefinitions:
           Properties:
             Text: |-
               =Text(
-                  galBoardRecords.Selected.Active_Source
+                  galBoardRecords.Selected.SourceActive
               )
             X: =825
             Y: =225
@@ -207,7 +200,7 @@ ComponentDefinitions:
       - SrcPAcodeValue:
           Control: ModernText@1.0.0
           Properties:
-            Text: =galBoardRecords.Selected.PA_Code_Source
+            Text: =galBoardRecords.Selected.SourcePACode
             X: =825
             Y: =200
       - Source PA Code Caption:
@@ -220,7 +213,7 @@ ComponentDefinitions:
       - SrcNameValue:
           Control: ModernText@1.0.0
           Properties:
-            Text: =galBoardRecords.Selected.Accommodation_Name_Source
+            Text: =galBoardRecords.Selected.SourceName
             VerticalAlign: =VerticalAlign.Top
             Width: =375
             X: =825
@@ -234,7 +227,7 @@ ComponentDefinitions:
       - SrcMnemValue:
           Control: ModernText@1.0.0
           Properties:
-            Text: =galBoardRecords.Selected.FacilityMnem_Source
+            Text: =galBoardRecords.Selected.SourceMnemonic
             X: =825
             Y: =150
       - Source Mnemonic Caption:
@@ -248,7 +241,7 @@ ComponentDefinitions:
           Control: ModernText@1.0.0
           Properties:
             OnSelect: =
-            Text: =galBoardRecords.Selected.FacilityMnem_Source
+            Text: =galBoardRecords.Selected.SourceMnemonic
             X: |
               =825
             Y: =125
@@ -309,7 +302,7 @@ ComponentDefinitions:
       - lblTargetFacilityValue1:
           Control: ModernText@1.0.0
           Properties:
-            Text: =galBoardRecords.Selected.FacilityMnem_Target
+            Text: =galBoardRecords.Selected.TargetFacility
             X: =825
             Y: =300
       - lblTargetFacilityCaption1:
@@ -323,7 +316,7 @@ ComponentDefinitions:
           Properties:
             AutoHeight: =true
             Height: =25
-            Text: =galBoardRecords.Selected.Accommodation_Mnem_Target
+            Text: =galBoardRecords.Selected.TargetMnemonic
             X: =825
             Y: =325
       - lblTargetMnemonicCaption1:
@@ -338,7 +331,7 @@ ComponentDefinitions:
           Properties:
             AutoHeight: =true
             Height: =25
-            Text: =galBoardRecords.Selected.Accommodation_Name_Target
+            Text: =galBoardRecords.Selected.TargetName
             X: =825
             Y: =350
       - lblTargetNameCaption1:
@@ -350,7 +343,7 @@ ComponentDefinitions:
       - lblTargetPACodeValue1:
           Control: ModernText@1.0.0
           Properties:
-            Text: =galBoardRecords.Selected.PA_Code_Target
+            Text: =galBoardRecords.Selected.TargetPACode
             X: =825
             Y: =375
       - lblTargetPACodeCaption1:
@@ -488,4 +481,6 @@ ComponentDefinitions:
             Width: =232
             X: =743
             Y: =601
+
+
 

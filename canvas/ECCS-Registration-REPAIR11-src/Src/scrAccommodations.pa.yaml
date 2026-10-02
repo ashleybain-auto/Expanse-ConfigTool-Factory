@@ -936,6 +936,7 @@ Screens:
             BorderColor: =RGBA(13, 50, 61, 1)
             BorderThickness: =1
             Clear: =true
+            DelayOutput: =true
             Default: =
             Font: =Font.'Open Sans'
             Height: =32
@@ -1661,3 +1662,6 @@ Screens:
             Width: =620
             X: =715
             Y: =22
+
+
+

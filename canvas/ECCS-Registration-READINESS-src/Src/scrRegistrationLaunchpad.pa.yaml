@@ -682,116 +682,58 @@ Screens:
             X: =185
             Y: =355
 
-      - galRegWorksheetReadiness:
-          Control: Gallery@2.15.0
-          Variant: BrowseLayout_Vertical_ThreeTextVariant_ver5.0
+      - lblRegWorksheetReadiness:
+          Control: ModernText@1.0.0
           Properties:
-            BorderColor: =RGBA(217, 221, 226, 1)
-            BorderThickness: =1
+            Color: =ColorValue("#54585A")
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Normal
             Height: =275
-            Items: |-
-              =colRegReadiness
-            TemplateSize: =42
+            Size: =10
+            Text: |-
+              =Concat(
+                  Sort(
+                      colRegReadiness,
+                      WorksheetName,
+                      SortOrder.Ascending
+                  ),
+                  WorksheetName &
+                  "    " &
+                  Text(TotalRecords) &
+                  " records    " &
+                  Text(
+                      Round(
+                          100 *
+                          (
+                              TestRecords +
+                              ZconRecords +
+                              LiveRecords
+                          ) /
+                          Max(
+                              1,
+                              TotalRecords
+                          ),
+                          0
+                      )
+                  ) &
+                  "% mapped    " &
+                  Text(
+                      Round(
+                          100 *
+                          LiveRecords /
+                          Max(
+                              1,
+                              TotalRecords
+                          ),
+                          0
+                      )
+                  ) &
+                  "% LIVE    " &
+                  Text(NoMatchRecords) &
+                  " NO MATCH" &
+                  Char(10)
+              )
+            VerticalAlign: =VerticalAlign.Top
             Width: =820
             X: =185
             Y: =385
-            Children:
-              - lblRegWorksheetName:
-                  Control: ModernText@1.0.0
-                  Properties:
-                    Color: =ColorValue("#54585A")
-                    Font: =Font.'Open Sans'
-                    FontWeight: =FontWeight.Semibold
-                    Height: =24
-                    Size: =10
-                    Text: =ThisItem.WorksheetName
-                    Width: =220
-                    X: =10
-                    Y: =8
-
-              - lblRegWorksheetRecords:
-                  Control: ModernText@1.0.0
-                  Properties:
-                    Color: =ColorValue("#54585A")
-                    Font: =Font.'Open Sans'
-                    Height: =24
-                    Size: =10
-                    Text: =ThisItem.TotalRecords & " records"
-                    Width: =100
-                    X: =240
-                    Y: =8
-
-              - lblRegWorksheetMapped:
-                  Control: ModernText@1.0.0
-                  Properties:
-                    Color: =ColorValue("#03173E")
-                    Font: =Font.'Open Sans'
-                    FontWeight: =FontWeight.Bold
-                    Height: =24
-                    Size: =10
-                    Text: |-
-                      =Text(
-                          Round(
-                              100 *
-                              (
-                                  ThisItem.TestRecords +
-                                  ThisItem.ZconRecords +
-                                  ThisItem.LiveRecords
-                              ) /
-                              Max(
-                                  1,
-                                  ThisItem.TotalRecords
-                              ),
-                              0
-                          )
-                      ) & "%"
-                    Width: =80
-                    X: =350
-                    Y: =8
-
-              - lblRegWorksheetLive:
-                  Control: ModernText@1.0.0
-                  Properties:
-                    Color: =ColorValue("#008C45")
-                    Font: =Font.'Open Sans'
-                    FontWeight: =FontWeight.Bold
-                    Height: =24
-                    Size: =10
-                    Text: |-
-                      =Text(
-                          Round(
-                              100 *
-                              ThisItem.LiveRecords /
-                              Max(
-                                  1,
-                                  ThisItem.TotalRecords
-                              ),
-                              0
-                          )
-                      ) & "%"
-                    Width: =70
-                    X: =440
-                    Y: =8
-
-              - lblRegWorksheetNoMatch:
-                  Control: ModernText@1.0.0
-                  Properties:
-                    Color: =Color.Red
-                    Font: =Font.'Open Sans'
-                    FontWeight: =FontWeight.Bold
-                    Height: =24
-                    Size: =10
-                    Text: =ThisItem.NoMatchRecords
-                    Width: =70
-                    X: =520
-                    Y: =8
-
-              - shpRegWorksheetSeparator:
-                  Control: Rectangle@2.3.0
-                  Properties:
-                    BorderColor: =RGBA(217, 221, 226, 1)
-                    Fill: =RGBA(217, 221, 226, 1)
-                    Height: =1
-                    Width: =790
-                    X: =10
-                    Y: =40

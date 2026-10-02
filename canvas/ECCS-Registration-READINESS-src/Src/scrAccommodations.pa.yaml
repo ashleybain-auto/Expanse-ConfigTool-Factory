@@ -1,0 +1,1790 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  scrAccommodations:
+    Properties:
+      Fill: =RGBA(232, 232, 232, 1)
+      LoadingSpinnerColor: =ColorValue("#E05929")
+      OnVisible: |-
+        =Set(
+            gblSelectedWorksheet,
+            ""
+        );
+
+        Set(
+            gblSelectedEnvironment,
+            "Expanse TEST"
+        );
+
+        Set(
+            gblSelectedAccommodation,
+            Blank()
+        );
+
+        Set(
+            gblEditMode,
+            false
+        );
+
+        Set(
+            gblSyncConfirmed,
+            false
+        );
+
+        Set(
+            gblShowSyncPrompt,
+            false
+        );
+
+        Reset(drpRegistrationWorksheet);
+        Reset(cmbFacility);
+        Reset(txtAccommodationSearch);
+
+        Reset(txtTargetFacility);
+        Reset(txtTargetMnem);
+        Reset(txtTargetName);
+        Reset(txtTargetPACode);
+        Reset(txtTargetActive)
+    Children:
+      - shpHeader:
+          Control: Rectangle@2.3.0
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Fill: =ColorValue("#03173E")
+            Height: =80
+            Width: =Parent.Width
+            X: '=0   '
+      - galAccommodations:
+          Control: Gallery@2.15.0
+          Variant: BrowseLayout_Vertical_ThreeTextVariant_ver5.0
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            BorderThickness: =1
+            Height: =479
+            Items: |-
+              =Filter(
+                  Switch(
+                      Substitute(
+                          Trim(
+                              Coalesce(
+                                  gblSelectedWorksheet,
+                                  ""
+                              )
+                          ),
+                          "REG ",
+                          ""
+                      ),
+
+                      "Accommodations",
+                          ForAll(
+                              Filter(
+                                  'Accommodation Data Clone',
+                                  IsBlank(gblSelectedFacility) ||
+                                  FacilityMnem_Source = gblSelectedFacility
+                              ),
+                              {
+                                  RecordKey: Text(ECCS_Clone_RowId),
+                                  WorksheetName: "Accommodations",
+
+                                  SourceFacility: Coalesce(
+                                      FacilityMnem_Source,
+                                      ""
+                                  ),
+                                  SourceMnemonic: Coalesce(
+                                      Accommodation_Mnem_Source,
+                                      ""
+                                  ),
+                                  SourceName: Coalesce(
+                                      Accommodation_Name_Source,
+                                      ""
+                                  ),
+                                  SourcePACode: Coalesce(
+                                      PA_Code_Source,
+                                      ""
+                                  ),
+                                  SourceActive: Text(
+                                      Active_Source
+                                  ),
+
+                                  TargetFacility: Coalesce(
+                                      FacilityMnem_Target,
+                                      ""
+                                  ),
+                                  TargetMnemonic: Coalesce(
+                                      Accommodation_Mnem_Target,
+                                      ""
+                                  ),
+                                  TargetName: Coalesce(
+                                      Accommodation_Name_Target,
+                                      ""
+                                  ),
+                                  TargetPACode: Coalesce(
+                                      PA_Code_Target,
+                                      ""
+                                  ),
+                                  TargetActive: Coalesce(
+                                      Active_Target_Value,
+                                      ""
+                                  ),
+                                  TargetMatchMtx: Coalesce(
+                                      TargetMatchMtx,
+                                      ""
+                                  ),
+
+                                  ReadOnly: false
+                              }
+                          ),
+
+                      "Locations",
+                          ForAll(
+                              Filter(
+                                  Locations,
+                                  IsBlank(gblSelectedFacility) ||
+                                  'Source Facility Mnemonic' = gblSelectedFacility
+                              ),
+                              {
+                                  RecordKey:
+                                      Coalesce(
+                                          'Source Facility Mnemonic',
+                                          ""
+                                      ) &
+                                      "|" &
+                                      Coalesce(
+                                          'Source Location Mnemonic',
+                                          ""
+                                      ),
+                                  WorksheetName: "Locations",
+
+                                  SourceFacility: Coalesce(
+                                      'Source Facility Mnemonic',
+                                      ""
+                                  ),
+                                  SourceMnemonic: Coalesce(
+                                      'Source Location Mnemonic',
+                                      ""
+                                  ),
+                                  SourceName: Coalesce(
+                                      'Source Location Name',
+                                      ""
+                                  ),
+                                  SourcePACode: Coalesce(
+                                      'Source PA Code',
+                                      ""
+                                  ),
+                                  SourceActive: Coalesce(
+                                      'Source Location Active',
+                                      ""
+                                  ),
+
+                                  TargetFacility: Coalesce(
+                                      'Target Facility Mnemonic',
+                                      ""
+                                  ),
+                                  TargetMnemonic: Coalesce(
+                                      'Target Location Mnemonic',
+                                      ""
+                                  ),
+                                  TargetName: Coalesce(
+                                      'Target Location Name',
+                                      ""
+                                  ),
+                                  TargetPACode: Coalesce(
+                                      'Target PA Code',
+                                      ""
+                                  ),
+                                  TargetActive: Coalesce(
+                                      'Target Location Active',
+                                      ""
+                                  ),
+                                  TargetMatchMtx: Coalesce(
+                                      'Target Match Matrix',
+                                      ""
+                                  ),
+
+                                  ReadOnly: false
+                              }
+                          ),
+
+                      "Services",
+                          ForAll(
+                              Filter(
+                                  Services,
+                                  IsBlank(gblSelectedFacility) ||
+                                  'Source Facility Mnemonic' = gblSelectedFacility
+                              ),
+                              {
+                                  RecordKey:
+                                      Coalesce(
+                                          'Source Facility Mnemonic',
+                                          ""
+                                      ) &
+                                      "|" &
+                                      Coalesce(
+                                          'Source Service Mnemonic',
+                                          ""
+                                      ),
+                                  WorksheetName: "Services",
+
+                                  SourceFacility: Coalesce(
+                                      'Source Facility Mnemonic',
+                                      ""
+                                  ),
+                                  SourceMnemonic: Coalesce(
+                                      'Source Service Mnemonic',
+                                      ""
+                                  ),
+                                  SourceName: Coalesce(
+                                      'Source Service Name',
+                                      ""
+                                  ),
+                                  SourcePACode: Coalesce(
+                                      'Source Service PA Code',
+                                      ""
+                                  ),
+                                  SourceActive: Text(
+                                      'Source Active Status'
+                                  ),
+
+                                  TargetFacility: Coalesce(
+                                      'Target Facility Mnemonic',
+                                      ""
+                                  ),
+                                  TargetMnemonic: Coalesce(
+                                      'Target Service Mnemonic',
+                                      ""
+                                  ),
+                                  TargetName: Coalesce(
+                                      'Target Service Name',
+                                      ""
+                                  ),
+                                  TargetPACode: Coalesce(
+                                      'Target Service PA Code',
+                                      ""
+                                  ),
+                                  TargetActive: Text(
+                                      'Target Active Status'
+                                  ),
+                                  TargetMatchMtx: Coalesce(
+                                      'Target Match Matrix',
+                                      ""
+                                  ),
+
+                                  ReadOnly: false
+                              }
+                          ),
+
+                      "Insurance",
+                          ForAll(
+                              Filter(
+                                  Insurances,
+                                  IsBlank(gblSelectedFacility) ||
+                                  'Source Facility Mnemonic' = gblSelectedFacility
+                              ),
+                              {
+                                  RecordKey:
+                                      Coalesce(
+                                          'Source Facility Mnemonic',
+                                          ""
+                                      ) &
+                                      "|" &
+                                      Coalesce(
+                                          'Source Mnemonic',
+                                          ""
+                                      ),
+                                  WorksheetName: "Insurance",
+
+                                  SourceFacility: Coalesce(
+                                      'Source Facility Mnemonic',
+                                      ""
+                                  ),
+                                  SourceMnemonic: Coalesce(
+                                      'Source Mnemonic',
+                                      ""
+                                  ),
+                                  SourceName: Coalesce(
+                                      'Source Description',
+                                      ""
+                                  ),
+                                  SourcePACode: Coalesce(
+                                      'Source PA Code',
+                                      ""
+                                  ),
+                                  SourceActive: Coalesce(
+                                      'Source Active Status',
+                                      ""
+                                  ),
+
+                                  TargetFacility: Coalesce(
+                                      'Target Facility Mnemonic',
+                                      ""
+                                  ),
+                                  TargetMnemonic: Coalesce(
+                                      'Target Mnemonic',
+                                      ""
+                                  ),
+                                  TargetName: Coalesce(
+                                      'Target Description',
+                                      ""
+                                  ),
+                                  TargetPACode: Coalesce(
+                                      'Target PA Code',
+                                      ""
+                                  ),
+                                  TargetActive: Coalesce(
+                                      'Target Active Status',
+                                      ""
+                                  ),
+                                  TargetMatchMtx: Coalesce(
+                                      'Target Match Matrix',
+                                      ""
+                                  ),
+
+                                  ReadOnly: false
+                              }
+                          ),
+
+                      "RoomBed",
+                          ForAll(
+                              Filter(
+                                  'Room Beds',
+                                  IsBlank(gblSelectedFacility) ||
+                                  'Source Facility Code' = gblSelectedFacility
+                              ),
+                              {
+                                  RecordKey:
+                                      Coalesce(
+                                          'Source Facility Code',
+                                          ""
+                                      ) &
+                                      "|" &
+                                      Coalesce(
+                                          'Source Location Code',
+                                          ""
+                                      ) &
+                                      "|" &
+                                      Coalesce(
+                                          'Source Room Code',
+                                          ""
+                                      ) &
+                                      "|" &
+                                      Coalesce(
+                                          'Source Bed Code',
+                                          ""
+                                      ),
+                                  WorksheetName: "RoomBed",
+
+                                  SourceFacility: Coalesce(
+                                      'Source Facility Code',
+                                      ""
+                                  ),
+                                  SourceMnemonic: Coalesce(
+                                      'Source Room Code',
+                                      ""
+                                  ),
+                                  SourceName: Coalesce(
+                                      'Source Accommodation Type',
+                                      ""
+                                  ),
+                                  SourcePACode: Coalesce(
+                                      'Source Rate Accommodation Procedure Code',
+                                      ""
+                                  ),
+                                  SourceActive: Text(
+                                      'Source Active Status'
+                                  ),
+
+                                  TargetFacility: Coalesce(
+                                      'Target Facility Code',
+                                      ""
+                                  ),
+                                  TargetMnemonic: Coalesce(
+                                      'Target Room Code',
+                                      ""
+                                  ),
+                                  TargetName: Coalesce(
+                                      'Target Accommodation Type',
+                                      ""
+                                  ),
+                                  TargetPACode: Coalesce(
+                                      'Target Rate Accommodation Procedure Code',
+                                      ""
+                                  ),
+                                  TargetActive: "",
+                                  TargetMatchMtx: Coalesce(
+                                      'Target Match Status',
+                                      ""
+                                  ),
+
+                                  ReadOnly: false
+                              }
+                          ),
+
+                      "Discharge Disposition",
+                          ForAll(
+                              Filter(
+                                  'Discharge Dispositions',
+                                  IsBlank(gblSelectedNetworkMnemonic) ||
+                                  'Network Mnemonic Source' =
+                                      gblSelectedNetworkMnemonic
+                              ),
+                              {
+                                  RecordKey:
+                                      Coalesce(
+                                          'Network Mnemonic Source',
+                                          ""
+                                      ) &
+                                      "|" &
+                                      Coalesce(
+                                          'Discharge Disposition Mnemonic Source',
+                                          ""
+                                      ),
+                                  WorksheetName: "Discharge Disposition",
+
+                                  SourceFacility: Coalesce(
+                                      'Network Mnemonic Source',
+                                      ""
+                                  ),
+                                  SourceMnemonic: Coalesce(
+                                      'Discharge Disposition Mnemonic Source',
+                                      ""
+                                  ),
+                                  SourceName: Coalesce(
+                                      'Discharge Disposition Name Source',
+                                      ""
+                                  ),
+                                  SourcePACode: Coalesce(
+                                      'Billing Code Source',
+                                      ""
+                                  ),
+                                  SourceActive: Text(
+                                      'Active Source'
+                                  ),
+
+                                  TargetFacility: "",
+                                  TargetMnemonic: Coalesce(
+                                      'Discharge Disposition Mnemonic Target',
+                                      ""
+                                  ),
+                                  TargetName: Coalesce(
+                                      'Discharge Disposition Name Target',
+                                      ""
+                                  ),
+                                  TargetPACode: "",
+                                  TargetActive: "",
+                                  TargetMatchMtx: Coalesce(
+                                      'Target Match Matrix',
+                                      ""
+                                  ),
+
+                                  ReadOnly: false
+                              }
+                          ),
+
+                      "Ins Auth Status",
+                          ForAll(
+                              Filter(
+                                  'Insurance Auths',
+                                  IsBlank(gblSelectedNetworkMnemonic) ||
+                                  'Network Mnemonic Source' =
+                                      gblSelectedNetworkMnemonic
+                              ),
+                              {
+                                  RecordKey:
+                                      Coalesce(
+                                          'Network Mnemonic Source',
+                                          ""
+                                      ) &
+                                      "|" &
+                                      Coalesce(
+                                          'Insurance Authorization Status Mnemonic Source',
+                                          ""
+                                      ),
+                                  WorksheetName: "Ins Auth Status",
+
+                                  SourceFacility: Coalesce(
+                                      'Network Mnemonic Source',
+                                      ""
+                                  ),
+                                  SourceMnemonic: Coalesce(
+                                      'Insurance Authorization Status Mnemonic Source',
+                                      ""
+                                  ),
+                                  SourceName: Coalesce(
+                                      'Insurance Authorization Status Name Source',
+                                      ""
+                                  ),
+                                  SourcePACode: "",
+                                  SourceActive: Coalesce(
+                                      'Active Source Flag',
+                                      ""
+                                  ),
+
+                                  TargetFacility: "",
+                                  TargetMnemonic: Coalesce(
+                                      'Insurance Authorization Status Mnemonic Target',
+                                      ""
+                                  ),
+                                  TargetName: Coalesce(
+                                      'Insurance Authorization Status Name Target',
+                                      ""
+                                  ),
+                                  TargetPACode: "",
+                                  TargetActive: Coalesce(
+                                      'Active Target Flag',
+                                      ""
+                                  ),
+                                  TargetMatchMtx: Coalesce(
+                                      'Target Match Matrix Note',
+                                      ""
+                                  ),
+
+                                  ReadOnly: false
+                              }
+                          ),
+
+                      "Financial Approver",
+                          ForAll(
+                              Filter(
+                                  'Financial Approvers',
+                                  IsBlank(gblSelectedNetworkMnemonic) ||
+                                  'Source Network Mnemonic' =
+                                      gblSelectedNetworkMnemonic
+                              ),
+                              {
+                                  RecordKey:
+                                      Coalesce(
+                                          'Source Network Mnemonic',
+                                          ""
+                                      ) &
+                                      "|" &
+                                      Coalesce(
+                                          'Source Financial Approver Mnemonic',
+                                          ""
+                                      ),
+                                  WorksheetName: "Financial Approver",
+
+                                  SourceFacility: Coalesce(
+                                      'Source Network Mnemonic',
+                                      ""
+                                  ),
+                                  SourceMnemonic: Coalesce(
+                                      'Source Financial Approver Mnemonic',
+                                      ""
+                                  ),
+                                  SourceName: Coalesce(
+                                      'Source Financial Approver Description',
+                                      ""
+                                  ),
+                                  SourcePACode: "",
+                                  SourceActive: "",
+
+                                  TargetFacility: "",
+                                  TargetMnemonic: Coalesce(
+                                      'Target Financial Approver Mnemonic',
+                                      ""
+                                  ),
+                                  TargetName: Coalesce(
+                                      'Target Financial Approver Description',
+                                      ""
+                                  ),
+                                  TargetPACode: "",
+                                  TargetActive: "",
+                                  TargetMatchMtx: Coalesce(
+                                      'Target Match Matrix',
+                                      ""
+                                  ),
+
+                                  ReadOnly: false
+                              }
+                          ),
+
+                      "Financial Class",
+                          ForAll(
+                              Filter(
+                                  'Financial Classes',
+                                  IsBlank(gblSelectedNetworkMnemonic) ||
+                                  'Source Network Mnemonic' =
+                                      gblSelectedNetworkMnemonic
+                              ),
+                              {
+                                  RecordKey:
+                                      Coalesce(
+                                          'Source Network Mnemonic',
+                                          ""
+                                      ) &
+                                      "|" &
+                                      Coalesce(
+                                          'Source Financial Class Mnemonic',
+                                          ""
+                                      ),
+                                  WorksheetName: "Financial Class",
+
+                                  SourceFacility: Coalesce(
+                                      'Source Network Mnemonic',
+                                      ""
+                                  ),
+                                  SourceMnemonic: Coalesce(
+                                      'Source Financial Class Mnemonic',
+                                      ""
+                                  ),
+                                  SourceName: Coalesce(
+                                      'Source Financial Class Name',
+                                      ""
+                                  ),
+                                  SourcePACode: "",
+                                  SourceActive: Text(
+                                      'Source Active Status'
+                                  ),
+
+                                  TargetFacility: Coalesce(
+                                      'Target Network Mnemonic',
+                                      ""
+                                  ),
+                                  TargetMnemonic: Coalesce(
+                                      'Target Financial Class Mnemonic',
+                                      ""
+                                  ),
+                                  TargetName: Coalesce(
+                                      'Target Financial Class Name',
+                                      ""
+                                  ),
+                                  TargetPACode: "",
+                                  TargetActive: Text(
+                                      'Target Active Status'
+                                  ),
+                                  TargetMatchMtx: Coalesce(
+                                      'Target Match Matrix',
+                                      ""
+                                  ),
+
+                                  ReadOnly: false
+                              }
+                          ),
+
+                      "Admit Source",
+                          ForAll(
+                              Filter(
+                                  'Admit Source Mapping',
+                                  IsBlank(gblSelectedNetworkMnemonic) ||
+                                  'Source Network Mnemonic' =
+                                      gblSelectedNetworkMnemonic
+                              ),
+                              {
+                                  RecordKey:
+                                      Coalesce(
+                                          'Source Network Mnemonic',
+                                          ""
+                                      ) &
+                                      "|" &
+                                      Coalesce(
+                                          'Source Admit Code',
+                                          ""
+                                      ),
+                                  WorksheetName: "Admit Source",
+
+                                  SourceFacility: Coalesce(
+                                      'Source Network Mnemonic',
+                                      ""
+                                  ),
+                                  SourceMnemonic: Coalesce(
+                                      'Source Admit Code',
+                                      ""
+                                  ),
+                                  SourceName: Coalesce(
+                                      'Source Admit Description',
+                                      ""
+                                  ),
+                                  SourcePACode: "",
+                                  SourceActive: Text(
+                                      'Source Active Status'
+                                  ),
+
+                                  TargetFacility: Coalesce(
+                                      'Target Network Mnemonic',
+                                      ""
+                                  ),
+                                  TargetMnemonic: Coalesce(
+                                      'Target Admit Code',
+                                      ""
+                                  ),
+                                  TargetName: Coalesce(
+                                      'Target Admit Description',
+                                      ""
+                                  ),
+                                  TargetPACode: "",
+                                  TargetActive: Text(
+                                      'Target Active Status'
+                                  ),
+                                  TargetMatchMtx: Coalesce(
+                                      'Match Status',
+                                      ""
+                                  ),
+
+                                  ReadOnly: false
+                              }
+                          ),
+
+                      FirstN(
+                          Table(
+                              {
+                                  RecordKey: "",
+                                  WorksheetName: "",
+                                  SourceFacility: "",
+                                  SourceMnemonic: "",
+                                  SourceName: "",
+                                  SourcePACode: "",
+                                  SourceActive: "",
+                                  TargetFacility: "",
+                                  TargetMnemonic: "",
+                                  TargetName: "",
+                                  TargetPACode: "",
+                                  TargetActive: "",
+                                  TargetMatchMtx: "",
+                                  ReadOnly: true
+                              }
+                          ),
+                          0
+                      )
+                  )
+                  ,
+                  IsBlank(Trim(txtAccommodationSearch.Text)) ||
+                  StartsWith(
+                      SourceMnemonic,
+                      Trim(txtAccommodationSearch.Text)
+                  ) ||
+                  StartsWith(
+                      SourceName,
+                      Trim(txtAccommodationSearch.Text)
+                  ) ||
+                  StartsWith(
+                      SourcePACode,
+                      Trim(txtAccommodationSearch.Text)
+                  )
+              )
+            OnSelect: |-
+              =Set(
+                  gblSelectedAccommodation,
+                  galAccommodations.Selected
+              );
+
+              Set(
+                  gblEditMode,
+                  false
+              );
+
+              Reset(txtTargetFacility);
+              Reset(txtTargetMnem);
+              Reset(txtTargetName);
+              Reset(txtTargetPACode);
+              Reset(txtTargetActive);
+
+              Set(
+                  gblSyncConfirmed,
+                  false
+              );
+
+              Set(
+                  gblShowSyncPrompt,
+                  IsMatch(
+                      Coalesce(
+                          galAccommodations.Selected.TargetMatchMtx,
+                          ""
+                      ),
+                      "^(LIVE|TEST|ZCON) \([0-9]{4}-[0-9]{2}-[0-9]{2}\)$",
+                      MatchOptions.Contains
+                  )
+              )
+            ShowNavigation: =true
+            TemplateSize: =95
+            Width: =682
+            X: =24
+            Y: =244
+          Children:
+            - Title5:
+                Control: Label@2.5.1
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 1)
+                  Color: =RGBA(50, 49, 48, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                  Height: =Self.Size * 1.8
+                  OnSelect: =Select(Parent)
+                  Overflow: =Overflow.Scroll
+                  PaddingBottom: =0
+                  PaddingLeft: =0
+                  PaddingRight: =0
+                  PaddingTop: =0
+                  Size: =14
+                  Text: =ThisItem.SourceFacility
+                  VerticalAlign: =VerticalAlign.Top
+                  Width: =Parent.TemplateWidth - 86
+                  X: =16
+                  Y: =(Parent.TemplateHeight - (Self.Size*1.8 + Subtitle5.Size*1.8 + 2 + Body5.Size*1.8)) / 2
+            - Subtitle5:
+                Control: Label@2.5.1
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                  Height: =Self.Size * 1.8
+                  OnSelect: =Select(Parent)
+                  PaddingBottom: =0
+                  PaddingLeft: =0
+                  PaddingRight: =0
+                  PaddingTop: =0
+                  Size: =12
+                  Text: =ThisItem.SourceName
+                  VerticalAlign: =VerticalAlign.Top
+                  Width: =Title5.Width
+                  X: =Title5.X
+                  Y: =Title5.Y + Title5.Height
+            - Body5:
+                Control: Label@2.5.1
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                  Height: =Self.Size * 1.8
+                  OnSelect: =Select(Parent)
+                  PaddingBottom: =0
+                  PaddingLeft: =0
+                  PaddingRight: =0
+                  PaddingTop: =0
+                  Size: =12
+                  Text: =ThisItem.SourceMnemonic
+                  VerticalAlign: =VerticalAlign.Top
+                  Width: =Title5.Width
+                  X: =Title5.X
+                  Y: =Subtitle5.Y + Subtitle5.Height
+            - arwExpand:
+                Control: Classic/Icon@2.5.0
+                Properties:
+                  AccessibleLabel: =Self.Tooltip
+                  BorderColor: =RGBA(0, 89, 178, 1)
+                  Color: =RGBA(166, 166, 166, 1)
+                  Height: =70
+                  Icon: =Icon.ChevronRight
+                  OnSelect: =Select(Parent)
+                  PaddingBottom: =16
+                  PaddingLeft: =16
+                  PaddingRight: =16
+                  PaddingTop: =16
+                  Tooltip: ="Edit/View item details"
+                  Width: =50
+                  X: =Parent.TemplateWidth - Self.Width - 12
+                  Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
+            - Separator7:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 89, 178, 1)
+                  Fill: =RGBA(255, 255, 255, 1)
+                  Height: =0
+                  OnSelect: =Select(Parent)
+                  Width: =Parent.TemplateWidth
+                  Y: =105
+            - Rectangle7:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 89, 178, 1)
+                  Fill: =RGBA(0, 89, 178, 1)
+                  Height: =Parent.TemplateHeight - Separator7.Height
+                  OnSelect: =Select(Parent)
+                  Visible: =ThisItem.IsSelected
+                  Width: =4
+      - lblAppTitle:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Color: =Color.White
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =36
+            Size: =18
+            Text: ="Expanse Cutover Configuration & Suite"
+            Width: =600
+            X: =24
+            Y: =10
+      - lblModuleTitle:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Color: =ColorValue("#E05929")
+            Font: =Font.'Open Sans'
+            Height: =24
+            Text: |-
+              ="Expanse | " &
+              Substitute(
+                  Coalesce(
+                      gblSelectedWorksheet,
+                      "REG Accommodations"
+                  ),
+                  "REG ",
+                  ""
+              )
+            Width: =400
+            X: =24
+            Y: =44
+      - txtAccommodationSearch:
+          Control: Classic/TextInput@2.3.2
+          Properties:
+            BorderColor: =RGBA(13, 50, 61, 1)
+            BorderThickness: =1
+            Clear: =true
+            Default: =
+            Font: =Font.'Open Sans'
+            Height: =32
+            HintText: ="Search mnemonic or name"
+            HoverBorderColor: =RGBA(0, 89, 178, 1)
+            HoverFill: =RGBA(153, 205, 255, 1)
+            Size: =12
+            Width: =285
+            X: =405
+            Y: =178
+      - lblResults:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Color: =ColorValue("#03173E")
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Size: =12
+            Text: ="Results"
+            Width: =155
+            X: =24
+            Y: =210
+      - lblResultCount:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Font: =Font.'Open Sans'
+            Height: =42
+            Text: =galAccommodations.AllItemsCount & " records"
+            Width: =132
+            X: =573
+            Y: =209
+      - shpConfigPanel:
+          Control: Rectangle@2.3.0
+          Properties:
+            BorderColor: =ColorValue("#D9D9D9")
+            Fill: =Color.White
+            Height: =688
+            Width: =654
+            X: =710
+            Y: =80
+      - lblCurrentActiveValue:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Font: =Font.'Open Sans'
+            Height: =28
+            Text: |-
+              =Coalesce(
+                  galAccommodations.Selected.SourceActive,
+                  ""
+              )
+            Width: =160
+            X: =950
+            Y: =272
+      - lblCurrentActiveCaption:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =29
+            Text: ="Source Active"
+            Width: =162
+            X: =720
+            Y: =272
+      - lblCurrentPAValue:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Font: =Font.'Open Sans'
+            Height: =28
+            Text: |-
+              =Coalesce(
+                  galAccommodations.Selected.SourcePACode,
+                  ""
+              )
+            Width: =160
+            X: =950
+            Y: =242
+      - lblCurrentPACaption:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =28
+            Text: ="Source PA Code"
+            Width: =184
+            X: =720
+            Y: =242
+      - lblCurrentNameValue:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Font: =Font.'Open Sans'
+            Height: =41
+            Size: =12
+            Text: |-
+              =Coalesce(
+                  galAccommodations.Selected.SourceName,
+                  ""
+              )
+            Width: =392
+            X: =950
+            Y: =212
+      - lblCurrentNameCaption:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =32
+            Text: ="Source Name"
+            Width: =184
+            X: =720
+            Y: =212
+      - lblCurrentMnemValue:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Font: =Font.'Open Sans'
+            Height: =28
+            Text: |-
+              =Coalesce(
+                  galAccommodations.Selected.SourceMnemonic,
+                  ""
+              )
+            Width: =300
+            Wrap: =false
+            X: =950
+            Y: =182
+      - lblCurrentMnemCaption:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =33
+            Text: ="Source Mnemonic"
+            Width: =197
+            Wrap: =false
+            X: =720
+            Y: =182
+      - lblCurrentFacilityValue:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Font: =Font.'Open Sans'
+            Height: =28
+            Text: |-
+              =Coalesce(
+                  galAccommodations.Selected.SourceFacility,
+                  ""
+              )
+            Width: =160
+            X: =950
+            Y: =158
+      - lblCurrentFacilityCaption:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =24
+            Text: ="Source Facility"
+            Width: =162
+            X: =720
+            Y: =158
+      - lblSelectedConfiguration:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Color: =ColorValue("#03173E")
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Size: =14
+            Text: |-
+              =Coalesce(
+                  gblSelectedWorksheet,
+                  ""
+              )
+            Width: =548
+            X: =712
+            Y: =78
+      - lblCurrentHeading:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Color: =ColorValue("#03173E")
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =36
+            OnSelect: =
+            Size: =14
+            Text: ="CURRENT CONFIGURATION"
+            Width: =410
+            X: =712
+            Y: =118
+      - txtTargetActive:
+          Control: Classic/TextInput@2.3.2
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Default: |-
+              =Coalesce(
+                  galAccommodations.Selected.TargetActive,
+                  ""
+              )
+            Font: =Font.'Open Sans'
+            Height: =28
+            HoverBorderColor: =RGBA(0, 89, 178, 1)
+            HoverFill: =RGBA(153, 205, 255, 1)
+            OnChange: |-
+              =Set(
+                  gblTargetActiveValue,
+                  Self.Text
+              )
+            Width: =210
+            X: =950
+            Y: =487
+      - lblTargetActiveCaption:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =28
+            Text: ="Target Active"
+            X: =720
+            Y: =487
+      - txtTargetPACode:
+          Control: Classic/TextInput@2.3.2
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Default: |-
+              =Coalesce(
+                  galAccommodations.Selected.TargetPACode,
+                  ""
+              )
+            Font: =Font.'Open Sans'
+            Height: =28
+            HoverBorderColor: =RGBA(0, 89, 178, 1)
+            HoverFill: =RGBA(153, 205, 255, 1)
+            Width: =210
+            X: =950
+            Y: =454
+      - lblTargetPACaption:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =28
+            Text: '="PA Code" '
+            X: =720
+            Y: =454
+      - txtTargetName:
+          Control: Classic/TextInput@2.3.2
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Default: |-
+              =Coalesce(
+                  galAccommodations.Selected.TargetName,
+                  ""
+              )
+            Font: =Font.'Open Sans'
+            Height: =28
+            HoverBorderColor: =RGBA(0, 89, 178, 1)
+            HoverFill: =RGBA(153, 205, 255, 1)
+            Width: =210
+            X: =950
+            Y: =421
+      - lblTargetNameCaption:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =24
+            Text: ="Target Name"
+            X: =720
+            Y: =421
+      - txtTargetMnem:
+          Control: Classic/TextInput@2.3.2
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Default: |-
+              =Coalesce(
+                  galAccommodations.Selected.TargetMnemonic,
+                  ""
+              )
+            Font: =Font.'Open Sans'
+            Height: =28
+            HoverBorderColor: =RGBA(0, 89, 178, 1)
+            HoverFill: =RGBA(153, 205, 255, 1)
+            Width: =210
+            X: =950
+            Y: =388
+      - lblTargetMnemCaption:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =24
+            Text: ="Target Mnemonic"
+            Width: =190
+            X: =720
+            Y: =388
+      - txtTargetFacility:
+          Control: Classic/TextInput@2.3.2
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Default: |-
+              =Coalesce(
+                  galAccommodations.Selected.TargetFacility,
+                  ""
+              )
+            Font: =Font.'Open Sans'
+            Height: =28
+            HoverBorderColor: =RGBA(0, 89, 178, 1)
+            HoverFill: =RGBA(153, 205, 255, 1)
+            Width: =210
+            X: =950
+            Y: =355
+      - lblTargetFacilityCaption:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =24
+            Text: ="Target Facility"
+            X: =720
+            Y: =355
+      - lblProposedHeading:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Color: =ColorValue("#E05929")
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: |
+              =36
+            Size: =14
+            Text: ="PROPOSED CONFIGURATION"
+            Width: =289
+            X: =712
+            Y: =317
+      - Source Server:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Font: =Font.'Open Sans'
+            Height: =20
+            Size: =11
+            Text: |-
+              =If(
+                  IsBlank(gblSelectedAccommodation),
+                  "",
+                  Coalesce(
+                      LookUp(
+                          'Accommodation Data Clone',
+                          FacilityMnem_Source = gblSelectedAccommodation.SourceFacility &&
+                          Accommodation_Mnem_Source = gblSelectedAccommodation.SourceMnemonic &&
+                          Accommodation_Name_Source = gblSelectedAccommodation.SourceName &&
+                          PA_Code_Source = gblSelectedAccommodation.SourcePACode,
+                          ECCS_SourceDatabase
+                      ),
+                      ""
+                  )
+              )
+            Width: =151
+            X: =787
+            Y: =717
+      - lblLineageServerValue:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Font: =Font.'Open Sans'
+            Height: =20
+            Size: =11
+            Text: ="Server"
+            Width: =60
+            X: =712
+            Y: =717
+      - Source Procedure:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Font: =Font.'Open Sans'
+            Height: =20
+            Size: =11
+            Text: |-
+              =If(
+                  IsBlank(gblSelectedAccommodation),
+                  "",
+                  Coalesce(
+                      LookUp(
+                          'Accommodation Data Clone',
+                          FacilityMnem_Source = gblSelectedAccommodation.SourceFacility &&
+                          Accommodation_Mnem_Source = gblSelectedAccommodation.SourceMnemonic &&
+                          Accommodation_Name_Source = gblSelectedAccommodation.SourceName &&
+                          PA_Code_Source = gblSelectedAccommodation.SourcePACode,
+                          ECCS_SourceProcedure
+                      ),
+                      ""
+                  )
+              )
+            Width: =402
+            X: =787
+            Y: =739
+      - lblLineageProcedureValue:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Font: =Font.'Open Sans'
+            Height: =20
+            Size: =11
+            Text: ="Xwalk"
+            Width: =50
+            X: =712
+            Y: =739
+      - Clone Row ID:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Font: =Font.'Open Sans'
+            Height: =20
+            Size: =11
+            Text: |-
+              =Coalesce(
+                  gblSelectedAccommodation.RecordKey,
+                  ""
+              )
+            Width: =95
+            X: =787
+            Y: =697
+      - lblLineageRowIdValue:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Font: =Font.'Open Sans'
+            Height: =20
+            Size: =11
+            Text: ="Row ID"
+            Width: =75
+            X: =712
+            Y: =697
+      - lblLineageHeading:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Color: =ColorValue("#03173E")
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =30
+            Text: ="Config-Tool Connection"
+            Width: =228
+            X: =710
+            Y: =669
+      - lblLineageClonedCaption:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Height: =24
+            Size: =12
+            Text: ="Last Refreshed:"
+            Width: =191
+            X: =1160
+            Y: =673
+      - lblLineageClonedValue:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Font: =Font.'Open Sans'
+            Height: =24
+            Size: =12
+            Text: |-
+              =If(
+                  IsBlank(gblSelectedAccommodation),
+                  "",
+                  Coalesce(
+                      Text(
+                          LookUp(
+                              'Accommodation Data Clone',
+                              FacilityMnem_Source = gblSelectedAccommodation.SourceFacility &&
+                              Accommodation_Mnem_Source = gblSelectedAccommodation.SourceMnemonic &&
+                              Accommodation_Name_Source = gblSelectedAccommodation.SourceName &&
+                              PA_Code_Source = gblSelectedAccommodation.SourcePACode,
+                              ECCS_ClonedAtUtc
+                          ),
+                          DateTimeFormat.ShortDateTime
+                      ),
+                      ""
+                  )
+              )
+            Width: =174
+            X: =1177
+            Y: =699
+      - btnUpdateSaveTarget:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =Color.White
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =ColorValue("#03173E")
+            Font: =Font.'Open Sans'
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(0, 51, 102, 1), -20%)
+            OnSelect: |-
+              =If(
+                  IsBlank(gblSelectedAccommodation),
+                  Notify(
+                      "Select a Registration record before updating the target.",
+                      NotificationType.Warning
+                  ),
+                  IfError(
+                      Patch(
+                          'Accommodation Data Clone',
+                          LookUp(
+                              'Accommodation Data Clone',
+                              FacilityMnem_Source = gblSelectedAccommodation.SourceFacility &&
+                              Accommodation_Mnem_Source = gblSelectedAccommodation.SourceMnemonic &&
+                              Accommodation_Name_Source = gblSelectedAccommodation.SourceName &&
+                              PA_Code_Source = gblSelectedAccommodation.SourcePACode
+                          ),
+                          {
+                              FacilityMnem_Target: txtTargetFacility.Text,
+                              Accommodation_Mnem_Target: txtTargetMnem.Text,
+                              Accommodation_Name_Target: txtTargetName.Text,
+                              PA_Code_Target: txtTargetPACode.Text,
+                              Active_Target_Value: txtTargetActive.Text,
+                              Update_User: User().FullName,
+                              Update_Datetime: Now()
+                          }
+                      ),
+                      Notify(
+                          "Update failed: " & FirstError.Message,
+                          NotificationType.Error
+                      ),
+                      Notify(
+                          "Target configuration updated.",
+                          NotificationType.Success
+                      );
+                      Refresh('Accommodation Data Clone')
+                  )
+              )
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Text: ="Update Target"
+            Width: =204
+            X: =956
+            Y: =618
+      - lblTargetMatchValue:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Color: |-
+              =If(
+                  Upper(
+                      Coalesce(
+                          galAccommodations.Selected.TargetMatchMtx,
+                          ""
+                      )
+                  ) = "NO MATCH",
+                  Color.Red,
+                  ColorValue("#03173E")
+              )
+            Font: =Font.'Open Sans'
+            FontWeight: |-
+              =If(
+                  Upper(
+                      Coalesce(
+                          galAccommodations.Selected.TargetMatchMtx,
+                          ""
+                      )
+                  ) = "NO MATCH",
+                  FontWeight.Bold,
+                  FontWeight.Normal
+              )
+            Height: =30
+            OnSelect: |-
+              =With(
+                  {
+                      MatchText: galAccommodations.Selected.TargetMatchMtx
+                  },
+                  Set(
+                      gblShowSyncPrompt,
+                      IsMatch(
+                          MatchText,
+                          "^(LIVE|TEST|ZCON) \([0-9]{4}-[0-9]{2}-[0-9]{2}\)$",
+                          MatchOptions.Contains
+                      )
+                  )
+              )
+            Text: |-
+              =Coalesce(
+                  galAccommodations.Selected.TargetMatchMtx,
+                  ""
+              )
+            Width: =625
+            X: =717
+            Y: =573
+      - lblTargetMatchCaption:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Color: |-
+              =If(
+                  galAccommodations.Selected.TargetMatchMtx = "NO MATCH",
+                  Color.Red,
+                  ColorValue("#03173E")
+              )
+            Font: =Font.'Lato Black'
+            FontWeight: |-
+              =If(
+                  galAccommodations.Selected.TargetMatchMtx = "NO MATCH",
+                  FontWeight.Bold,
+                  FontWeight.Normal
+              )
+            Height: =37
+            Size: =16
+            Text: ="Target Match"
+            X: =715
+            Y: =536
+      - btnBack1:
+          Control: ModernButton@1.0.0
+          Properties:
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Normal
+            Icon: ="ArrowLeft"
+            OnSelect: |-
+              =Set(
+                  gblDashboardExpanded,
+                  false
+              );
+              Back()
+            Size: =14
+            Text: ="BACK"
+            Width: =100
+            X: =717
+            Y: =18
+      - btnNext1:
+          Control: ModernButton@1.0.0
+          Properties:
+            Align: =Align.Center
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Normal
+            Icon: ="ArrowRight"
+            Layout: =ButtonLayout.IconAfter
+            OnSelect: |-
+              =Navigate(
+                  cmpECCSConfigurations,
+                  ScreenTransition.Cover
+              )
+            Size: =14
+            Text: ="NEXT"
+            Width: =100
+            X: =1231
+            Y: =21
+      - btnResetRefresh:
+          Control: ModernButton@1.0.0
+          Properties:
+            Align: =Align.Center
+            BasePaletteColor: =RGBA(8, 222, 8, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Normal
+            Icon: ="ArrowReset"
+            OnSelect: |-
+              =Reset(drpRegistrationWorksheet);
+
+              Reset(cmbFacility);
+
+              Reset(txtAccommodationSearch);
+
+              Reset(txtTargetFacility);
+              Reset(txtTargetMnem);
+              Reset(txtTargetName);
+              Reset(txtTargetPACode);
+              Reset(txtTargetActive);
+
+              Set(
+                  gblSelectedWorksheet,
+                  ""
+              );
+
+              Set(
+                  gblSelectedAccommodation,
+                  Blank()
+              );
+
+              Set(
+                  gblEditMode,
+                  false
+              );
+
+              Set(
+                  gblSyncConfirmed,
+                  false
+              );
+
+              Set(
+                  gblShowSyncPrompt,
+                  false
+              );
+
+              Refresh('Accommodation Data Clone')
+            Size: =14
+            Text: ="REFRESH"
+            Width: =110
+            X: =974
+            Y: =18
+      - drpRegistrationWorksheet:
+          Control: Classic/DropDown@2.3.1
+          Properties:
+            BorderColor: =RGBA(13, 50, 61, 1)
+            BorderThickness: =1
+            ChevronBackground: =RGBA(224, 89, 41, 1)
+            ChevronFill: =RGBA(255, 255, 255, 1)
+            ChevronHoverBackground: =ColorFade(RGBA(0, 51, 102, 1), -20%)
+            ChevronHoverFill: =RGBA(255, 255, 255, 1)
+            Default: |-
+              =If(
+                  !IsBlank(gblSelectedWorksheet),
+                  gblSelectedWorksheet,
+                  Blank()
+              )
+            Font: =Font.'Open Sans'
+            Height: =32
+            HoverFill: =RGBA(153, 205, 255, 1)
+            Items: |-
+              =Sort(
+                  Filter(
+                      'Reg Config Categories',
+                      'Reg Worksheet Name' <> "REG ALL" &&
+                      'Reg Worksheet Name' <> "REG [INSERT-UPLOAD]"
+                      ),
+                  'Reg Worksheet Name',
+                  SortOrder.Ascending
+              )
+            Items.Value: =eccs_regworksheetname
+            OnChange: |-
+              =Set(
+                  gblSelectedWorksheet,
+                  drpRegistrationWorksheet.Selected.'Reg Worksheet Name'
+              );
+
+              Set(
+                  gblSelectedAccommodation,
+                  Blank()
+              );
+
+              Set(
+                  gblEditMode,
+                  false
+              );
+
+              Set(
+                  gblSyncConfirmed,
+                  false
+              )
+            OnSelect: =gblSelectedWorksheet
+            PressedColor: =RGBA(255, 255, 255, 1)
+            PressedFill: =RGBA(0, 89, 178, 1)
+            SelectionColor: =RGBA(255, 255, 255, 1)
+            SelectionFill: =RGBA(0, 51, 102, 1)
+            Size: =12
+            Width: =285
+            X: =24
+            Y: =181
+      - btnRegConfigHome:
+          Control: ModernButton@1.0.0
+          Properties:
+            Icon: ="Home"
+            OnSelect: |-
+              =Navigate(
+                  scrRegistrationLaunchpad,
+                  ScreenTransition.Fade
+              )
+            Text: ="HOME"
+            Width: =100
+            X: =528
+            Y: =18
+      - drpWaveSubwave1:
+          Control: ModernDropdown@1.0.3
+          Properties:
+            BorderColor: =RGBA(13, 50, 61, 1)
+            BorderThickness: =1
+            Font: =Font.'Open Sans'
+            ItemDisplayText: =ThisItem.'COID Code'
+            Items: ='dim.Ref.Organizations'
+            Width: =285
+            X: =24
+            Y: =110
+      - lblWaveSubwave1:
+          Control: ModernText@1.0.0
+          Properties:
+            Color: =ColorValue("#03173E")
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Size: =14
+            Text: ="Wave - Subwave"
+            X: =24
+            Y: =82
+      - lblRegWorksheetName:
+          Control: ModernText@1.0.0
+          Properties:
+            Color: =ColorValue("#03173E")
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Size: =14
+            Text: ="Reg Worksheet Name"
+            Width: =171
+            X: =24
+            Y: =149
+      - lblWildcardSearch:
+          Control: ModernText@1.0.0
+          Properties:
+            Color: =ColorValue("#03173E")
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Size: =14
+            Text: ="Text Search"
+            X: =405
+            Y: =150
+      - cmbFacility:
+          Control: ModernDropdown@1.0.3
+          Properties:
+            BorderColor: =RGBA(13, 50, 61, 1)
+            BorderThickness: =1
+            Font: =Font.'Open Sans'
+            ItemDisplayText: =ThisItem.'COID Code'
+            Items: ='dim.Ref.Organizations'
+            Width: =280
+            X: =405
+            Y: =111
+      - lblFacility:
+          Control: ModernText@1.0.0
+          Properties:
+            Color: =ColorValue("#03173E")
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Size: =14
+            Text: ="Facility"
+            X: =405
+            Y: =82
+

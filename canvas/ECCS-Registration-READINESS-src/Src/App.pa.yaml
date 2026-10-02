@@ -323,4 +323,31 @@ App:
               )
           }
       )
+            ClearCollect(
+          colECCSCutoverSchedule,
+          {
+              EventName: "3A UAT - EFL",
+              Phase: "UAT",
+              StartDate: DateTimeValue("2026-09-03T00:00:00"),
+              FinishDate: DateTimeValue("2026-09-11T00:00:00")
+          },
+          {
+              EventName: "3A Go Live - EFL",
+              Phase: "Go Live",
+              StartDate: DateTimeValue("2026-10-15T00:00:00"),
+              FinishDate: DateTimeValue("2026-10-15T00:00:00")
+          },
+          {
+              EventName: "3B UAT - NTX",
+              Phase: "UAT",
+              StartDate: DateTimeValue("2026-12-07T00:00:00"),
+              FinishDate: DateTimeValue("2026-12-11T00:00:00")
+          },
+          {
+              EventName: "3B Go Live - NTX",
+              Phase: "Go Live",
+              StartDate: DateTimeValue("2027-01-14T00:00:00"),
+              FinishDate: DateTimeValue("2027-01-14T00:00:00")
+          }
+      );
     Theme: =PowerAppsTheme

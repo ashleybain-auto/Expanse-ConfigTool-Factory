@@ -75,6 +75,54 @@ ComponentDefinitions:
           Properties:
             X: =40
             Y: =40
+            Text: |-
+              "REGISTRATION READINESS"
+            Text: |-
+              Text(
+                  Round(
+                      100 *
+                      Sum(
+                          colRegReadiness,
+                          LiveRecords
+                      ) /
+                      Max(
+                          1,
+                          Sum(
+                              colRegReadiness,
+                              TotalRecords
+                          )
+                      ),
+                      0
+                  )
+              ) & "%"
+            Text: |-
+              "Worksheets"
+            Text: |-
+              Text(
+                  Round(
+                      100 *
+                      (
+                          Sum(
+                              colRegReadiness,
+                              TotalRecords
+                          ) -
+                          Sum(
+                              colRegReadiness,
+                              NoMatchRecords
+                          )
+                      ) /
+                      Max(
+                          1,
+                          Sum(
+                              colRegReadiness,
+                              TotalRecords
+                          )
+                      ),
+                      0
+                  )
+              ) & "%"
+            Text: |-
+              "NO MATCH"
       - lblRegOverallValue:
           Control: ModernText@1.0.0
           Properties:

@@ -241,7 +241,7 @@ ComponentDefinitions:
           Control: ModernText@1.0.0
           Properties:
             OnSelect: =
-            Text: =galBoardRecords.Selected.SourceMnemonic
+            Text: =galBoardRecords.Selected.SourceFacility
             X: |
               =825
             Y: =125
@@ -355,7 +355,7 @@ ComponentDefinitions:
       - lblTargetActiveValue1:
           Control: ModernText@1.0.0
           Properties:
-            Text: =""
+            Text: =galBoardRecords.Selected.TargetActive
             X: =825
             Y: =402
       - lblTargetActiveCaption1:
@@ -481,6 +481,7 @@ ComponentDefinitions:
             Width: =232
             X: =743
             Y: =601
+
 
 
 

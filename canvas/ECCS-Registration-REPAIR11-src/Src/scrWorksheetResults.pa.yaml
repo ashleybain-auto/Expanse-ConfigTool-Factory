@@ -12,6 +12,14 @@ Screens:
       Fill: =RGBA(232, 232, 232, 1)
       LoadingSpinnerColor: =RGBA(0, 51, 102, 1)
     Children:
+      - cmpDrpdwnFiltersFacilityWks_Bulk:
+          Control: CanvasComponent
+          ComponentName: cmpDrpdwnFiltersFacilityWks
+          Properties:
+            Height: =150
+            Width: =900
+            X: =53
+            Y: =95
       - galWorksheetResults:
           Control: Gallery@2.15.0
           Variant: BrowseLayout_Vertical_OneTextVariant_ver5.0
@@ -142,89 +150,4 @@ Screens:
             Width: =477
             X: =28
             Y: =38
-      - drpWorksheetSelection:
-          Control: Classic/DropDown@2.3.1
-          Properties:
-            BorderColor: =RGBA(0, 89, 178, 1)
-            ChevronBackground: =RGBA(0, 51, 102, 1)
-            ChevronFill: =RGBA(255, 255, 255, 1)
-            ChevronHoverBackground: =ColorFade(RGBA(0, 51, 102, 1), -20%)
-            ChevronHoverFill: =RGBA(255, 255, 255, 1)
-            Font: =Font.'Open Sans'
-            Height: =42
-            HoverFill: =RGBA(153, 205, 255, 1)
-            Items: |-
-              =Sort(
-                  Filter(
-                      'Reg Config Categories',
-                      'Reg Worksheet Name' <> "REG ALL" &&
-                      'Reg Worksheet Name' <> "REG [INSERT-UPLOAD]"
-                  ),
-                  'Reg Worksheet Name',
-                  SortOrder.Ascending
-              )
-            Items.Value: =eccs_regworksheetname
-            OnSelect: |-
-              =Set(
-                  gblSelectedWorksheet,
-                  drpWorksheetSelection.SelectedText.Value
-              );
-            PressedColor: =RGBA(255, 255, 255, 1)
-            PressedFill: =RGBA(0, 89, 178, 1)
-            SelectionColor: =RGBA(255, 255, 255, 1)
-            SelectionFill: =RGBA(0, 51, 102, 1)
-            Width: =404
-            X: =53
-            Y: =133
-      - lblRegWorksheetName1:
-          Control: ModernText@1.0.0
-          Properties:
-            Height: =39
-            Text: ="Reg Worksheet Name"
-            Width: =176
-            X: =53
-            Y: =94
-      - drpSrcFacilityMnem:
-          Control: Classic/DropDown@2.3.1
-          Properties:
-            BorderColor: =RGBA(0, 89, 178, 1)
-            ChevronBackground: =RGBA(0, 51, 102, 1)
-            ChevronFill: =RGBA(255, 255, 255, 1)
-            ChevronHoverBackground: =ColorFade(RGBA(0, 51, 102, 1), -20%)
-            ChevronHoverFill: =RGBA(255, 255, 255, 1)
-            Font: =Font.'Open Sans'
-            Height: =46
-            HoverFill: =RGBA(153, 205, 255, 1)
-            Items: |-
-              =Sort(
-                  Distinct(
-                      'Accommodation Data Clone',
-                      FacilityMnem_Source
-                  ),
-                  Value,
-                  SortOrder.Ascending
-              )
-            Items.Value: =Value
-            PressedColor: =RGBA(255, 255, 255, 1)
-            PressedFill: =RGBA(0, 89, 178, 1)
-            SelectionColor: =RGBA(255, 255, 255, 1)
-            SelectionFill: =RGBA(0, 51, 102, 1)
-            Width: =404
-            X: =53
-            Y: =221
-      - lblFacilityMnemSrc:
-          Control: ModernText@1.0.0
-          Properties:
-            AutoHeight: =true
-            Text: ="Source Facility Mnemonic"
-            Width: =208
-            X: =53
-            Y: =189
-      - cmpECCSNavigationBar_WorksheetResults:
-          Control: CanvasComponent
-          ComponentName: cmpECCSNavigationBar
-          Properties:
-            Height: =36
-            Width: =620
-            X: =718
-            Y: =26
+

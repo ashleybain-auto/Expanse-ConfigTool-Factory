@@ -200,7 +200,21 @@ ComponentDefinitions:
             Font: =Font.'Open Sans'
             Height: =26
             ItemDisplayText: =ThisItem.'Reg Worksheet Name'
-            Items: ='Reg Config Categories'
+            Items: |-
+              =Sort(
+                  Filter(
+                      'Reg Config Categories',
+                      'Reg Worksheet Name' <> "REG ALL" &&
+                      'Reg Worksheet Name' <> "REG [INSERT-UPLOAD]"
+                  ),
+                  'Reg Worksheet Name',
+                  SortOrder.Ascending
+              )
+            OnChange: |-
+              =Set(
+                  gblSelectedWorksheet,
+                  drpRegWorksheetG.Selected.'Reg Worksheet Name'
+              )
             Size: =12
             X: =8
             Y: =102

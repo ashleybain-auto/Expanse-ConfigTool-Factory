@@ -14,13 +14,6 @@ Screens:
       LoadingSpinnerColor: =RGBA(0, 51, 102, 1)
       Width: =1200
     Children:
-      - cmpDrpdwnFiltersFacility_2:
-          Control: CanvasComponent
-          ComponentName: cmpDrpdwnFiltersFacilityWks
-          Properties:
-            Height: =616
-            Width: =625
-            Y: =84
       - cmpECCSConfigurationBoard_1:
           Control: CanvasComponent
           ComponentName: cmpECCSConfigurationBoard
@@ -54,6 +47,12 @@ Screens:
             Width: =1200
             WorksheetName: ="Registration | Configuration Review"
             X: =6
-
+      - cmpDrpdwnFiltersFacility_2:
+          Control: CanvasComponent
+          ComponentName: cmpDrpdwnFiltersFacilityWks
+          Properties:
+            Height: =616
+            Width: =625
+            Y: =84
 
 

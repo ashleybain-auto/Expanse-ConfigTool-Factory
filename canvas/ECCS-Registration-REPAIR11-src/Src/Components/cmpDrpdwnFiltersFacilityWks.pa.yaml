@@ -1,0 +1,219 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+ComponentDefinitions:
+  cmpDrpdwnFiltersFacilityWks:
+    DefinitionType: CanvasComponent
+    Description: Wave Facility Dropdown
+    AccessAppScope: true
+    Properties:
+      Height: =450
+      Width: =625
+    Children:
+      - lblGlbWaveSubwave_1:
+          Control: ModernText@1.0.0
+          Properties:
+            Color: =ColorValue("#03173E")
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Size: =13
+            Text: ="WAVE - SUBWAVE"
+            Width: =240
+            X: =5
+            Y: =3
+      - cmpGallerySearchFilter:
+          Control: Gallery@2.15.0
+          Variant: BrowseLayout_Vertical_OneTextVariant_ver5.0
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Height: =285
+            TemplateSize: =36
+            Width: =619
+            X: =5
+            Y: =160
+          Children:
+            - Title8:
+                Control: Label@2.5.1
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 1)
+                  Color: =RGBA(50, 49, 48, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                  Height: =Self.Size * 1.8
+                  OnSelect: =Select(Parent)
+                  PaddingBottom: =0
+                  PaddingLeft: =0
+                  PaddingRight: =0
+                  PaddingTop: =0
+                  Size: =12
+                  Text: =ThisItem.SampleHeading
+                  VerticalAlign: =VerticalAlign.Top
+                  Width: =Parent.TemplateWidth - 86
+                  X: =16
+                  Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
+            - NextArrow7:
+                Control: Classic/Icon@2.5.0
+                Properties:
+                  AccessibleLabel: =Self.Tooltip
+                  BorderColor: =RGBA(0, 89, 178, 1)
+                  Color: =RGBA(166, 166, 166, 1)
+                  Height: =50
+                  Icon: =Icon.ChevronRight
+                  OnSelect: =Select(Parent)
+                  PaddingBottom: =12
+                  PaddingLeft: =12
+                  PaddingRight: =12
+                  PaddingTop: =12
+                  Tooltip: ="View item details"
+                  Width: =50
+                  X: =Parent.TemplateWidth - Self.Width - 12
+                  Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
+            - Separator10:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 89, 178, 1)
+                  Fill: =RGBA(255, 255, 255, 1)
+                  Height: =2
+                  OnSelect: =Select(Parent)
+                  Width: =Parent.TemplateWidth
+                  Y: =Parent.TemplateHeight - Self.Height
+            - Rectangle6:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 89, 178, 1)
+                  Fill: =RGBA(0, 89, 178, 1)
+                  Height: =Parent.TemplateHeight - Separator10.Height
+                  OnSelect: =Select(Parent)
+                  Visible: =ThisItem.IsSelected
+                  Width: =4
+      - drpWaveSubWave_1:
+          Control: ModernDropdown@1.0.3
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =26
+            ItemDisplayText: =ThisItem.Value
+            Items: |-
+              =Sort(
+                  Distinct(
+                      Filter(
+                          'dim.Ref.Organizations',
+                          !IsBlank('Wave Number') &&
+                          'Wave Number' <> "Wave" &&
+                          'Wave Number' <> "NULL" &&
+                          !IsBlank('SubWave2 Code') &&
+                          'SubWave2 Code' <> "SubWave" &&
+                          'SubWave2 Code' <> "NULL"
+                      ),
+                      'Wave Number' & " - " & 'SubWave2 Code'
+                  ),
+                  Value,
+                  SortOrder.Ascending
+              )
+            OnChange: |-
+              =Set(
+                  gblSelectedWaveNumber,
+                  First(
+                      Split(
+                          drpWaveSubWave_1.Selected.Value,
+                          " - "
+                      )
+                  ).Value
+              );
+              Set(
+                  gblSelectedSubWaveCode,
+                  Last(
+                      Split(
+                          drpWaveSubWave_1.Selected.Value,
+                          " - "
+                      )
+                  ).Value
+              );
+              Set(
+                  gblSelectedFacility,
+                  Blank()
+              );
+              Set(
+                  gblSelectedNetworkMnemonic,
+                  Blank()
+              )
+            Size: =12
+            Width: =210
+            X: =8
+            Y: =32
+      - lblGlbFacilityMneName_1:
+          Control: ModernText@1.0.0
+          Properties:
+            Color: =ColorValue("#03173E")
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Size: =13
+            Text: ="FACILITY MNEMONIC/NAME"
+            Width: =250
+            X: =325
+            Y: =3
+      - drpFacilityMnemName_1:
+          Control: ModernDropdown@1.0.3
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =26
+            ItemDisplayText: =ThisItem.'Facility Mnemonic'
+            Items: |-
+              =Sort(
+                  Filter(
+                      'dim.Ref.Organizations',
+                      !IsBlank('Facility Mnemonic') &&
+                      'Facility Mnemonic' <> "Facility Mnemonic" &&
+                      'Facility Mnemonic' <> "NULL" &&
+                      (
+                          IsBlank(gblSelectedWaveNumber) ||
+                          'Wave Number' = gblSelectedWaveNumber
+                      ) &&
+                      (
+                          IsBlank(gblSelectedSubWaveCode) ||
+                          'SubWave2 Code' = gblSelectedSubWaveCode
+                      )
+                  ),
+                  'Facility Mnemonic',
+                  SortOrder.Ascending
+              )
+            OnChange: |-
+              =Set(
+                  gblSelectedFacility,
+                  drpFacilityMnemName_1.Selected.'Facility Mnemonic'
+              );
+              Set(
+                  gblSelectedNetworkMnemonic,
+                  drpFacilityMnemName_1.Selected.'Network Mnemonic'
+              )
+            Size: =12
+            Width: =285
+            X: =325
+            Y: =32
+      - drpRegWorksheetG:
+          Control: ModernDropdown@1.0.3
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =26
+            ItemDisplayText: =ThisItem.'Reg Worksheet Name'
+            Items: ='Reg Config Categories'
+            Size: =12
+            X: =8
+            Y: =102
+      - lblRegWorksheetsG:
+          Control: ModernText@1.0.0
+          Properties:
+            Color: =ColorValue("#03173E")
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Height: =34
+            Size: =13
+            Text: ="REG WORKSHEET NAME"
+            Width: =200
+            X: =5
+            Y: =68
+

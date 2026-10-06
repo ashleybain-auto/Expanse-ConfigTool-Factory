@@ -1,0 +1,424 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+ComponentDefinitions:
+  cmpECCSCutoverReadinessDsh:
+    DefinitionType: CanvasComponent
+    Description: ReadinessDashboard
+    AccessAppScope: true
+    Properties:
+      Height: =700
+      Width: =1200
+    Children:
+      - shpReadinessDash:
+          Control: Rectangle@2.3.0
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Fill: '=ColorValue("#03173E") '
+            Height: =80
+            Width: =1200
+      - shpReadinessSidePanel:
+          Control: Rectangle@2.3.0
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Fill: =ColorValue("#03173E")
+            Height: =700
+            Width: =100
+      - lblReadinessSubTitle:
+          Control: ModernText@1.0.0
+          Properties:
+            Color: =ColorValue("#E05929")
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Height: =45
+            Size: =16
+            Text: ="Cutover Automation Configuation Readiness"
+            Width: =375
+            X: =126
+            Y: =39
+      - lblReadinessDashTitle:
+          Control: ModernText@1.0.0
+          Properties:
+            Color: =Color.White
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =44
+            Size: =19
+            Text: ="Expanse Cutover Automation Readiness Dashboard"
+            Width: =500
+            X: =113
+            Y: =11
+      - txtLogoExpanse:
+          Control: ModernText@1.0.0
+          Properties:
+            Color: =ColorValue("#E05929")
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Text: ="Expanse"
+            Width: =75
+            X: =13
+            Y: =57
+      - imgHCALogo2:
+          Control: Image@2.2.3
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Height: =46
+            Image: =HCA_Healthcare_Logo_Extracted
+            X: =13
+            Y: =11
+      - lblRegReadiness:
+          Control: ModernText@1.0.0
+          Properties:
+            Color: =ColorValue("#03173E")
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Size: =16
+            Text: ="REGISTRATION READINESS"
+            Width: =240
+            X: =108
+            Y: =122
+      - lblRegEventDate:
+          Control: ModernText@1.0.0
+          Properties:
+            Align: =Align.Right
+            AutoHeight: =true
+            Color: =ColorValue("#03173E")
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Text: |-
+              =With(
+                  {
+                      nextEvent: First(
+                          Sort(
+                              Filter(
+                                  colECCSCutoverSchedule,
+                                  StartDate >= Today()
+                              ),
+                              StartDate,
+                              SortOrder.Ascending
+                          )
+                      )
+                  },
+                  If(
+                      IsBlank(nextEvent.StartDate),
+                      "No milestone scheduled",
+                      nextEvent.EventName &
+                      " | " &
+                      Text(
+                          nextEvent.StartDate,
+                          "[$-en-US]mmmm d, yyyy"
+                      )
+                  )
+              )
+            Width: =275
+            X: =925
+            Y: =80
+      - lblRegCountdown:
+          Control: ModernText@1.0.0
+          Properties:
+            Align: =Align.Center
+            Color: =ColorValue("#E05929")
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =45
+            Size: =22
+            Text: |-
+              =With(
+                  {
+                      nextEvent: First(
+                          Sort(
+                              Filter(
+                                  colECCSCutoverSchedule,
+                                  StartDate >= Now()
+                              ),
+                              StartDate,
+                              SortOrder.Ascending
+                          )
+                      )
+                  },
+                  If(
+                      IsBlank(nextEvent.StartDate),
+                      "COUNTDOWN NOT CONFIGURED",
+                      With(
+                          {
+                              totalMinutes: DateDiff(
+                                  Now(),
+                                  nextEvent.StartDate,
+                                  TimeUnit.Minutes
+                              )
+                          },
+                          If(
+                              totalMinutes <= 0,
+                              "EVENT ACTIVE",
+                              Int(totalMinutes / 1440) &
+                              "d " &
+                              Mod(
+                                  Int(totalMinutes / 60),
+                                  24
+                              ) &
+                              "h " &
+                              Mod(
+                                  totalMinutes,
+                                  60
+                              ) &
+                              "m"
+                          )
+                      )
+                  )
+              )
+            Width: =175
+            X: =1025
+            Y: =109
+      - conReadinessGrid:
+          Control: GroupContainer@1.5.0
+          Variant: GridLayout
+          Properties:
+            BorderColor: =RGBA(13, 50, 61, 1)
+            DropShadow: =DropShadow.None
+            Height: =125
+            LayoutGap: =1
+            LayoutGridColumns: =6
+            PaddingBottom: =1
+            PaddingLeft: =1
+            PaddingRight: =1
+            PaddingTop: =1
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Width: =825
+            X: =108
+            Y: =155
+          Children:
+            - txtRegOverallReadiness:
+                Control: ModernText@1.0.0
+                Properties:
+                  Align: =Align.Center
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Bold
+                  Size: =25
+                  Text: |-
+                    =Text(
+                        Round(
+                            100 *
+                            Sum(
+                                colRegReadiness,
+                                LiveRecords
+                            ) /
+                            Max(
+                                1,
+                                Sum(
+                                    colRegReadiness,
+                                    TotalRecords
+                                )
+                            ),
+                            0
+                        )
+                    ) & "%"
+                  X: =40
+                  Y: =40
+            - txtRegWorksheetsLoaded:
+                Control: ModernText@1.0.0
+                Properties:
+                  Align: =Align.Center
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Bold
+                  Size: =25
+                  Text: |-
+                    =CountRows(
+                        Filter(
+                            colRegReadiness,
+                            TotalRecords > 0
+                        )
+                    ) & " / " & CountRows(colRegReadiness)
+                  X: =40
+                  Y: =40
+            - txtRegOverallMapped:
+                Control: ModernText@1.0.0
+                Properties:
+                  Align: =Align.Center
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Bold
+                  Size: =25
+                  Text: |-
+                    =Text(
+                        Round(
+                            100 *
+                            (
+                                Sum(
+                                    colRegReadiness,
+                                    TestRecords
+                                ) +
+                                Sum(
+                                    colRegReadiness,
+                                    ZconRecords
+                                ) +
+                                Sum(
+                                    colRegReadiness,
+                                    LiveRecords
+                                )
+                            ) /
+                            Max(
+                                1,
+                                Sum(
+                                    colRegReadiness,
+                                    TotalRecords
+                                )
+                            ),
+                            0
+                        )
+                    ) & "%"
+                  X: =40
+                  Y: =40
+            - txtRegLiveMapped:
+                Control: ModernText@1.0.0
+                Properties:
+                  Align: =Align.Center
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Bold
+                  Size: =25
+                  Text: |-
+                    =Text(
+                        Round(
+                            100 *
+                            Sum(
+                                colRegReadiness,
+                                LiveRecords
+                            ) /
+                            Max(
+                                1,
+                                Sum(
+                                    colRegReadiness,
+                                    TotalRecords
+                                )
+                            ),
+                            0
+                        )
+                    ) & "%"
+                  X: =40
+                  Y: =40
+            - txtRegNoMatchALL:
+                Control: ModernText@1.0.0
+                Properties:
+                  Align: =Align.Center
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Bold
+                  Size: =25
+                  Text: |-
+                    =Text(
+                        Sum(
+                            colRegReadiness,
+                            NoMatchRecords
+                        )
+                    )
+                  X: =40
+                  Y: =40
+            - txtWaveSubwave2:
+                Control: ModernText@1.0.0
+                Properties:
+                  Align: =Align.Center
+                  Fill: =RGBA(54, 176, 75, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Bold
+                  Size: =14
+                  Text: ="Wave-Subwave"
+                  X: =40
+                  Y: =40
+            - lblOverallReadiness:
+                Control: ModernText@1.0.0
+                Properties:
+                  Align: =Align.Center
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  LayoutGridColumnEnd: =2
+                  LayoutGridColumnStart: =1
+                  LayoutGridRowEnd: =3
+                  LayoutGridRowStart: =2
+                  Size: =14
+                  Text: ="Overall Readiness"
+                  VerticalAlign: =VerticalAlign.Top
+                  X: =40
+                  Y: =40
+            - lblWorksheets:
+                Control: ModernText@1.0.0
+                Properties:
+                  Align: =Align.Center
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Size: =14
+                  Text: ="Worksheets"
+                  VerticalAlign: =VerticalAlign.Top
+                  X: =40
+                  Y: =40
+            - lblOverallMapped:
+                Control: ModernText@1.0.0
+                Properties:
+                  Align: =Align.Center
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Size: =14
+                  Text: ="Mapped"
+                  VerticalAlign: =VerticalAlign.Top
+                  X: =40
+                  Y: =40
+            - lblLiveMapping:
+                Control: ModernText@1.0.0
+                Properties:
+                  Align: =Align.Center
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Size: =14
+                  Text: ="LIVE"
+                  VerticalAlign: =VerticalAlign.Top
+                  X: =40
+                  Y: =40
+            - lblOverallNoMatch:
+                Control: ModernText@1.0.0
+                Properties:
+                  Align: =Align.Center
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Size: =14
+                  Text: ="NO MATCH"
+                  VerticalAlign: =VerticalAlign.Top
+                  X: =40
+                  Y: =40
+            - lblWaveSubwave3:
+                Control: ModernText@1.0.0
+                Properties:
+                  Align: =Align.Center
+                  FontWeight: =FontWeight.Semibold
+                  Italic: =true
+                  LayoutGridColumnEnd: =7
+                  LayoutGridColumnStart: =6
+                  LayoutGridRowEnd: =3
+                  LayoutGridRowStart: =2
+                  Text: ="Value of Wave-Subwave filter"
+                  VerticalAlign: =VerticalAlign.Top
+                  X: =40
+                  Y: =40
+      - drpWaveSubwaveFilter2:
+          Control: ModernDropdown@1.0.3
+          Properties:
+            Font: =Font.'Open Sans'
+            ItemDisplayText: =ThisItem.'COID Code'
+            Items: =Filter('dim.Ref.Organizations', 'dim.Ref.Organizations (Views)'.'Active dim.Ref.Organizations')
+            Width: =225
+            X: =276
+            Y: =85
+      - lblWaveSubwave2:
+          Control: ModernText@1.0.0
+          Properties:
+            Align: =Align.Center
+            AutoHeight: =true
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Size: =16
+            Text: ="WAVE - SUBWAVE"
+            X: =100
+            Y: =80

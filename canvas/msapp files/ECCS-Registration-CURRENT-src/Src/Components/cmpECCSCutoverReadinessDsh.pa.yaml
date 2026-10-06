@@ -1,0 +1,123 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+ComponentDefinitions:
+  cmpECCSCutoverReadinessDsh:
+    DefinitionType: CanvasComponent
+    Description: ReadinessDashboard
+    AccessAppScope: true
+    Properties:
+      Height: =700
+      Width: =1200
+    Children:
+      - shpReadinessDash:
+          Control: Rectangle@2.3.0
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Fill: '=ColorValue("#03173E") '
+            Width: =1200
+      - shpReadinessSidePanel:
+          Control: Rectangle@2.3.0
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Fill: =ColorValue("#03173E")
+            Height: =700
+            Width: =126
+      - lblReadinessSubTitle:
+          Control: ModernText@1.0.0
+          Properties:
+            Color: =ColorValue("#E05929")
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Height: =45
+            Size: =16
+            Text: ="Cutover Automation Configuation Readiness"
+            Width: =634
+            X: =126
+            Y: =39
+      - lblReadinessDashTitle:
+          Control: ModernText@1.0.0
+          Properties:
+            Color: =Color.White
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =44
+            Size: =20
+            Text: ="Expanse Cutover Automation Readiness Dashboard"
+            Width: =607
+            X: =126
+            Y: =11
+      - txtLogoExpanse:
+          Control: ModernText@1.0.0
+          Properties:
+            Color: =ColorValue("#E05929")
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Text: ="Expanse"
+            Width: =75
+            X: =13
+            Y: =57
+      - imgHCALogo2:
+          Control: Image@2.2.3
+          Properties:
+            BorderColor: =RGBA(0, 89, 178, 1)
+            Height: =46
+            Image: =HCA_Healthcare_Logo_Extracted
+            X: =13
+            Y: =11
+      - lnkHCAFacilityCDMO:
+          Control: ModernLink@1.0.1
+          Properties:
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Height: =42
+            Size: =16
+            Text: ="HCA Facility Master Dashboard"
+            URL: ="https://app.powerbi.com/Redirect?action=OpenReport&appId=1a725814-e659-4e47-9441-44cf9a3d221d&reportObjectId=40574145-bf2c-4b46-a1bf-9e1f70bee640&ctid=335a6d75-c3eb-4b1a-ac08-d49338816ca0&reportPage=ReportSection797a8533711808f0a3e5&pbi_source=appShareLink&portalSessionId=ebbe5c27-e73d-444e-9f96-7087822939ca"
+            Width: =242
+            X: =126
+            Y: =100
+      - lnkMTXGoLiveDashboardLIVE:
+          Control: ModernLink@1.0.1
+          Properties:
+            Height: =48
+            Text: ="MTX Cutover Dashboard - LIVE"
+            URL: ="https://app.powerbi.com/Redirect?action=OpenReport&appId=87ec218e-1de4-4f36-baa7-0a277ece5fbf&reportObjectId=282bf5c6-3629-4438-8872-636cf22f9ec5&ctid=335a6d75-c3eb-4b1a-ac08-d49338816ca0&reportPage=experience%3Dpower-bi&pbi_source=appShareLink&portalSessionId=ebbe5c27-e73d-444e-9f96-7087822939ca"
+            Width: =293
+            X: =126
+            Y: =142
+      - lnkRegDiscAppLIVE:
+          Control: ModernLink@1.0.1
+          Properties:
+            Height: =44
+            Text: ="Cutover Registration Discrepancy App - LIVE"
+            URL: ="https://apps.powerapps.com/play/e/7cf0a697-e4d4-edab-865c-7709868b5519/a/ad956e4d-7603-44d2-86d4-a7aa5dcc5dc4?tenantId=335a6d75-c3eb-4b1a-ac08-d49338816ca0&hint=09cb79ba-1bbb-4f28-bb11-6bc5b2e564fa&source=sharebutton&sourcetime=1790883992218#"
+            Width: =335
+            X: =126
+            Y: =190
+      - lnkMTXDRStatusDash:
+          Control: ModernLink@1.0.1
+          Properties:
+            Height: =49
+            Text: ="Expanse Data Repository Status Dashboard"
+            URL: ="https://app.powerbi.com/Redirect?action=OpenReport&appId=46f65ffc-097c-4346-ad93-da2e2383a93b&reportObjectId=3228c662-40d8-4149-859f-32afa5399fe6&ctid=335a6d75-c3eb-4b1a-ac08-d49338816ca0&reportPage=ReportSection2afbfc70422289a0ef7d&pbi_source=appShareLink&portalSessionId=ebbe5c27-e73d-444e-9f96-7087822939ca"
+            Width: =316
+            X: =382
+            Y: =93
+      - tlbTestFunc:
+          Control: Toolbar@2.0.5
+          Properties:
+            Alignment: ='Toolbar.Alignment'.Vertical
+            BasePaletteColor: =RGBA(227, 98, 0, 1)
+            Font: =Font.'Open Sans'
+            FontSize: =14
+            FontWeight: =FontWeight.Semibold
+            Height: =142
+            Padding: ='Toolbar.Padding'.Small
+            Width: =126
+            Y: =558
